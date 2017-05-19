@@ -1,0 +1,31 @@
+<?xml version='1.0'?>
+<form name="eeee" method="post" db_table="wines_products" db_primary_id="id" action="products.php">
+   <input type="text" name="fname" value="" required="text" size="50" >{REGISTER_FORM_FNAME}
+      <required>Please, write text name !</required>
+   </input>
+   <input type="text" name="lname" value="" required="text">{REGISTER_FORM_LNAME}</input>
+   <input type="text" name="doggy_name" value="" required="text">Doggy name
+      <required>Need name of your doggy !</required>
+   </input>
+   <input type="text" name="mname" value=""> Mother name</input>
+   <input type="text" name="fromwhere" value="" size="30" maxlength="40" class="cnnInput">
+     How you find site ?
+   </input>
+   <label>
+	 Check please options
+	 <input name="radiobutton" type="radio" value="1" reverse="true" required="true" >1</input>
+	 <input name="radiobutton" type="radio" value="2" reverse="true">2</input>
+	 <input name="radiobutton" type="radio" value="3" reverse="true">3</input>
+   </label>
+   <label>111
+	 <input name="radiobutton2" type="radio" value="4" reverse="true" checked="true">4</input>
+	 <input name="radiobutton2" type="radio" value="5" reverse="true">5</input>
+	 <input name="radiobutton2" type="radio" value="6" reverse="true">6</input>
+   </label>
+   <label>
+	 Select some options:
+    <input type="checkbox" name="checkbox" value="checkbox" reverse="true">Smouking when drinking ?</input>
+    <input type="checkbox" name="checkbox" value="checkbox" >Dring in free time ? </input>
+  </label>
+   <input type="submit" value="REGISTER" class="cnnFormButtonSearch" />
+</form>

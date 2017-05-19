@@ -1,0 +1,18 @@
+<?xml version='1.0'?>
+<form name="news" method="post" db_table="wines_products" db_primary_id="id" action="products.php">
+   <input name="title" type="text"  required="text" size="50" maxlength="128">Name Wine</input>
+   <input name="id_type" type="selectbox" required="text" db_table="wines_types" db_primary_id="id"  db_primary_name="name">
+     Type Wine
+   </input>
+   <input name="id_cat" type="selectbox" required="text" db_table="wines_categories" db_primary_id="id"  db_primary_name="name">
+     Categorie Wine
+   </input>
+   <input name="year" type="text"  required="text" size="4" maxlength="4">Year</input>
+   <input name="size" type="selectbox" required="text" values="500ML;750ML;1L;1.5L;3L;Other">
+     Size boutle
+   </input>
+   <input name="image" type="image" upload_dir="../../../tmp/" prefix="product-" max_width="150" max_height="175">Image</input>
+   <input name="cost" type="text"  required="float" size="5" maxlength="7">Cost</input>
+   <textarea id="myarea" name="text" extension="type_editor" cols="50" rows="10">Text</textarea>
+   <input type="submit" value="{INSERT_UPDATE}" style="margin-top:10"/>
+</form>
