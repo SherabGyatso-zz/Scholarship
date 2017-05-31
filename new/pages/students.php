@@ -3,11 +3,11 @@ $c="";
 
 $lqry="";
 if(isset($_GET['a']) && $_GET['a']==1) {
-	$qry="SELECT * FROM `StudentScholarship` WHERE StudentId=".$_GET['id'].""; 
+	$qry="SELECT * FROM `StudentScholarship` WHERE StudentId=".$_GET['id']."";
 	$rs = mysqli_query ($db,$qry) or die ("DB Error!!!");
 	if(mysqli_num_rows($rs)>0) {
 		header("Location: index.php?pid=104&ewn=101");
-		exit();		
+		exit();
 	}
 
 	$qry="DELETE FROM `Student` WHERE StudentId='".$_GET['id']."'";
@@ -18,20 +18,20 @@ if(isset($_GET['a']) && $_GET['a']==1) {
 	$lqry.=$qry;
 	add_log($db,$_SESSION['userid'],$_SESSION['utype'],12,$lqry);
 	header("Location: index.php?pid=104&ewn=214");
-	exit();		
+	exit();
 }
 
 if(isset($_GET['a']) && $_GET['a']==2) {
 	$fcheck=$_POST['fcheck'];
 	for($i=0;$i<count($fcheck);$i++) {
-	
-		$qry="SELECT * FROM `StudentScholarship` WHERE StudentId=".$fcheck[$i].""; 
+
+		$qry="SELECT * FROM `StudentScholarship` WHERE StudentId=".$fcheck[$i]."";
 		$rs = mysqli_query ($db,$qry) or die ("DB Error!!!");
 		if(mysqli_num_rows($rs)>0) {
 			header("Location: index.php?pid=104&ewn=101");
-			exit();		
+			exit();
 		}
-				
+
 		$qry="DELETE FROM `Student` WHERE StudentId='".$fcheck[$i]."'";
 		$rs = mysqli_query ($db,$qry) or die ("DB Error!!!");
 		$lqry.=$qry."\n\r";
@@ -42,9 +42,9 @@ if(isset($_GET['a']) && $_GET['a']==2) {
 	add_log($db,$_SESSION['userid'],$_SESSION['utype'],12,$lqry);
 	header("Location: index.php?pid=104&ewn=215");
 	exit();
-} 
+}
 
-$c.="<font class=\"title\">Students</font><br><Br>
+$c.="<h4 class=\"title\">Students</h4>
 <a href=\"?pid=105&a=a\"><img src=\"images/add.gif\" width=\"16\" height=\"16\" border=\"0\" alt=\"Edit category\" align=\"left\" />&nbsp;&nbsp;Add new student</a><br><Br>
 ";
 //show existing addresses
@@ -55,7 +55,7 @@ if(isset($_POST['studname'])!="") { $wh = " and student.Name like '%" . trim($_P
 $qry = "SELECT Student.StudentId, Student.Name, Student.Surname, Student.DateOfBirth, School.Name AS SchoolName, SchoolCategory.SchoolCategoryName
 FROM (
 Student
-LEFT JOIN StudentSchool ON ( StudentSchool.StudentId = Student.StudentId ) 
+LEFT JOIN StudentSchool ON ( StudentSchool.StudentId = Student.StudentId )
 )
 LEFT JOIN School ON ( School.SchoolId = StudentSchool.SchoolId ) , SchoolCategory
 WHERE SchoolCategory.SchoolCategoryId = School.SchoolCategoryId AND Student.isApproved=1 ".$wh;
@@ -161,8 +161,8 @@ while ($line = mysqli_fetch_array($rs)) {
 	".$i."
 	</td>
 	<td bgcolor=\"#FAFAFA\">
-	
-	
+
+
 	<b>".$line['Name']."</b><br>
 	".$line['DateOfBirth']."
 	</td>
@@ -175,7 +175,7 @@ while ($line = mysqli_fetch_array($rs)) {
 	<td bgcolor=\"whitesmoke\" align=\"center\" valign=\"middle\">
 	<a href=\"index.php?pid=200&id=".$line['StudentId']."\"><font size=\"-1\">view&nbsp;details&nbsp;&raquo;</font></a>
 	</td>
-	
+
 	<td bgcolor=\"#FAFAFA\" align=\"center\" >
 	<a href=\"?pid=105&a=e&id=".$line['StudentId']."\"><img src=\"images/edit.gif\" width=\"16\" height=\"16\" border=\"0\" alt=\"Edit student\" /></a>&nbsp;&nbsp;&nbsp;&nbsp;
 	<a href=\"?pid=104&a=1&id=".$line['StudentId']."\"><img src=\"images/delete.gif\" width=\"16\" height=\"16\" border=\"0\" alt=\"Delete student\" /></a>

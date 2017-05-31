@@ -1,8 +1,7 @@
 <?php
 $c="";
 
-$c.="<font class=\"title\">Report</font><br><Br>
-";
+$c.="<h4 class=\"title\">Report</h4>";
 
 if(!isset($_GET['id'])) exit(0); else $gssid=$_GET['id'];
 
@@ -44,13 +43,13 @@ $elt->setValue($r['contact_number']);
 
 if($line['ScholarshipId']=="2" || $line['ScholarshipId']=="4") {
 //sponsor list dropdown
-	
+
 	$elt =& $form->addElement('text','sponsor_name','Sponsor Name:');
 	$elt->setValue($r['sponsor_name']);
 	$elt =& $form->addElement('text','amount_received','Amount received from the Sponsor for the current year:');
 	$elt->setValue($r['amount_received']);
 	$elt =& $form->addElement('text','medical_leave','Medical Leave sanctioned on:');
-	$elt->setValue($r['medical_leave']);	
+	$elt->setValue($r['medical_leave']);
 	$elt =& $form->addElement('text','remarks','Remarks:');
 	$elt->setValue($r['remarks']);
 }elseif($line['ScholarshipId']=="1") {
@@ -73,10 +72,10 @@ $form->addElement('submit','save','Submit','class="button"');
 if ($form->validate()) {
 	$form->process('submit_report');
 	header("Location: index.php?pid=110&id=$gssid");
-	exit();		
+	exit();
 } else {
 	$rendered_form=$form->toHtml();
-	$c.=$rendered_form; 
+	$c.=$rendered_form;
 }
 
 ?>

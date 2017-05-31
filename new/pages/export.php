@@ -3,7 +3,7 @@
 $c="";
 
 
-$c.="<font class=\"title\">Export Scholarships data to Excel</font><br><Br>
+$c.="<h4 class=\"title\">Export Scholarships data to Excel</h4>
 ";
 
 $c.="<Br><b>Select date range to export:</b><br><br>";

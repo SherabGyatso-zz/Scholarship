@@ -8,19 +8,19 @@ if(isset($_POST['submitted']) && $_POST['submitted']==1) {
 	if(isset($_GET['a']) && $_GET['a']=="a") {
 		$dob=$_POST['birth_y']."-".$_POST['birth_m']."-".$_POST['birth_d'];
 		$qry = "
-		INSERT INTO `Student` ( `StudentId` , `Name` , `Surname` , `DateOfBirth` , `SecondarySchoolFinishYear` , `Password` , `Address` ) 
+		INSERT INTO `Student` ( `StudentId` , `Name` , `Surname` , `DateOfBirth` , `SecondarySchoolFinishYear` , `Password` , `Address` )
 		VALUES (
 		'', '".$_POST['sname']."', '".$_POST['ssurname']."', '$dob', '".$_POST['sec_s_f_y']."', '".$_POST['spassword']."', '".$_POST['saddress']."'
 		)";
 		$rs=mysql_query($qry,$db) or die("Database error 1 - $qry");
 		$lqry.=$qry."\n\r";
-		$qry="SELECT StudentId FROM Student 
+		$qry="SELECT StudentId FROM Student
 		WHERE Name='".$_POST['sname']."' AND Surname='".$_POST['ssurname']."' AND DateOfBirth='$dob'
 		";
 		$rs=mysql_query($qry,$db) or die("Database error 2");
 		$line=mysqli_fetch_array($rs);
 		$student_id=$line['StudentId'];
-		$qry="INSERT StudentSchool ( `Id` , `StudentId` , `SchoolId` , `YearOfStart` , `GradeOfStart` ) 
+		$qry="INSERT StudentSchool ( `Id` , `StudentId` , `SchoolId` , `YearOfStart` , `GradeOfStart` )
 		VALUES (
 		'', '$student_id', '".$_POST['sschoolname']."', '".$_POST['syos']."', '".$_POST['sgos']."'
 		)";
@@ -29,40 +29,40 @@ if(isset($_POST['submitted']) && $_POST['submitted']==1) {
 		add_log($db,$_SESSION['userid'],$_SESSION['utype'],10,$lqry);
 		$ewnid=212;
 		if($_POST['next_opt']==0) $next_pid="104";
-		if($_POST['next_opt']==1) $next_pid="105&a=a";	
+		if($_POST['next_opt']==1) $next_pid="105&a=a";
 	} else if(isset($_GET['a']) && $_GET['a']=="e") {
 		$dob=$_POST['birth_y']."-".$_POST['birth_m']."-".$_POST['birth_d'];
 		$qry = "
-		UPDATE `Student` 
-		SET 
-		`Name` = '".$_POST['sname']."', 
-		`Surname` = '".$_POST['ssurname']."', 
-		`Password` = '".$_POST['spassword']."', 
-		`email` = '".$_POST['e-mail']."', 
+		UPDATE `Student`
+		SET
+		`Name` = '".$_POST['sname']."',
+		`Surname` = '".$_POST['ssurname']."',
+		`Password` = '".$_POST['spassword']."',
+		`email` = '".$_POST['e-mail']."',
 		`DateOfBirth` = '".$dob."',
-		`SecondarySchoolFinishYear` = '".$_POST['sec_s_f_y']."', 
-		`Address` = '".$_POST['saddress']."' 
+		`SecondarySchoolFinishYear` = '".$_POST['sec_s_f_y']."',
+		`Address` = '".$_POST['saddress']."'
 		WHERE `StudentId`='".$_POST['id']."'";
 		$rs=mysqli_query($db,$qry) or die("Database error 4");
 		$lqry.=$qry."\n\r";
 		$qry = "
-		UPDATE `StudentSchool` 
-		SET 
-		`SchoolId` = '".$_POST['sschoolname']."', 
-		`YearOfStart` = '".$_POST['syos']."', 
-		`GradeOfStart` = '".$_POST['sgos']."' 
+		UPDATE `StudentSchool`
+		SET
+		`SchoolId` = '".$_POST['sschoolname']."',
+		`YearOfStart` = '".$_POST['syos']."',
+		`GradeOfStart` = '".$_POST['sgos']."'
 		WHERE `StudentId`='".$_POST['id']."'";
 		$rs=mysqli_query($db,$qry) or die("Database error 5");
 		$lqry.=$qry;
 		add_log($db,$_SESSION['userid'],$_SESSION['utype'],11,$lqry);
-		$ewnid=213;	
+		$ewnid=213;
 	}
 	header("Location: index.php?pid=".$next_pid."&ewn=".$ewnid."");
 	exit();
 }
 $title="Add new students";
 if(isset($_GET['a']) && $_GET['a']=="e") $title="Edit Student";
-$c.="<font class=\"title\">$title</font><br><Br>";
+$c.="<h4 class=\"title\">$title</h4>";
 
 if(isset($_GET['a'])) {
 	if($_GET['a']=="a") {
@@ -128,8 +128,8 @@ $form.="<br><br />
 $qry2 = "
 SELECT School.SchoolId, School.Name, School.SchoolCategoryId, SchoolCategory.SchoolCategoryName
 FROM School
-LEFT JOIN SchoolCategory ON ( SchoolCategory.SchoolCategoryId = School.SchoolCategoryId ) 
-WHERE 1 
+LEFT JOIN SchoolCategory ON ( SchoolCategory.SchoolCategoryId = School.SchoolCategoryId )
+WHERE 1
 ORDER BY SchoolCategory.SchoolCategoryName, School.Name
 ";
 $rs2 = mysqli_query ($db,$qry2) or die ("DB Error!!!");
@@ -164,7 +164,7 @@ if(isset($_GET['a']) && $_GET['a']=="a") {
 $c.="
 <input type=\"radio\" name=\"next_opt\" value=\"0\" checked />&nbsp;Save and go back to list<br />
 <input type=\"radio\" name=\"next_opt\" value=\"1\" />&nbsp;Save and add new student<br />
-<br />"; 
+<br />";
 }
 
 $c.="<input type=\"submit\" value=\"Submit\" class=\"button\" />&nbsp;&nbsp;&nbsp;

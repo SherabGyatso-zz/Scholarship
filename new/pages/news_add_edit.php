@@ -12,9 +12,9 @@ if(isset($_POST['submitted']) && $_POST['submitted']==1) {
 	$towrite_l = strtr($towrite_l, $trans);
 	if(isset($_GET['a']) && $_GET['a']=="a") {
 		$now = time();
-		
+
 		$qry = "
-		INSERT INTO `news` ( `id` , `title` , `short` , `long` , `dateadded` ) 
+		INSERT INTO `news` ( `id` , `title` , `short` , `long` , `dateadded` )
 		VALUES (
 		'', '".$_POST['title']."', '$towrite_s', '$towrite_l', '$now'
 		)";
@@ -25,10 +25,10 @@ if(isset($_POST['submitted']) && $_POST['submitted']==1) {
 		add_log($db,$_SESSION['userid'],$_SESSION['utype'],22,$lqry);
 	} else if(isset($_GET['a']) && $_GET['a']=="e") {
 		$qry = "
-		UPDATE `news` 
-		SET `title` = '".$_POST['title']."', `short` = '$towrite_s', `long` = '$towrite_l' 
+		UPDATE `news`
+		SET `title` = '".$_POST['title']."', `short` = '$towrite_s', `long` = '$towrite_l'
 		WHERE `id`='".$_POST['id']."'";
-		$ewnid=233;	
+		$ewnid=233;
 		$lqry.=$qry;
 		add_log($db,$_SESSION['userid'],$_SESSION['utype'],23,$lqry);
 	}
@@ -40,7 +40,7 @@ if(isset($_POST['submitted']) && $_POST['submitted']==1) {
 
 $title="Add news";
 if(isset($_GET['a']) && $_GET['a']=="e") $title="Edit news";
-$c.="<font class=\"title\">$title</font><br><Br>";
+$c.="<h4 class=\"title\">$title</h4>"
 
 if(isset($_GET['a'])) {
 	if($_GET['a']=="a") {
@@ -67,7 +67,7 @@ $form="
 <form action=\"$scf\" method=\"post\">
 <input type=\"hidden\" name=\"id\" value=\"".$_GET['id']."\" />
 $date_added_txt
-<br> 
+<br>
 <b>Title:</b>&nbsp;&nbsp;
 	<input type=\"text\" size=\"10\" name=\"title\" maxlength=\"255\" class=\"inputbox\" value=\"$title_value\" />
 <b>News header:</b><br>
@@ -86,7 +86,7 @@ if(isset($_GET['a']) && $_GET['a']=="a") {
 $c.="
 <input type=\"radio\" name=\"next_opt\" value=\"0\" checked />&nbsp;Save and go back to list<br />
 <input type=\"radio\" name=\"next_opt\" value=\"1\" />&nbsp;Save and add next news<br />
-<br />"; 
+<br />";
 }
 
 $c.="<input type=\"submit\" value=\"Submit\" class=\"button\" />&nbsp;&nbsp;&nbsp;

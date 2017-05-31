@@ -4,15 +4,15 @@ $c="";
 $lqry="";
 if(isset($_GET['a']) && $_GET['a']==1) {
 
-	$qry="SELECT * FROM `School` WHERE AddressId=".$_GET['id'].""; 
+	$qry="SELECT * FROM `School` WHERE AddressId=".$_GET['id']."";
 	$rs = mysqli_query ($db,$qry) or die ("DB Error!!!");
 	$c1 = mysqli_num_rows($rs);
-	$qry="SELECT * FROM `Student` WHERE AddressId=".$_GET['id'].""; 
+	$qry="SELECT * FROM `Student` WHERE AddressId=".$_GET['id']."";
 	$rs = mysqli_query ($db,$qry) or die ("DB Error!!!");
 	$c2 = mysqli_num_rows($rs);
 	if($c1>0 || $c2>0) {
 		header("Location: index.php?pid=101&ewn=103");
-		exit();		
+		exit();
 	}
 
 	$qry="DELETE FROM `Address` WHERE AddressId='".$_GET['id']."'";
@@ -20,24 +20,24 @@ if(isset($_GET['a']) && $_GET['a']==1) {
 	$lqry.=$qry;
 	add_log($db,$_SESSION['userid'],$_SESSION['utype'],3,$lqry);
 	header("Location: index.php?pid=101&ewn=206");
-	exit();		
+	exit();
 }
 
 if(isset($_GET['a']) && $_GET['a']==2) {
 	$fcheck=$_POST['fcheck'];
 	for($i=0;$i<count($fcheck);$i++) {
-	
-		$qry="SELECT * FROM `School` WHERE AddressId=".$fcheck[$i].""; 
+
+		$qry="SELECT * FROM `School` WHERE AddressId=".$fcheck[$i]."";
 		$rs = mysqli_query ($db,$qry) or die ("DB Error!!!");
 		$c1 = mysqli_num_rows($rs);
-		$qry="SELECT * FROM `Student` WHERE AddressId=".$fcheck[$i].""; 
+		$qry="SELECT * FROM `Student` WHERE AddressId=".$fcheck[$i]."";
 		$rs = mysqli_query ($db,$qry) or die ("DB Error!!!");
 		$c2 = mysqli_num_rows($rs);
 		if($c1>0 || $c2>0) {
 			header("Location: index.php?pid=101&ewn=103");
-			exit();		
+			exit();
 		}
-			
+
 		$qry="DELETE FROM `Address` WHERE AddressId='".$fcheck[$i]."'";
 		$rs = mysqli_query ($db,$qry) or die ("DB Error!!!");
 		$lqry.=$qry."\n\r";
@@ -45,7 +45,7 @@ if(isset($_GET['a']) && $_GET['a']==2) {
 	add_log($db,$_SESSION['userid'],$_SESSION['utype'],3,$lqry);
 	header("Location: index.php?pid=101&ewn=207");
 	exit();
-} 
+}
 
 $qry = "SELECT * FROM Address WHERE 1";
 
@@ -63,7 +63,7 @@ $qry.=$limit;
 
 $rs = mysqli_query ($db,$qry) or die ("DB Error!!!");
 
-$c.="<font class=\"title\">Addresses</font><br><Br>
+$c.="<h4 class=\"title\">Addresses</h4>
 <table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\">
 <tr>
 <td align=\"left\">

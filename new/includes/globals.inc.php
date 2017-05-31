@@ -3,7 +3,7 @@
 $DBHOST = "localhost";
 $DBNAME = "scholarship";
 $DBUSERNAME = "root";
-$DBPASSWORD = "123";
+$DBPASSWORD = "root";
 $DBADMIN = "root";
 $ADMPASSWORD = "123";
 

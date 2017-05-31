@@ -28,7 +28,7 @@ $gos_value=$line['GradeOfStart'];
 $qry = "
 SELECT School.SchoolId, School.Name, School.Address, School.SchoolCategoryId, SchoolCategory.SchoolCategoryName
 FROM School
-LEFT JOIN SchoolCategory ON ( SchoolCategory.SchoolCategoryId = School.SchoolCategoryId ) 
+LEFT JOIN SchoolCategory ON ( SchoolCategory.SchoolCategoryId = School.SchoolCategoryId )
 WHERE School.SchoolId='$sid_value'
 ";
 $rs = mysqli_query ($db,$qry) or die ("DB Error!!!");
@@ -41,7 +41,7 @@ $c="";
 
 $title="Student details";
 if(isset($_SESSION['utype']) && $_SESSION['utype']==2) $title="Your profile";
-$c.="<font class=\"title\">$title</font><br><Br>";
+$c.="<h4 class=\"title\">$title</h4>";
 
 $add_info="";
 if($a=="reg") {
@@ -61,7 +61,7 @@ if($a=="reg") {
 	</tr>
 	<tr><td colspan=\"2\" bgcolor=\"whitesmoke\" style=\"font-size: 2px\">&nbsp;</td></tr>
 	";
-	
+
 	$add_info2="
 		<tr><td colspan=\"2\" bgcolor=\"whitesmoke\"><b>Profile has not been approved yet</b><br>
 		<a href=\"?pid=114&a=3&id=$studentID\"><img src=\"images/accept.gif\" width=\"16\" height=\"16\" border=\"0\" alt=\"Approve student\" align=\"absmiddle\" />&nbsp;&nbsp;Clik here to approve the student</a></td></tr>

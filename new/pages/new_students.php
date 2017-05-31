@@ -12,7 +12,7 @@ if(isset($_GET['a']) && $_GET['a']==1) {
 	registration_mail($_GET['id'],"delete");
 	add_log($db,$_SESSION['userid'],$_SESSION['utype'],17,$lqry);
 	header("Location: index.php?pid=114&ewn=228");
-	exit();		
+	exit();
 }
 
 if(isset($_GET['a']) && $_GET['a']==3) {
@@ -21,14 +21,14 @@ if(isset($_GET['a']) && $_GET['a']==3) {
 	registration_mail($_GET['id'],"approve");
 	add_log($db,$_SESSION['userid'],$_SESSION['utype'],16,$qry);
 	header("Location: index.php?pid=114&ewn=229");
-	exit();		
+	exit();
 }
 
 if(isset($_GET['a']) && $_GET['a']==2) {
 	$sub_action=$_POST['sub_action'];
 	if($sub_action=="Approve selected") {
 		$fcheck=$_POST['fcheck'];
-		for($i=0;$i<count($fcheck);$i++) {		
+		for($i=0;$i<count($fcheck);$i++) {
 			$qry="UPDATE Student SET isApproved=1 WHERE StudentId='".$fcheck[$i]."'";
 			$rs = mysqli_query ($db,$qry) or die ("DB Error!!!");
 			$lqry.=$qry."\n\r";
@@ -39,7 +39,7 @@ if(isset($_GET['a']) && $_GET['a']==2) {
 		exit();
 	} else if($sub_action=="Delete selected") {
 		$fcheck=$_POST['fcheck'];
-		for($i=0;$i<count($fcheck);$i++) {		
+		for($i=0;$i<count($fcheck);$i++) {
 			$qry="DELETE FROM `Student` WHERE StudentId='".$fcheck[$i]."'";
 			$rs = mysqli_query ($db,$qry) or die ("DB Error!!!");
 			$lqry.=$qry."\n\r";
@@ -54,15 +54,14 @@ if(isset($_GET['a']) && $_GET['a']==2) {
 	}
 }
 
-$c.="<font class=\"title\">Registrations - new students</font><br><Br>
-";
+$c.="<h4 class=\"title\">Registrations - new students</h4>";
 //show existing addresses
 
 $qry = "
 SELECT Student.StudentId, Student.Name, Student.Surname, Student.DateOfBirth, School.Name AS SchoolName, SchoolCategory.SchoolCategoryName
 FROM (
 Student
-LEFT JOIN StudentSchool ON ( StudentSchool.StudentId = Student.StudentId ) 
+LEFT JOIN StudentSchool ON ( StudentSchool.StudentId = Student.StudentId )
 )
 LEFT JOIN School ON ( School.SchoolId = StudentSchool.SchoolId ) , SchoolCategory
 WHERE SchoolCategory.SchoolCategoryId = School.SchoolCategoryId AND Student.isApproved=0
