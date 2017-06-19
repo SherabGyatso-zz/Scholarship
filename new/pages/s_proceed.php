@@ -6,7 +6,7 @@ if(isset($_GET['ty']))
   $prm=$_GET['ty'];
 
 
-$c.="<font class=\"title\">Scholarship</font><br><Br>
+$c.="<h4 class=\"title\">Scholarship</h4>
 ";
 
 
@@ -27,7 +27,7 @@ $form = new HTML_QuickForm('status','post',$form_action);
 $form->addElement('hidden','ssid',$gssid);
 $elt =& $form->addElement('hidden','sid');
 $elt->setValue($line['StudentId']);
-$sel_status = array('Selected','Alternate','Rejected','Closed','Discontinued','Returnee','Non Returnee'); 
+$sel_status = array('Selected','Alternate','Rejected','Closed','Discontinued','Returnee','Non Returnee');
 $elt =& $form->addElement('select','status','Status: ',$sel_status);
 $elt->setSelected(getIndex($sel_status,$line['Status']));
 //$elt =& $form->addElement('text','study_course','Study Course:',' READONLY');
@@ -36,7 +36,7 @@ $qry="select * from course order by course";
 $rs = mysqli_query ($db,$qry) or die ("DB Error!!!".mysql_error());
 //$course="<option value=\"all\" SELECTED><--Select Year--></option>";
 	while($row=mysqli_fetch_array($rs)) {
-	    
+
 		$course[$row['courseid']] = $row['Course'] .">><b>".$row['courseType']."</b>>> ".$row['fullform'];
 	}
 
@@ -64,10 +64,10 @@ $form->addElement('submit','save','Submit','class="button"');
 if ($form->validate()) {
 	$form->process('submit_status');
 	header("Location: index.php?pid=109&id=$gssid");
-	exit();		
+	exit();
 } else {
 	$rendered_form=$form->toHtml();
-	$c.=$rendered_form; 
+	$c.=$rendered_form;
 }
 if($status=="Selected") $c.="</td><td width=\"50%\" align=\"center\"><table cellpadding=\"5\" cellspacing=\"0\" align=\"center\"><tr><td style=\"border: 1px solid #cccccc; background: whitesmoke\"><a href=\"index.php?pid=110&id=$gssid\"><img src=\"images/report.gif\" border=0 align=\"absmiddle\">&nbsp;&nbsp;REPORT</a></td></tr></table>";
 $c.="</td></tr></table>";

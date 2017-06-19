@@ -4,11 +4,11 @@ $c="";
 $lqry="";
 if(isset($_GET['a']) && $_GET['a']==1) {
 
-	$qry="SELECT * FROM `studentscholarship` WHERE courseid=".$_GET['id'].""; 
+	$qry="SELECT * FROM `studentscholarship` WHERE courseid=".$_GET['id']."";
 	$rs = mysqli_query ($db,$qry) or die ("DB Error!!!");
 	if(mysqli_num_rows($rs)>0) {
 		header("Location: index.php?pid=118&ewn=102");
-		exit();		
+		exit();
 	}
 
 	$qry="DELETE FROM `course` WHERE courseid='".$_GET['id']."'";
@@ -17,20 +17,20 @@ if(isset($_GET['a']) && $_GET['a']==1) {
 	$lqry.=$qry;
 	add_log($db,$_SESSION['userid'],$_SESSION['utype'],9,$lqry);
 	header("Location: index.php?pid=118&ewn=237");
-	exit();		
+	exit();
 }
 
 if(isset($_GET['a']) && $_GET['a']==2) {
 	$fcheck=$_POST['fcheck'];
 	for($i=0;$i<count($fcheck);$i++) {
 
-		$qry="SELECT * FROM `course` WHERE courseid=".$fcheck[$i].""; 
+		$qry="SELECT * FROM `course` WHERE courseid=".$fcheck[$i]."";
 		$rs = mysqli_query ($db,$qry) or die ("DB Error!!!");
 		if(mysqli_num_rows($rs)>0) {
 			header("Location: index.php?pid=118&ewn=102");
-			exit();		
-		}	
-			
+			exit();
+		}
+
 		$qry="DELETE FROM `course` WHERE courseid='".$fcheck[$i]."'";
 		$lqry.=$qry."\n\r";
 		$rs = mysqli_query ($db,$qry) or die ("DB Error!!!");
@@ -38,9 +38,9 @@ if(isset($_GET['a']) && $_GET['a']==2) {
 	add_log($db,$_SESSION['userid'],$_SESSION['utype'],9,$lqry);
 	header("Location: index.php?pid=118&ewn=211");
 	exit();
-} 
+}
 
-$c.="<font class=\"title\">Course</font><br><Br>
+$c.="<h4 class=\"title\">Course</h4>
 <a href=\"?pid=119&a=a\"><img src=\"images/add.gif\" width=\"16\" height=\"16\" border=\"0\" alt=\"Edit category\" align=\"left\" />&nbsp;&nbsp;Add new course</a><br><Br>
 ";
 //show existing addresses

@@ -64,7 +64,7 @@ if(!isset($_SESSION['logged']) || $_SESSION['logged']!=1) {
 	display_content($leftcontent,$content);
 	echo $footer;
 } else {
-  
+
 	$leftcontent = get_left_content($_SESSION['user'],$_SESSION['utype']);
 	$content = get_content($db,$pid,$_SESSION['utype']);
 
@@ -73,8 +73,8 @@ if(!isset($_SESSION['logged']) || $_SESSION['logged']!=1) {
 		exit();
 	}
 	echo $header;
-	if(isset($_GET['ewn'])) display_ewn($_GET['ewn'],0);
-	display_content($leftcontent,$content);
+	if(isset($_GET['ewn'])) display_ewn($_GET['ewn'], 0);
+	display_content($leftcontent, $content);
 	echo $footer;
 
 }

@@ -1,44 +1,55 @@
 <?php
-/* vim: set expandtab tabstop=4 shiftwidth=4: */
-// +----------------------------------------------------------------------+
-// | PHP version 4.0                                                      |
-// +----------------------------------------------------------------------+
-// | Copyright (c) 1997-2003 The PHP Group                                |
-// +----------------------------------------------------------------------+
-// | This source file is subject to version 2.0 of the PHP license,       |
-// | that is bundled with this package in the file LICENSE, and is        |
-// | available at through the world-wide-web at                           |
-// | http://www.php.net/license/2_02.txt.                                 |
-// | If you did not receive a copy of the PHP license and are unable to   |
-// | obtain it through the world-wide-web, please send a note to          |
-// | license@php.net so we can mail you a copy immediately.               |
-// +----------------------------------------------------------------------+
-// | Author: Alexey Borzov <borz_off@cs.msu.su>                           |
-// +----------------------------------------------------------------------+
-//
-// $Id: ITDynamic.php,v 1.1 2005/12/06 01:50:39 matthieu_ Exp $
-
-require_once 'Html/QuickForm/Renderer.php';
+/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 /**
  * A concrete renderer for HTML_QuickForm, using Integrated Templates.
- * 
- * This is a "dynamic" renderer, which means that concrete form look 
- * is defined at runtime. This also means that you can define 
+ *
+ * PHP versions 4 and 5
+ *
+ * LICENSE: This source file is subject to version 3.01 of the PHP license
+ * that is available through the world-wide-web at the following URI:
+ * http://www.php.net/license/3_01.txt If you did not receive a copy of
+ * the PHP License and are unable to obtain it through the web, please
+ * send a note to license@php.net so we can mail you a copy immediately.
+ *
+ * @category    HTML
+ * @package     HTML_QuickForm
+ * @author      Alexey Borzov <avb@php.net>
+ * @copyright   2001-2007 The PHP Group
+ * @license     http://www.php.net/license/3_01.txt PHP License 3.01
+ * @link        http://pear.php.net/package/HTML_QuickForm
+ */
+
+/**
+ * An abstract base class for QuickForm renderers
+ */
+require_once 'HTML/QuickForm/Renderer.php';
+
+/**
+ * A concrete renderer for HTML_QuickForm, using Integrated Templates.
+ *
+ * This is a "dynamic" renderer, which means that concrete form look
+ * is defined at runtime. This also means that you can define
  * <b>one</b> template file for <b>all</b> your forms. That template
- * should contain a block for every element 'look' appearing in your 
+ * should contain a block for every element 'look' appearing in your
  * forms and also some special blocks (consult the examples). If a
  * special block is not set for an element, the renderer falls back to
  * a default one.
- * 
- * @author Alexey Borzov <borz_off@cs.msu.su>
- * @access public
+ *
+ * @category    HTML
+ * @package     HTML_QuickForm
+ * @author      Alexey Borzov <avb@php.net>
+ * @version     Release: 3.2.10
+ * @since       3.0
  */
 class HTML_QuickForm_Renderer_ITDynamic extends HTML_QuickForm_Renderer
 {
+   /**#@+
+    * @access private
+    */
    /**
     * A template class (HTML_Template_ITX or HTML_Template_Sigma) instance
-    * @var object
+    * @var HTML_Template_ITX|HTML_Template_Sigma
     */
     var $_tpl = null;
 
@@ -67,7 +78,7 @@ class HTML_QuickForm_Renderer_ITDynamic extends HTML_QuickForm_Renderer
     var $_groupElementIdx = 0;
 
    /**
-    * Blocks to use for different elements  
+    * Blocks to use for different elements
     * @var array
     */
     var $_elementBlocks = array();
@@ -77,16 +88,17 @@ class HTML_QuickForm_Renderer_ITDynamic extends HTML_QuickForm_Renderer
     * @var string
     */
     var $_headerBlock = null;
+   /**#@-*/
 
 
    /**
     * Constructor
     *
-    * @param object     An HTML_Template_ITX/HTML_Template_Sigma object to use
+    * @param HTML_Template_ITX|HTML_Template_Sigma     Template object to use
     */
-    function HTML_QuickForm_Renderer_ITDynamic(&$tpl)
+    function __construct(&$tpl)
     {
-        $this->HTML_QuickForm_Renderer();
+        parent::__construct();
         $this->_tpl =& $tpl;
         $this->_tpl->setCurrentBlock('qf_main_loop');
     }
@@ -110,7 +122,7 @@ class HTML_QuickForm_Renderer_ITDynamic extends HTML_QuickForm_Renderer
         // assign javascript validation rules
         $this->_tpl->setVariable('qf_javascript', $form->getValidationScript());
     }
-      
+
 
     function renderHeader(&$header)
     {
@@ -177,7 +189,7 @@ class HTML_QuickForm_Renderer_ITDynamic extends HTML_QuickForm_Renderer
         $this->_tpl->parse($blockName);
         $this->_tpl->parseCurrentBlock();
     }
-   
+
 
     function renderHidden(&$element)
     {
@@ -221,12 +233,12 @@ class HTML_QuickForm_Renderer_ITDynamic extends HTML_QuickForm_Renderer
 
    /**
     * Returns the name of a block to use for element rendering
-    * 
+    *
     * If a name was not explicitly set via setElementBlock(), it tries
     * the names '{prefix}_{element type}' and '{prefix}_{element}', where
     * prefix is either 'qf' or the name of the current group's block
-    * 
-    * @param object     An HTML_QuickForm_element object
+    *
+    * @param HTML_QuickForm_element     form element being rendered
     * @access private
     * @return string    block name
     */
@@ -256,7 +268,7 @@ class HTML_QuickForm_Renderer_ITDynamic extends HTML_QuickForm_Renderer
 
    /**
     * Sets the block to use for element rendering
-    * 
+    *
     * @param mixed      element name or array ('element name' => 'block name')
     * @param string     block name if $elementName is not an array
     * @access public

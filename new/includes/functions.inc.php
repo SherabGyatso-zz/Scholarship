@@ -98,7 +98,7 @@ function display_ewn($id,$mode) {
 }
 
 function display_content($leftcontent,$content) {
-	echo($leftcontent."<div class=\"proper-content\">".$content."</div>");
+	echo("<div class=\"wrapper\"><div class=\"sidebar\">".$leftcontent."</div><div class=\"proper-content\">".$content."</div></div>");
 }
 
 function get_left_content($user,$utype) {
@@ -106,33 +106,31 @@ function get_left_content($user,$utype) {
 	$ustatus = $utypes[$utype];
 
 	$login_box = "
-	<div style=\"text-align:left\">
-	Welcome<br />
-	<font class=\"title2\"><b>$user</b></font><br /><br />
+	<h4 class='title'>Welcome</h4>
+	<font class='title2'><b>$user</b></font><br /><br />
 
 	Your status is:<br />
 	<font class=\"title2\"><b>$ustatus</b></font><br /><br />
 
-	<input type=\"button\" onclick=\"window.location='index.php?logout=1'\" value=\"LogOut\" class=\"button\">
-	</div>";
+	<input type=\"button\" onclick=\"window.location='index.php?logout=1'\" value=\"LogOut\" class=\"button\">";
 
 	if($utype==1) $menu_box = "
 
 	<a href=\"?pid=300\">Registrations</a><br><br />
-	
+
 	<a href=\"?pid=114\">Accept Registrations</a><br><br />
-	
-	<a href=\"?pid=100\">Manage school categories</a><Br>
+
+	<!--<a href=\"?pid=100\">Manage school categories</a><Br>
 	<a href=\"?pid=102\">Manage schools</a><br><br />
-     <a href=\"?pid=118\">Manage Course</a><Br>
+     <a href=\"?pid=118\">Manage Course</a><Br>-->
 	<a href=\"?pid=104\">Manage students</a><br><br />
 
 	<a href=\"?pid=108&clk=0\"><b>SCHOLARSHIPS</b></a><br><br />
-	
-	 <a href=\"?pid=120\">Manage Scholarship Types</a><Br><br />
-	 
+
+	 <!--<a href=\"?pid=120\">Manage Scholarship Types</a><Br><br />-->
+
 	<a href=\"?pid=117\"><b>Export</b></a><br><br /><br />
-	<a href=\"?pid=106\">Edit templates</a><br>
+	<!--<a href=\"?pid=106\">Edit templates</a><br>-->
 
 	<a href=\"?pid=115\">Manage news</a><br>
 
@@ -143,22 +141,22 @@ function get_left_content($user,$utype) {
 	<a href=\"?pid=3\">Logs</a><Br><br />
 
 	<a href=\"?pid=300\">Registrations</a><br><br />
-	
+
 	<a href=\"?pid=114\">Accept Registrations</a><br><br />
 
-	
+
 	<a href=\"?pid=100\">Manage school categories</a><Br>
 	<a href=\"?pid=102\">Manage schools</a><br><br />
     <a href=\"?pid=118\">Manage Course</a><Br>
 	<a href=\"?pid=104\">Manage students</a><br><br />
 
 	<a href=\"?pid=108&clk=0\"><b>SCHOLARSHIPS</b></a><br><br />
-	
+
 	 <a href=\"?pid=120\">Manage Scholarship type</a><Br><br />
-	 
+
 	<a href=\"?pid=117\"><b>Export</b></a><br><br />
 	<a href=\"?pid=106\">Edit templates</a><br>
-     
+
 	<a href=\"?pid=115\">Manage news</a><br>
 
 	"; else if($utype==2) $menu_box ="
@@ -173,7 +171,7 @@ function get_left_content($user,$utype) {
 	$retval = "
 			<div style=\"float: left;width:210px\">
 				<div class=\"login-box\">$login_box</div>
-				<div class=\"menu-box\"><h3>MENU</h3>$menu_box</div>
+				<div class=\"menu-box\"><h4 class='title'>MENU</h4>$menu_box</div>
 			</div>
 	";
 
@@ -259,16 +257,8 @@ function loguser($db,$login,$pass,$utype) {
 }
 
 function get_reg_info() {
-	return "<fieldset style=\"
-	margin-bottom:20px;
-	margin-top:25px;
-	padding-bottom:15px;
-	padding-left:20px;
-	padding-right:8px;
-	padding-top:3px;
-	text-align:left;
-	width:165px;\">
-	<legend><b>REGISTRATION</b></legend>
+	return "<fieldset class='signup'>
+	<h4 class='title'>REGISTRATION</h4>
 	<br><font class=\"green\">Don't have an account yet?</font><br><br>
 	<a href=\"?pid=300\"><img src=\"images/user_add.gif\" border=\"0\" align=\"absmiddle\" />&nbsp;&nbsp;<b>Register now</b><br></a><br>
 	<b>You will be given acces to:</b><br /><br />
@@ -283,11 +273,9 @@ function get_reg_info() {
 function get_login_form($db) {
 
 	return "
-	<div style=\"float: left;width:210px\">
 	<div class=\"login-box\">
 
-	<font class=\"title2\"><b>SIGN IN</b><br /></font>
-<br />
+	<h4 class=\"title\">SIGN IN</h4>
 	<form action=\"index.php\" method=\"post\" id=\"loginform\">
 
 	<input type=\"text\" name=\"login\" id=\"login\" class=\"inputbox\" value=\"login\" onclick=\"this.value=''\" /><br />
@@ -305,9 +293,7 @@ function get_login_form($db) {
 	</form>
 
 	</div>
-	".get_reg_info()."
-	</div>
-	";
+	".get_reg_info();
 }
 
 function get_news_list($db,$count) {
@@ -409,7 +395,7 @@ function add_log($db,$uid,$utype,$type,$query) {
 
 //templates managment
 function get_form($db,$templateid,&$form) {
-   
+
 	$qry="SELECT * FROM TemplateElements WHERE TemplateId='$templateid'";
 	$rs = mysqli_query($db,$qry) or die ("DB Error!!!");
 	while ($line = mysqli_fetch_array($rs)) {
@@ -461,8 +447,8 @@ function submit_application_form($d) {
 	{
 	$form_data_array = array();
 	foreach($d as $key => $value) {
-	   
-		if($key != 'photo' and $key != 'MAX_FILE_SIZE') 
+
+		if($key != 'photo' and $key != 'MAX_FILE_SIZE')
 		$form_data_array[$key] = $value;
 	}
 
@@ -478,7 +464,7 @@ $qry="SELECT StudentScholarshipId FROM StudentScholarship WHERE StudentId=$stude
 
 	$rs = mysqli_query ($db,$qry) or die ("DB Error!!!");
 	$line = mysqli_fetch_array($rs);
-   if($_FILES['photo']['type']=="image/pjpeg" || $_FILES['photo']['type']=="image/jpeg" || $_FILES['photo']['type']=="image/jpg") 			
+   if($_FILES['photo']['type']=="image/pjpeg" || $_FILES['photo']['type']=="image/jpeg" || $_FILES['photo']['type']=="image/jpg")
 	{
 		$uploaddir = "sholarshipphotos/";
 		$uploadfile = $uploaddir . $line['StudentScholarshipId'] . ".jpg";
@@ -490,15 +476,15 @@ $qry="SELECT StudentScholarshipId FROM StudentScholarship WHERE StudentId=$stude
     {
 	$form_data=serialize($d);
 	//echo $form_data;
-	$qry = "UPDATE `StudentScholarship` SET 
-	`FormData` = '".$form_data."' 
+	$qry = "UPDATE `StudentScholarship` SET
+	`FormData` = '".$form_data."'
 	 WHERE `StudentScholarshipId` =".$gssid."
 	";
 	//echo $qry;
 	$rs = mysqli_query ($db,$qry) or die ("DB Error!!!");
 
 	}
-	
+
 	}
 
 function submit_status($d) {
@@ -525,7 +511,7 @@ function submit_status($d) {
 	 UPDATE `student` SET `XiiRollno`=".$d['rollno']." where StudentId = ".$d['sid']."";
 	If($d['rollno']!=0)
 	$rst = mysqli_query($db,$stu_qry) or die("DB Error Student".$stu_qry);
-	
+
 	$rs = mysqli_query ($db,$qry) or die ("DB Error!!!".mysqli_error());
 }
 
@@ -558,13 +544,13 @@ function register_user($p) {
 
 function submit_report($d) {
 	global $db;
-	
+
 	//assigning zero to the amount field if it is empty
-	
-	if($d['1i_y1_amt']=="") $d['1i_y1_amt']=0; 
-	
+
+	if($d['1i_y1_amt']=="") $d['1i_y1_amt']=0;
+
 	$d['1i_y1_amt']=str_replace(",","",$d['1i_y1_amt']);
-	
+
 	if($d['21i_y1_amt']=="") $d['21i_y1_amt']=0;
 		$d['21i_y1_amt']=str_replace(",","",$d['21i_y1_amt']);
 	if($d['fi_y1_amt']=="") $d['fi_y1_amt']=0;
@@ -572,30 +558,30 @@ function submit_report($d) {
 	if($d['1i_y2_amt']=="") $d['1i_y2_amt']=0;
 		$d['1i_y2_amt']=str_replace(",","",$d['1i_y2_amt']);
 	if($d['21i_y2_amt']=="") $d['21i_y2_amt']=0;
-		 $d['21i_y2_amt']=str_replace(",","",$d['21i_y2_amt']);	
+		 $d['21i_y2_amt']=str_replace(",","",$d['21i_y2_amt']);
 	if($d['fi_y2_amt']=="") $d['fi_y2_amt']=0;
 		$d['fi_y2_amt']=str_replace(",","",$d['fi_y2_amt']);
 	if($d['1i_y3_amt']=="") $d['1i_y3_amt']=0;
-		$d['1i_y3_amt']=str_replace(",","",$d['1i_y3_amt']);	
+		$d['1i_y3_amt']=str_replace(",","",$d['1i_y3_amt']);
 	if($d['21i_y3_amt']=="") $d['21i_y3_amt']=0;
-		$d['21i_y3_amt']=str_replace(",","",$d['21i_y3_amt']);	 
+		$d['21i_y3_amt']=str_replace(",","",$d['21i_y3_amt']);
 	if($d['fi_y3_amt']=="") $d['fi_y3_amt']=0;
-		$d['fi_y3_amt']=str_replace(",","",$d['fi_y3_amt']);	
+		$d['fi_y3_amt']=str_replace(",","",$d['fi_y3_amt']);
 	if($d['1i_y4_amt']=="") $d['1i_y4_amt']=0;
-		$d['1i_y4_amt']=str_replace(",","",$d['1i_y4_amt']);	
+		$d['1i_y4_amt']=str_replace(",","",$d['1i_y4_amt']);
 	if($d['21i_y4_amt']=="") $d['21i_y4_amt']=0;
-		$d['21i_y4_amt']=str_replace(",","",$d['21i_y4_amt']);	
+		$d['21i_y4_amt']=str_replace(",","",$d['21i_y4_amt']);
 	if($d['fi_y4_amt']=="") $d['fi_y4_amt']=0;
-		 $d['fi_y4_amt']=str_replace(",","",$d['fi_y4_amt']);	
+		 $d['fi_y4_amt']=str_replace(",","",$d['fi_y4_amt']);
 	if($d['1i_y5_amt']=="") $d['1i_y5_amt']=0;
-		$d['1i_y5_amt']=str_replace(",","",$d['1i_y5_amt']);	
+		$d['1i_y5_amt']=str_replace(",","",$d['1i_y5_amt']);
 	if($d['21i_y5_amt']=="") $d['21i_y5_amt']=0;
-		$d['21i_y5_amt']=str_replace(",","",$d['21i_y5_amt']);	
+		$d['21i_y5_amt']=str_replace(",","",$d['21i_y5_amt']);
 	if($d['fi_y5_amt']=="") $d['fi_y5_amt']=0;
 		$d['fi_y5_amt']=str_replace(",","",$d['fi_y5_amt']);
-		
+
 	//update to reporting table
-	$rep_qry ="update `reporting` set 
+	$rep_qry ="update `reporting` set
 	`1i_y1_ddno`='".$d['1i_y1_ddno']."',
 	`1i_y1_amt`=".$d['1i_y1_amt'].",
 	`2i_y1_ddno`='".$d['2i_y1_ddno']."',
@@ -625,11 +611,11 @@ function submit_report($d) {
 	`2i_y5_ddno`='".$d['2i_y5_ddno']."',
 	`21i_y5_amt`=".$d['21i_y5_amt'].",
 	`fi_y5_ddno`='".$d['fi_y5_ddno']."',
-	`fi_y5_amt`=".$d['fi_y5_amt']."  
-	 Where `StudentScholarshipId`=".$d['ssid']; 
+	`fi_y5_amt`=".$d['fi_y5_amt']."
+	 Where `StudentScholarshipId`=".$d['ssid'];
 	// echo $rep_qry;
 	 mysqli_query ($db, $rep_qry) or die ("DB Error update reporting!!!".mysql_error());
-	
+
 	//updating data in studentScholarship table
 	$report_data=serialize($d);
     /*echo '<pre>';
@@ -640,10 +626,10 @@ function submit_report($d) {
 	$inst = addslashes($str);
 	//echo addslashes($report_data);
 	$qry="
-	UPDATE `StudentScholarship` SET 
-	SponsorName= '".$d['sponsor_name']."', 
-	category='".$d['category']."', 
-	Remarks = '".$d['remarks']."', 
+	UPDATE `StudentScholarship` SET
+	SponsorName= '".$d['sponsor_name']."',
+	category='".$d['category']."',
+	Remarks = '".$d['remarks']."',
    `ReportData` = '$report_data',
 	NameOfInstitution = '".addslashes($d['name_of_edu_inst'])."',
 	place ='".$d['place']."'
@@ -651,8 +637,8 @@ function submit_report($d) {
 	";
 	//echo $qry;
 	$rs = mysqli_query ($db,$qry) or die ("DB Error!!!".mysql_error());
-	
-	
+
+
 }
 
 function display_form_data($db,$gssid,$prm) {
@@ -671,7 +657,7 @@ function display_form_data($db,$gssid,$prm) {
 	$retval.=$ifphoto;
 
 	  foreach($d as $val_name => $val) {
-		
+
 		if($val_name!="save" && $val_name!="studentid" && $val_name!="stype") {
 			$qry="SELECT `Label` FROM `TemplateElements`
 			WHERE (`TemplateId`='1' OR `TemplateId`='$andtemplate') AND `Name`='$val_name'";
@@ -680,7 +666,7 @@ function display_form_data($db,$gssid,$prm) {
 			if($val_name=='gender')
 			 $val=($d['gender']==0)?'Male':'Female';
 			$retval.="<tr><td style=\"border-bottom: 1px dashed #CCCCCC\">".$line['Label']."</td><td width=\"65%\" style=\"border-bottom: 1px dashed #CCCCCC\"><b>$val</b></td></tr>";
-	
+
 		}
 	}
 
@@ -819,7 +805,7 @@ function add_report_elements(&$form,$stype,$rd,$readonly=FALSE) {
 			$name="fi_y".$i."_progress_rec";
 			$elt =& $form->addElement('select',$name,'Progress Report Received: ',$options,$attribs);
 			$elt->setSelected($rd[$name]);
-			
+
 		} else {
 			$name="fi_y".$i."_exam_results";
 			$elt =& $form->addElement('select',$name,'Examination Results received: ',$options,$attribs);
@@ -882,7 +868,7 @@ function get_limit($mode,$page) {
 	$from=$limit_set*($page-1);
 
 	return " LIMIT $from , $limit_set";
-	
+
 }
 
 function get_paginator_select($mode,$pid,$order=-1) {
@@ -917,7 +903,7 @@ function get_nr_of_pages($db,$qry,$mode) {
 
 	$nop = $num/$limit_set;
 	return $nop;
-	
+
 }
 
 
@@ -925,7 +911,7 @@ function get_nr_of_pages($db,$qry,$mode) {
     $limit_set=$_SESSION["p_".$mode];
 	$no = $nop*$limit_set;
     $nop = ceil($nop);
-	
+
 	if($order==-1) $ord=""; else $ord="&order=$order";
 	$retval="
 	<br><table border =\"1\" width=\"100%\" cellpadding=\"1\" cellspacing=\"1\">
@@ -938,31 +924,31 @@ function get_nr_of_pages($db,$qry,$mode) {
 	$plinks="";
     $plinks="<b> Page $cpage of $nop   |  </b>";
 	/*for($i=1;$i<=$nop;$i++) {
-		if($i!=$cpage) 
+		if($i!=$cpage)
 		$plinks.="&nbsp;&nbsp;<a href=\"index.php?pid=$pid&page=$i$ord\">$i</a>&nbsp;&nbsp;";
-		else 
+		else
 		$plinks.="&nbsp;&nbsp;<b>$i</b>&nbsp;&nbsp;";
 	}*/
-	
-	
-	
+
+
+
 	if($cpage!=1) {
 	    $tp=1;
-		$range = $page*$limit_set;	
+		$range = $page*$limit_set;
 		$plinks.="<a href=\"index.php?pid=$pid&page=$tp&sno=$range$ord\">--&lt;First</a>&nbsp;&nbsp;";
 		$tp=$cpage-1;
-		$range = ($tp-1)*$limit_set;	
+		$range = ($tp-1)*$limit_set;
 		$plinks.="<a href=\"index.php?pid=$pid&page=$tp&sno=$range$ord\">&lt;Prev</a>&nbsp;";
 	}
 	if($cpage!=$nop) {
 		$tp=$cpage+1;
-		$range = $cpage*$limit_set;	
+		$range = $cpage*$limit_set;
 		$plinks=$plinks."|&nbsp;&nbsp;<a href=\"index.php?pid=$pid&page=$tp&sno=$range$ord\">Next&gt;</a>&nbsp;&nbsp;";
 		$tp=$nop;
-		$range = ($tp-1)*$limit_set;	
+		$range = ($tp-1)*$limit_set;
 		$plinks.="<a href=\"index.php?pid=$pid&page=$tp&sno=$range$ord\">Last&gt;--</a>&nbsp;&nbsp;";
 	}
-	
+
 	$retval.="$plinks</td></tr></table>";
 	return $retval;
 }
