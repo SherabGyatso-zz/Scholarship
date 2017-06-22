@@ -4,12 +4,12 @@ $c="";
 $lqry="";
 if(isset($_GET['a']) && $_GET['a']==1) {
 
-	$qry="SELECT * FROM `studentscholarship` WHERE ScholarshipId=".$_GET['id'].""; 
+	$qry="SELECT * FROM `studentscholarship` WHERE ScholarshipId=".$_GET['id']."";
 	//echo $qry;
 	$rs = mysqli_query ($db,$qry) or die ("DB Error!!!");
 	if(mysqli_num_rows($rs)>0) {
 		header("Location: index.php?pid=120&ewn=102");
-		exit();		
+		exit();
 	}
 
 	$qry="DELETE FROM `scholarshiptypes` WHERE scholarshipid='".$_GET['id']."'";
@@ -18,20 +18,20 @@ if(isset($_GET['a']) && $_GET['a']==1) {
 	$lqry.=$qry;
 	add_log($db,$_SESSION['userid'],$_SESSION['utype'],9,$lqry);
 	header("Location: index.php?pid=120&ewn=210");
-	exit();		
+	exit();
 }
 
 if(isset($_GET['a']) && $_GET['a']==2) {
 	$fcheck=$_POST['fcheck'];
 	for($i=0;$i<count($fcheck);$i++) {
 
-		$qry="SELECT * FROM `scholarshiptypes` WHERE scholarshipid=".$fcheck[$i].""; 
+		$qry="SELECT * FROM `scholarshiptypes` WHERE scholarshipid=".$fcheck[$i]."";
 		$rs = mysqli_query ($db,$qry) or die ("DB Error!!!");
 		if(mysqli_num_rows($rs)>0) {
 			header("Location: index.php?pid=120&ewn=102");
-			exit();		
-		}	
-			
+			exit();
+		}
+
 		$qry="DELETE FROM `scholarshiptypes` WHERE scholarshipid='".$fcheck[$i]."'";
 		$lqry.=$qry."\n\r";
 		$rs = mysqli_query ($db,$qry) or die ("DB Error!!!");
@@ -39,9 +39,9 @@ if(isset($_GET['a']) && $_GET['a']==2) {
 	add_log($db,$_SESSION['userid'],$_SESSION['utype'],9,$lqry);
 	header("Location: index.php?pid=120&ewn=211");
 	exit();
-} 
+}
 
-$c.="<font class=\"title\">Scholarship Types</font><br><Br>
+$c.="<h4 class=\"title\">Scholarship Types</h4>
 <a href=\"?pid=121&a=a\"><img src=\"images/add.gif\" width=\"16\" height=\"16\" border=\"0\" alt=\"Edit category\" align=\"left\" />&nbsp;&nbsp;Add new Scholarship</a><br><Br>
 ";
 //show existing addresses
@@ -77,7 +77,8 @@ $selord[2]="";
 $selord[3]="";
 
 $selord[$order]=" SELECTED";
-
+$paginator_select="";
+$paginator_pages="";
 $c.="
 <table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\">
 <tr>
@@ -130,7 +131,7 @@ while ($line = mysqli_fetch_array($rs)) {
 	<td bgcolor=\"#FAFAFA\">
 	<b>".$line['Name']."</b><br>
 	</td>
-	
+
 	<td bgcolor=\"#FAFAFA\" align=\"center\">
 	<a href=\"?pid=121&a=e&id=".$line['ScholarshipId']."\"><img src=\"images/edit.gif\" width=\"16\" height=\"16\" border=\"0\" alt=\"Edit school\" /></a>&nbsp;&nbsp;&nbsp;&nbsp;
 	<a href=\"?pid=120&a=1&id=".$line['ScholarshipId']."\"><img src=\"images/delete.gif\" width=\"16\" height=\"16\" border=\"0\" alt=\"Delete school\" /></a>
@@ -138,7 +139,7 @@ while ($line = mysqli_fetch_array($rs)) {
 	</tr>
 	";
 }
-
+$paginator_pages="";
 $c.="</table><br>
 <table width=\"100%\" cellpadding=\"3\" cellspacing=\"2\">
 <tr>
@@ -152,6 +153,7 @@ $c.="</table><br>
 </table>
 
 </form>
+
 $paginator_pages";
 
 ?>

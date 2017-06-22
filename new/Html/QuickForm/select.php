@@ -1,37 +1,45 @@
 <?php
-/* vim: set expandtab tabstop=4 shiftwidth=4: */
-// +----------------------------------------------------------------------+
-// | PHP version 4.0                                                      |
-// +----------------------------------------------------------------------+
-// | Copyright (c) 1997-2003 The PHP Group                                |
-// +----------------------------------------------------------------------+
-// | This source file is subject to version 2.0 of the PHP license,       |
-// | that is bundled with this package in the file LICENSE, and is        |
-// | available at through the world-wide-web at                           |
-// | http://www.php.net/license/2_02.txt.                                 |
-// | If you did not receive a copy of the PHP license and are unable to   |
-// | obtain it through the world-wide-web, please send a note to          |
-// | license@php.net so we can mail you a copy immediately.               |
-// +----------------------------------------------------------------------+
-// | Authors: Adam Daniel <adaniel1@eesus.jnj.com>                        |
-// |          Bertrand Mansion <bmansion@mamasam.com>                     |
-// +----------------------------------------------------------------------+
-//
-// $Id: select.php,v 1.1 2005/12/06 01:50:39 matthieu_ Exp $
-
-require_once('Html/QuickForm/element.php');
+/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 /**
  * Class to dynamically create an HTML SELECT
  *
- * @author       Adam Daniel <adaniel1@eesus.jnj.com>
- * @author       Bertrand Mansion <bmansion@mamasam.com>
- * @version      1.0
- * @since        PHP4.04pl1
- * @access       public
+ * PHP versions 4 and 5
+ *
+ * LICENSE: This source file is subject to version 3.01 of the PHP license
+ * that is available through the world-wide-web at the following URI:
+ * http://www.php.net/license/3_01.txt If you did not receive a copy of
+ * the PHP License and are unable to obtain it through the web, please
+ * send a note to license@php.net so we can mail you a copy immediately.
+ *
+ * @category    HTML
+ * @package     HTML_QuickForm
+ * @author      Adam Daniel <adaniel1@eesus.jnj.com>
+ * @author      Bertrand Mansion <bmansion@mamasam.com>
+ * @author      Alexey Borzov <avb@php.net>
+ * @copyright   2001-2007 The PHP Group
+ * @license     http://www.php.net/license/3_01.txt PHP License 3.01
+ * @link        http://pear.php.net/package/HTML_QuickForm
+ */
+
+/**
+ * Base class for form elements
+ */
+require_once 'HTML/QuickForm/element.php';
+
+/**
+ * Class to dynamically create an HTML SELECT
+ *
+ * @category    HTML
+ * @package     HTML_QuickForm
+ * @author      Adam Daniel <adaniel1@eesus.jnj.com>
+ * @author      Bertrand Mansion <bmansion@mamasam.com>
+ * @author      Alexey Borzov <avb@php.net>
+ * @version     Release: 3.2.10
+ * @since       1.0
  */
 class HTML_QuickForm_select extends HTML_QuickForm_element {
-    
+
     // {{{ properties
 
     /**
@@ -42,10 +50,10 @@ class HTML_QuickForm_select extends HTML_QuickForm_element {
      * @access    private
      */
     var $_options = array();
-    
+
     /**
      * Default values of the SELECT
-     * 
+     *
      * @var       string
      * @since     1.0
      * @access    private
@@ -54,10 +62,10 @@ class HTML_QuickForm_select extends HTML_QuickForm_element {
 
     // }}}
     // {{{ constructor
-        
+
     /**
      * Class constructor
-     * 
+     *
      * @param     string    Select name attribute
      * @param     mixed     Label(s) for the select
      * @param     mixed     Data to be used to populate options
@@ -66,22 +74,22 @@ class HTML_QuickForm_select extends HTML_QuickForm_element {
      * @access    public
      * @return    void
      */
-    function HTML_QuickForm_select($elementName=null, $elementLabel=null, $options=null, $attributes=null)
+    function __construct($elementName=null, $elementLabel=null, $options=null, $attributes=null)
     {
-        HTML_QuickForm_element::HTML_QuickForm_element($elementName, $elementLabel, $attributes);
+        parent::__construct($elementName, $elementLabel, $attributes);
         $this->_persistantFreeze = true;
         $this->_type = 'select';
         if (isset($options)) {
             $this->load($options);
         }
     } //end constructor
-    
+
     // }}}
     // {{{ apiVersion()
 
     /**
-     * Returns the current API version 
-     * 
+     * Returns the current API version
+     *
      * @since     1.0
      * @access    public
      * @return    double
@@ -96,7 +104,7 @@ class HTML_QuickForm_select extends HTML_QuickForm_element {
 
     /**
      * Sets the default values of the select box
-     * 
+     *
      * @param     mixed    $values  Array or comma delimited string of selected values
      * @since     1.0
      * @access    public
@@ -105,7 +113,7 @@ class HTML_QuickForm_select extends HTML_QuickForm_element {
     function setSelected($values)
     {
         if (is_string($values) && $this->getMultiple()) {
-            $values = split("[ ]?,[ ]?", $values);
+            $values = preg_split("/[ ]?,[ ]?/D", $values);
         }
         if (is_array($values)) {
             $this->_values = array_values($values);
@@ -113,13 +121,13 @@ class HTML_QuickForm_select extends HTML_QuickForm_element {
             $this->_values = array($values);
         }
     } //end func setSelected
-    
+
     // }}}
     // {{{ getSelected()
 
     /**
      * Returns an array of the selected values
-     * 
+     *
      * @since     1.0
      * @access    public
      * @return    array of selected values
@@ -134,7 +142,7 @@ class HTML_QuickForm_select extends HTML_QuickForm_element {
 
     /**
      * Sets the input field name
-     * 
+     *
      * @param     string    $name   Input field name attribute
      * @since     1.0
      * @access    public
@@ -144,13 +152,13 @@ class HTML_QuickForm_select extends HTML_QuickForm_element {
     {
         $this->updateAttributes(array('name' => $name));
     } //end func setName
-    
+
     // }}}
     // {{{ getName()
 
     /**
      * Returns the element name
-     * 
+     *
      * @since     1.0
      * @access    public
      * @return    string
@@ -165,7 +173,7 @@ class HTML_QuickForm_select extends HTML_QuickForm_element {
 
     /**
      * Returns the element name (possibly with brackets appended)
-     * 
+     *
      * @since     1.0
      * @access    public
      * @return    string
@@ -200,7 +208,7 @@ class HTML_QuickForm_select extends HTML_QuickForm_element {
 
     /**
      * Returns an array of the selected values
-     * 
+     *
      * @since     1.0
      * @access    public
      * @return    array of selected values
@@ -215,7 +223,7 @@ class HTML_QuickForm_select extends HTML_QuickForm_element {
 
     /**
      * Sets the select field size, only applies to 'multiple' selects
-     * 
+     *
      * @param     int    $size  Size of select  field
      * @since     1.0
      * @access    public
@@ -225,13 +233,13 @@ class HTML_QuickForm_select extends HTML_QuickForm_element {
     {
         $this->updateAttributes(array('size' => $size));
     } //end func setSize
-    
+
     // }}}
     // {{{ getSize()
 
     /**
      * Returns the select field size
-     * 
+     *
      * @since     1.0
      * @access    public
      * @return    int
@@ -246,7 +254,7 @@ class HTML_QuickForm_select extends HTML_QuickForm_element {
 
     /**
      * Sets the select mutiple attribute
-     * 
+     *
      * @param     bool    $multiple  Whether the select supports multi-selections
      * @since     1.2
      * @access    public
@@ -260,13 +268,13 @@ class HTML_QuickForm_select extends HTML_QuickForm_element {
             $this->removeAttribute('multiple');
         }
     } //end func setMultiple
-    
+
     // }}}
     // {{{ getMultiple()
 
     /**
      * Returns the select mutiple attribute
-     * 
+     *
      * @since     1.2
      * @access    public
      * @return    bool    true if multiple select, false otherwise
@@ -284,7 +292,7 @@ class HTML_QuickForm_select extends HTML_QuickForm_element {
      *
      * @param     string    $text       Display text for the OPTION
      * @param     string    $value      Value for the OPTION
-     * @param     mixed     $attributes Either a typical HTML attribute string 
+     * @param     mixed     $attributes Either a typical HTML attribute string
      *                                  or an associative array
      * @since     1.0
      * @access    public
@@ -293,7 +301,7 @@ class HTML_QuickForm_select extends HTML_QuickForm_element {
     function addOption($text, $value, $attributes=null)
     {
         if (null === $attributes) {
-            $attributes = array('value' => $value);
+            $attributes = array('value' => (string)$value);
         } else {
             $attributes = $this->_parseAttributes($attributes);
             if (isset($attributes['selected'])) {
@@ -305,17 +313,17 @@ class HTML_QuickForm_select extends HTML_QuickForm_element {
                     $this->_values[] = $value;
                 }
             }
-            $this->_updateAttrArray($attributes, array('value' => $value));
+            $this->_updateAttrArray($attributes, array('value' => (string)$value));
         }
         $this->_options[] = array('text' => $text, 'attr' => $attributes);
     } // end func addOption
-    
+
     // }}}
     // {{{ loadArray()
 
     /**
      * Loads the options from an associative array
-     * 
+     *
      * @param     array    $arr     Associative array of options
      * @param     mixed    $values  (optional) Array or comma delimited string of selected values
      * @since     1.0
@@ -343,12 +351,12 @@ class HTML_QuickForm_select extends HTML_QuickForm_element {
 
     /**
      * Loads the options from DB_result object
-     * 
+     *
      * If no column names are specified the first two columns of the result are
      * used as the text and value columns respectively
-     * @param     object    $result     DB_result object 
-     * @param     string    $textCol    (optional) Name of column to display as the OPTION text 
-     * @param     string    $valueCol   (optional) Name of column to use as the OPTION value 
+     * @param     object    $result     DB_result object
+     * @param     string    $textCol    (optional) Name of column to display as the OPTION text
+     * @param     string    $valueCol   (optional) Name of column to use as the OPTION value
      * @param     mixed     $values     (optional) Array or comma delimited string of selected values
      * @since     1.0
      * @access    public
@@ -363,7 +371,7 @@ class HTML_QuickForm_select extends HTML_QuickForm_element {
         if (isset($values)) {
             $this->setValue($values);
         }
-        $fetchMode = ($textCol && $valueCol) ? DB_FETCHMODE_ASSOC : DB_FETCHMODE_DEFAULT;
+        $fetchMode = ($textCol && $valueCol) ? DB_FETCHMODE_ASSOC : DB_FETCHMODE_ORDERED;
         while (is_array($row = $result->fetchRow($fetchMode)) ) {
             if ($fetchMode == DB_FETCHMODE_ASSOC) {
                 $this->addOption($row[$textCol], $row[$valueCol]);
@@ -373,17 +381,17 @@ class HTML_QuickForm_select extends HTML_QuickForm_element {
         }
         return true;
     } // end func loadDbResult
-    
+
     // }}}
     // {{{ loadQuery()
 
     /**
      * Queries a database and loads the options from the results
      *
-     * @param     mixed     $conn       Either an existing DB connection or a valid dsn 
+     * @param     mixed     $conn       Either an existing DB connection or a valid dsn
      * @param     string    $sql        SQL query string
-     * @param     string    $textCol    (optional) Name of column to display as the OPTION text 
-     * @param     string    $valueCol   (optional) Name of column to use as the OPTION value 
+     * @param     string    $textCol    (optional) Name of column to display as the OPTION text
+     * @param     string    $valueCol   (optional) Name of column to use as the OPTION value
      * @param     mixed     $values     (optional) Array or comma delimited string of selected values
      * @since     1.1
      * @access    public
@@ -425,7 +433,7 @@ class HTML_QuickForm_select extends HTML_QuickForm_element {
      * first are optional and only mean something depending on the type of the first argument.
      * If the first argument is an array then all arguments are passed in order to loadArray.
      * If the first argument is a db_result then all arguments are passed in order to loadDbResult.
-     * If the first argument is a string or a DB connection then all arguments are 
+     * If the first argument is a string or a DB connection then all arguments are
      * passed in order to loadQuery.
      * @param     mixed     $options     Options source currently supports assoc array or DB_result
      * @param     mixed     $param1     (optional) See function detail
@@ -451,7 +459,7 @@ class HTML_QuickForm_select extends HTML_QuickForm_element {
                 break;
         }
     } // end func load
-    
+
     // }}}
     // {{{ toHtml()
 
@@ -484,9 +492,10 @@ class HTML_QuickForm_select extends HTML_QuickForm_element {
             }
             $strHtml .= $tabs . '<select' . $attrString . ">\n";
 
+            $strValues = is_array($this->_values)? array_map('strval', $this->_values): array();
             foreach ($this->_options as $option) {
-                if (is_array($this->_values) && in_array((string)$option['attr']['value'], $this->_values)) {
-                    $this->_updateAttrArray($option['attr'], array('selected' => 'selected'));
+                if (!empty($strValues) && in_array($option['attr']['value'], $strValues, true)) {
+                    $option['attr']['selected'] = 'selected';
                 }
                 $strHtml .= $tabs . "\t<option" . $this->_getAttrString($option['attr']) . '>' .
                             $option['text'] . "</option>\n";
@@ -495,13 +504,13 @@ class HTML_QuickForm_select extends HTML_QuickForm_element {
             return $strHtml . $tabs . '</select>';
         }
     } //end func toHtml
-    
+
     // }}}
     // {{{ getFrozenHtml()
 
     /**
      * Returns the value of field without HTML tags
-     * 
+     *
      * @since     1.0
      * @access    public
      * @return    string
@@ -512,7 +521,7 @@ class HTML_QuickForm_select extends HTML_QuickForm_element {
         if (is_array($this->_values)) {
             foreach ($this->_values as $key => $val) {
                 for ($i = 0, $optCount = count($this->_options); $i < $optCount; $i++) {
-                    if ((string)$val == (string)$this->_options[$i]['attr']['value']) {
+                    if (0 == strcmp($val, $this->_options[$i]['attr']['value'])) {
                         $value[$key] = $this->_options[$i]['text'];
                         break;
                     }
@@ -559,7 +568,7 @@ class HTML_QuickForm_select extends HTML_QuickForm_element {
             $cleanValue = null;
             foreach ($value as $v) {
                 for ($i = 0, $optCount = count($this->_options); $i < $optCount; $i++) {
-                    if ($v == $this->_options[$i]['attr']['value']) {
+                    if (0 == strcmp($v, $this->_options[$i]['attr']['value'])) {
                         $cleanValue[] = $v;
                         break;
                     }
@@ -574,19 +583,19 @@ class HTML_QuickForm_select extends HTML_QuickForm_element {
             return $this->_prepareValue($cleanValue, $assoc);
         }
     }
-    
+
     // }}}
     // {{{ onQuickFormEvent()
 
-    function onQuickFormEvent($event, $arg, &$caller)
+    function onQuickFormEvent($event, $arg, $caller = null)
     {
-        if ('updateValue' == $event) {
+        if ($caller && 'updateValue' == $event) {
             $value = $this->_findValue($caller->_constantValues);
             if (null === $value) {
                 $value = $this->_findValue($caller->_submitValues);
-                // Fix for bug #4465
+                // Fix for bug #4465 & #5269
                 // XXX: should we push this to element::onQuickFormEvent()?
-                if (null === $value && !$caller->isSubmitted()) {
+                if (null === $value && (!$caller->isSubmitted() || !$this->getMultiple())) {
                     $value = $this->_findValue($caller->_defaultValues);
                 }
             }

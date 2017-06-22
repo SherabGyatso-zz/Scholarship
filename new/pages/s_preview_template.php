@@ -1,6 +1,6 @@
 <?php
 
-$c="<font class=\"title\">Template preview</font><br><Br>";
+$c="<h4 class=\"title\">Template preview</h4>"
 
 if(isset($_GET['id'])) $templateid=$_GET['id']; else die("ERROR!");
 

@@ -5,7 +5,7 @@ if(isset($_GET['ty']))
   $prm=$_GET['ty'];
 
 
-$c.="<font class=\"title\">Scholarship</font><br><Br>
+$c.="<h4 class=\"title\">Scholarship</h4>
 ";
 
 if(!isset($_GET['id'])) exit(0); else $gssid=$_GET['id'];
@@ -29,7 +29,7 @@ $c.="";
 			if($val_name=='gender')
 			 $val=($d['gender']==0)?'Male':'Female';
 			$retval.="<tr><td style=\"border-bottom: 1px dashed #CCCCCC\">".$line['Label']."</td><td width=\"65%\" style=\"border-bottom: 1px dashed #CCCCCC\"><b>$val</b></td></tr>";
-	
+
 
 header("Location:index.php?pid=1000&id=$gssid");
 ?>

@@ -7,7 +7,7 @@ $db=dbconnect($DBHOST,$DBUSERNAME,$DBPASSWORD,$DBNAME);
 $qry="SELECT * FROM studentscholarship  where StudentScholarshipId=155 order by StudentScholarshipId ";
 echo $qry;
 echo '<br />';
-$rs = mysqli_query ($db,$qry) or die (mysql_error()."DB Error selecting!!!");
+$rs = mysqli_query ($db,$qry) or die (mysqli_error()."DB Error selecting!!!");
 $line=mysqli_fetch_array($rs);
 $r=unserialize($line['ReportData']);
 
@@ -78,10 +78,10 @@ $qry1 ="update `reporting` set
 	`fi_y5_amt`=".$r['fi_y5_amt']." 
 	 Where `StudentScholarshipId`=155"; 
 echo $qry1;
-mysql_query ($qry1,$db) or die (mysql_error() ." DB Error updateing!!!"); 
+mysqli_query ($db,$qry1) or die (mysqli_error() ." DB Error updateing!!!"); 
 
 
-/*while($line=mysqli_fetch_array($rs))
+/*while($line=mysql_fetch_array($rs))
 {
 $r=unserialize($line['ReportData']);
 //$str_rep=str_replace(",","",$r['fi_y5_amt']);

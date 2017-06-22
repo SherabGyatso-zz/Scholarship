@@ -7,7 +7,7 @@ $db=dbconnect($DBHOST,$DBUSERNAME,$DBPASSWORD,$DBNAME);
 $qry="SELECT * FROM studentscholarship  where studentscholarship.Status ='Selected' order by StudentScholarshipId ";
 echo $qry;
 echo '<br />';
-$rs = mysqli_query ($db,$qry) or die (mysql_error()."DB Error selecting!!!");
+$rs = mysqli_query ($db,$qry) or die (mysqli_error()."DB Error selecting!!!");
 $line=mysqli_fetch_array($rs);
 
 

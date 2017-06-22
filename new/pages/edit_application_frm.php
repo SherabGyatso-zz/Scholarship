@@ -1,8 +1,8 @@
 <?php
- 
+
 $c="";
 
-$c.="<font class=\"title\">Editing Application Form</font><br><Br>
+$c.="<h4 class=\"title\">Editing Application Form</h4>
 ";
 if(!isset($_GET['id'])) exit(0); else $gssid=$_GET['id'];
 
@@ -21,29 +21,29 @@ $stype=$_GET['stype'];
 		case 2 : $add_fields=3; $t="DoE Scholarship Application Form"; break;
 		case 3 : $add_fields=4; $t="Research Scholarship Application Form"; break;
 		case 4 : $add_fields=5; $t="Songtsen Scholarship Application Form"; break;
-	}	
+	}
 $qry="select email from student where studentid=".$line['StudentId'];
-$rs = mysql_query($qry,$db) or die("DB ERROR!!!");
+$rs = mysqli_query($db,$qry) or die("DB ERROR!!!");
 $line1=mysqli_fetch_array($rs);
 $email=$line1['email'];
 
 $d=unserialize($line['FormData']);
 
-	$c.="<font class=\"title\">$t</font><br><Br>";
+	$c.="<h4 class=\"title\">$t</h4>";
 	$edit_type = 'e';
 	$template_name="template$add_fields";
 	$form = new HTML_QuickForm($template_name,'post',"?pid=1000&id=$gssid");
-	
+
 	//$form->addElement('file','photo','Your Photo (max. 1MB):');
-	
+
 	get_form11($db,1,$form, $d);
 	get_form11($db,$add_fields,$form, $d);
 		$studentid=$line['StudentId'];
 	$form->addElement('hidden','edit_type',$edit_type);
 	$form->addElement('hidden','stype',$stype);
-	$form->addElement('hidden','studentid',$studentid); 
+	$form->addElement('hidden','studentid',$studentid);
 	$form->addElement('submit','save','Submit','class="button"');
-	$form->addElement('reset','reset','Reset','class="button"');  
+	$form->addElement('reset','reset','Reset','class="button"');
 	if ($form->validate()) {
 		$form->process('submit_application_form');
 		header("Location: index.php?pid=109&id=$gssid");
@@ -51,15 +51,15 @@ $d=unserialize($line['FormData']);
 		exit();
 	} else {
 		$rendered_form=$form->toHtml();
-		$c.=$rendered_form; 
-	}		
+		$c.=$rendered_form;
+	}
 
 
 /*echo '<pre>';
 print_r($d);
 echo '</pre>';*/
 function get_form11($db,$templateid,&$form, $d) {
-   
+
 	$qry="SELECT * FROM TemplateElements WHERE TemplateId='$templateid'";
 	$rs = mysqli_query ($db,$qry) or die ("DB Error!!!");
 	while ($line = mysqli_fetch_array($rs)) {
@@ -124,19 +124,19 @@ function get_field11(&$form,$params,$d,$readonly=FALSE) {
 		$elt->setValue($d['E-mail_Address']);
 		$elt =& $form->addElement('text','edu_qualification','Edu_qualification:');
 		$elt->setValue($d['edu_qualification']);
-		$sel_status = array('','Yes','No'); 
+		$sel_status = array('','Yes','No');
 		$elt =& $form->addElement('select','if_reserved_seats','if_reserved_seats: ',$sel_status);
 		$edit_type = 'e';
-		$form->addElement('hidden','edit_type',$edit_type); 
+		$form->addElement('hidden','edit_type',$edit_type);
 		$form->addElement('submit','save','Update','class="button"');
- 
+
 		 if ($form->validate()) {
 		$form->process('submit_application_form');
 		header("Location: index.php?pid=1000&id=$gssid");
-		exit();	
+		exit();
 		} else {
 			$rendered_form=$form->toHtml();
-			$c.=$rendered_form; 
+			$c.=$rendered_form;
 			//$retval.=$c;
-		}	
+		}
 */?>

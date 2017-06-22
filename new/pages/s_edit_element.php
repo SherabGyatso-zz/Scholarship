@@ -11,7 +11,7 @@ $qry="SELECT * FROM Template WHERE TemplateId='$templateid'";
 $rs = mysqli_query ($db,$qry) or die ("DB Error!!!");
 $line = mysqli_fetch_array($rs);
 
-$c.="<font class=\"title\">Edit form element</font><br><Br>
+$c.="<h4 class=\"title\">Edit form element</h4>
 <b>Template name:</b> ".$line['Name']."<br />
 <br />
 ";
@@ -62,19 +62,19 @@ if($step==1) {
 		if($_POST['required']==1) $required=1;
 	} else $required=0;
 	if(isset($_POST['checkboxtext'])) $text=$_POST['checkboxtext']; else $text="";
-	
+
 	if(isset($_POST['options'])) {
 		$trans = array("\n" => "||", "\r" => "");
 		$options = strtr($_POST['options'], $trans);
 	} else $options="";
-	
-	$qry="UPDATE TemplateElements SET 
+
+	$qry="UPDATE TemplateElements SET
 		Label='$elementLabel',
 		Text='$text',
 		Options='$options',
 		required='$required' WHERE ElementId=$eltId";
 	$rs = mysqli_query ($db,$qry) or die ("DB Error!!!");
-	
+
 	add_log($db,$_SESSION['userid'],$_SESSION['utype'],19,$qry);
 	header("Location: index.php?pid=111&id=$templateid&ewn=222");
 	exit();

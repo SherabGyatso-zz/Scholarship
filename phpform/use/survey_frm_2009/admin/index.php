@@ -280,7 +280,7 @@ INPUT.button {
     $result = mysql_query($query);
     $j=0;
 
-    while($row=mysqli_fetch_array($result)) {
+    while($row=mysql_fetch_array($result)) {
       echo "<tr>";
 
       for($i=1;$i<sizeof($columns);$i++) {

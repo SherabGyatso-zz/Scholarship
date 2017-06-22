@@ -4,11 +4,11 @@ $c="";
 $lqry="";
 if(isset($_GET['a']) && $_GET['a']==1) {
 
-	$qry="SELECT * FROM `StudentSchool` WHERE SchoolId=".$_GET['id'].""; 
+	$qry="SELECT * FROM `StudentSchool` WHERE SchoolId=".$_GET['id']."";
 	$rs = mysqli_query ($db,$qry) or die ("DB Error!!!");
 	if(mysqli_num_rows($rs)>0) {
 		header("Location: index.php?pid=102&ewn=102");
-		exit();		
+		exit();
 	}
 
 	$qry="DELETE FROM `School` WHERE SchoolId='".$_GET['id']."'";
@@ -16,20 +16,20 @@ if(isset($_GET['a']) && $_GET['a']==1) {
 	$lqry.=$qry;
 	add_log($db,$_SESSION['userid'],$_SESSION['utype'],9,$lqry);
 	header("Location: index.php?pid=102&ewn=210");
-	exit();		
+	exit();
 }
 
 if(isset($_GET['a']) && $_GET['a']==2) {
 	$fcheck=$_POST['fcheck'];
 	for($i=0;$i<count($fcheck);$i++) {
 
-		$qry="SELECT * FROM `StudentSchool` WHERE SchoolId=".$fcheck[$i].""; 
+		$qry="SELECT * FROM `StudentSchool` WHERE SchoolId=".$fcheck[$i]."";
 		$rs = mysqli_query ($db,$qry) or die ("DB Error!!!");
 		if(mysqli_num_rows($rs)>0) {
 			header("Location: index.php?pid=102&ewn=102");
-			exit();		
-		}	
-			
+			exit();
+		}
+
 		$qry="DELETE FROM `School` WHERE SchoolId='".$fcheck[$i]."'";
 		$lqry.=$qry."\n\r";
 		$rs = mysqli_query ($db,$qry) or die ("DB Error!!!");
@@ -37,19 +37,19 @@ if(isset($_GET['a']) && $_GET['a']==2) {
 	add_log($db,$_SESSION['userid'],$_SESSION['utype'],9,$lqry);
 	header("Location: index.php?pid=102&ewn=211");
 	exit();
-} 
+}
 
-$c.="<font class=\"title\">Schools</font><br><Br>
+$c.="<h4 class=\"title\">Schools</h4>
 <a href=\"?pid=103&a=a\"><img src=\"images/add.gif\" width=\"16\" height=\"16\" border=\"0\" alt=\"Edit category\" align=\"left\" />&nbsp;&nbsp;Add new school</a><br><Br>
 ";
 //show existing addresses
 
 $qry = "
 SELECT School.SchoolId, School.Name, School.Address, SchoolCategory.SchoolCategoryName
-FROM 
-School 
-LEFT JOIN SchoolCategory ON ( SchoolCategory.SchoolCategoryId = School.SchoolCategoryId ) 
-WHERE 1 
+FROM
+School
+LEFT JOIN SchoolCategory ON ( SchoolCategory.SchoolCategoryId = School.SchoolCategoryId )
+WHERE 1
 ";
 
 $order=-1;
