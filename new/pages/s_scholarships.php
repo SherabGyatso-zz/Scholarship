@@ -230,6 +230,9 @@ $sel2[1]="";
 $sel2[2]="";
 $sel2[3]="";
 $sel2[4]="";
+$sel2[5]="";
+$sel2[6]="";
+$sel2[7]="";
 if(isset($_SESSION['statustype'])) {
 	$sel2[$_SESSION['statustype']]=" SELECTED";
 }

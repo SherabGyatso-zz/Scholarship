@@ -32,7 +32,7 @@ if(isset($_POST['submitted']) && $_POST['submitted']==1) {
 		$lqry.=$qry;
 		add_log($db,$_SESSION['userid'],$_SESSION['utype'],23,$lqry);
 	}
-	if(mysql_query($qry,$db)) {
+	if(mysqli_query($db,$qry)) {
 		header("Location: index.php?pid=".$next_pid."&ewn=".$ewnid."");
 		exit();
 	}
@@ -40,7 +40,9 @@ if(isset($_POST['submitted']) && $_POST['submitted']==1) {
 
 $title="Add news";
 if(isset($_GET['a']) && $_GET['a']=="e") $title="Edit news";
-$c.="<h4 class=\"title\">$title</h4>"
+
+$c.="<h4 class=\"title\">$title</h4>";
+
 
 if(isset($_GET['a'])) {
 	if($_GET['a']=="a") {

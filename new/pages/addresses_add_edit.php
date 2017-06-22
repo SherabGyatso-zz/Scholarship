@@ -40,7 +40,7 @@ if(isset($_SESSION['logged']) && $_SESSION['logged']==1) {
 			add_log($db,$_SESSION['userid'],$_SESSION['utype'],2,$lqry);
 			$ewnid=205;
 		}
-		if(mysql_query($qry,$db)) $ewn=$ewnid;
+		if(mysqli_query($db,$qry)) $ewn=$ewnid;
 	}
 	
 	if(isset($_GET['a'])) {

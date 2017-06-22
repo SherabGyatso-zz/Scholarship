@@ -2,7 +2,8 @@
 
 $c="";
 
-$c.="<h4 class=\"title\">Manage templates</h4>"
+
+$c.="<h4 class=\"title\">Manage templates</h4>";
 
 $qry="SELECT * FROM Template WHERE 1";
 $rs = mysqli_query ($db,$qry) or die ("DB Error!!!");

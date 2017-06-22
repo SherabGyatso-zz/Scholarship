@@ -95,7 +95,7 @@ $selord[4]="";
 $selord[$order]=" SELECTED";
 
 $c.="
-<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" >
+<table width=\"100%\" position=\"relative\" cellpadding=\"0\" cellspacing=\"0\" >
 <tr>
 <td align=\"left\">
 <form>

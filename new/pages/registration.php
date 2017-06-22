@@ -17,7 +17,7 @@ if(isset($_GET['a']) && $_GET['a']==1) {
 	$elt =& $form->addElement('text','name','Name:');
 	$form->addRule('name','This field is required','required');
 	$form->addRule('name','This field is required','required');
-	$elt =& $form->addElement('text','roll','Class XII Roll no:');
+	//$elt =& $form->addElement('text','roll','Class XII Roll no:');
 
 	$elt =& $form->addElement('text','surname','Email Id (login):');
 	$form->addRule('surname','This field is required','required');
@@ -46,7 +46,7 @@ if(isset($_GET['a']) && $_GET['a']==1) {
 	$elt =& $form->addElement('html','<tR><td>&nbsp;</td></tr>');
 	$elt =& $form->addElement('select', 'gender', 'Gender : ',$gender);
 	$elt =& $form->addElement('html','<tR><td>&nbsp;</td></tr>');
-	$elt =& $form->addElement('select','sec_school_f_year','Secondary school finish year: ',$years);
+	$elt =& $form->addElement('select','sec_school_f_year','High school graduation: ',$years);
 	$elt =& $form->addElement('html','<tR><td>&nbsp;</td></tr>');
 	/*$qry = "SELECT * FROM Address WHERE 1";
 	$rs = mysqli_query ($db,$qry) or die ("DB Error!!!");

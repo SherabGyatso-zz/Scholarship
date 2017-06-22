@@ -629,7 +629,7 @@ class HTML_QuickForm extends HTML_Common
            $elementObject->onQuickFormEvent('updateValue', null, isset($this) ? $this : null);
         } else {
             $args = func_get_args();
-            $elementObject =& $this->_loadElement('addElement', $element, array_slice($args, 1));
+            $elementObject = $this->_loadElement('addElement', $element, array_slice($args, 1));
             if (PEAR::isError($elementObject)) {
                 return $elementObject;
             }
@@ -645,7 +645,7 @@ class HTML_QuickForm extends HTML_Common
                 $this->_duplicateIndex[$elementName][] = end($elKeys);
             } else {
                 $error = PEAR::raiseError(null, QUICKFORM_INVALID_ELEMENT_NAME, null, E_USER_WARNING, "Element '$elementName' already exists in HTML_QuickForm::addElement()", 'HTML_QuickForm_Error', true);
-                return $error;
+                return errorHandler($error);
             }
         } else {
             $this->_elements[] =& $elementObject;

@@ -10,7 +10,7 @@ $rs = mysqli_query ($db,$qry) or die ("DB Error!!!");
 $line=mysqli_fetch_array($rs);
 $status=$line['Status'];
 $qry="select * from student where studentid=".$line['StudentId'];
-$rs = mysqli_query($db, $qry) or die("DB ERROR!!!");
+$rs = mysqli_query($db,$qry) or die("DB ERROR!!!");
 $line1=mysqli_fetch_array($rs);
 $c.=show_scholarship_type($db,$line['ScholarshipId']);
 
@@ -30,14 +30,16 @@ $form_action="index.php?pid=110&id=$gssid";
 $form = new HTML_QuickForm('status','post',$form_action);
 $form->addElement('hidden','ssid',$gssid);
 
-$elt =& $form->addElement('text','name_of_edu_inst','Name of Educational Institution:');
-$name_of_edu = mysql_real_escape_string($r['name_of_edu_inst']);
-$elt->setValue($name_of_edu);
-$elt =& $form->addElement('text','place','Place of Institution:');
+$elt =$form->addElement('text','name_of_edu_inst','Name of Educational Institution:');
+//$name_of_edu = mysqli_real_escape_string($r,$_POST['name_of_edu_inst']);
+//$elt->setValue($name_of_edu);
+$elt->setValue($r['name_of_edu_inst']);
+$elt =$form->addElement('text','place','Place of Institution:');
 $elt->setValue($r['place']);
 $elt =& $form->addElement('text','mailing_address','Mailing address:');
-$mailing_address = mysql_real_escape_string($r['mailing_address']);
-$elt->setValue($mailing_address);
+//$mailing_address = mysqli_real_escape_string($r,$_POST['mailing_address']);
+//$elt->setValue($mailing_address);
+$elt->setValue($r['mailing_address']);
 $elt =& $form->addElement('text','contact_number','Contact number:');
 $elt->setValue($r['contact_number']);
 
