@@ -1,38 +1,29 @@
 <?php
-/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
+/* vim: set expandtab tabstop=4 shiftwidth=4: */
+// +----------------------------------------------------------------------+
+// | PHP version 4.0                                                      |
+// +----------------------------------------------------------------------+
+// | Copyright (c) 1997-2003 The PHP Group                                |
+// +----------------------------------------------------------------------+
+// | This source file is subject to version 2.0 of the PHP license,       |
+// | that is bundled with this package in the file LICENSE, and is        |
+// | available at through the world-wide-web at                           |
+// | http://www.php.net/license/2_02.txt.                                 |
+// | If you did not receive a copy of the PHP license and are unable to   |
+// | obtain it through the world-wide-web, please send a note to          |
+// | license@php.net so we can mail you a copy immediately.               |
+// +----------------------------------------------------------------------+
+// | Authors: Adam Daniel <adaniel1@eesus.jnj.com>                        |
+// |          Alexey Borzov <borz_off@cs.msu.su>                          |
+// |          Bertrand Mansion <bmansion@mamasam.com>                     |
+// +----------------------------------------------------------------------+
+//
+// $Id: RuleRegistry.php,v 1.1 2005/12/06 01:50:39 matthieu_ Exp $
 
 /**
- * Registers rule objects and uses them for validation
- *
- * PHP versions 4 and 5
- *
- * LICENSE: This source file is subject to version 3.01 of the PHP license
- * that is available through the world-wide-web at the following URI:
- * http://www.php.net/license/3_01.txt If you did not receive a copy of
- * the PHP License and are unable to obtain it through the web, please
- * send a note to license@php.net so we can mail you a copy immediately.
- *
- * @category    HTML
- * @package     HTML_QuickForm
- * @author      Adam Daniel <adaniel1@eesus.jnj.com>
- * @author      Bertrand Mansion <bmansion@mamasam.com>
- * @author      Alexey Borzov <avb@php.net>
- * @copyright   2001-2007 The PHP Group
- * @license     http://www.php.net/license/3_01.txt PHP License 3.01
- * @link        http://pear.php.net/package/HTML_QuickForm
- */
-
-/**
- * Registers rule objects and uses them for validation
- *
- * @category    HTML
- * @package     HTML_QuickForm
- * @author      Adam Daniel <adaniel1@eesus.jnj.com>
- * @author      Bertrand Mansion <bmansion@mamasam.com>
- * @author      Alexey Borzov <avb@php.net>
- * @version     Release: 3.2.10
- * @since       3.2
- */
+* Registers rule objects and uses them for validation
+*
+*/
 class HTML_QuickForm_RuleRegistry
 {
     /**
@@ -47,11 +38,11 @@ class HTML_QuickForm_RuleRegistry
      * Returns a singleton of HTML_QuickForm_RuleRegistry
      *
      * Usually, only one RuleRegistry object is needed, this is the reason
-     * why it is recommended to use this method to get the validation object.
+     * why it is recommended to use this method to get the validation object. 
      *
      * @access    public
      * @static
-     * @return    HTML_QuickForm_RuleRegistry
+     * @return    object    Reference to the HTML_QuickForm_RuleRegistry singleton
      */
     function &singleton()
     {
@@ -114,7 +105,7 @@ class HTML_QuickForm_RuleRegistry
      *
      * @param     string   $ruleName        Name of the requested rule
      * @access    public
-     * @return    HTML_QuickForm_Rule
+     * @return    object
      */
     function &getRule($ruleName)
     {
@@ -124,7 +115,7 @@ class HTML_QuickForm_RuleRegistry
             if (!empty($path)) {
                 include_once($path);
             }
-            $this->_rules[$class] = new $class();
+            $this->_rules[$class] =& new $class();
         }
         $this->_rules[$class]->setName($ruleName);
         return $this->_rules[$class];
@@ -134,7 +125,7 @@ class HTML_QuickForm_RuleRegistry
      * Performs validation on the given values
      *
      * @param     string   $ruleName        Name of the rule to be used
-     * @param     mixed    $values          Can be a scalar or an array of values
+     * @param     mixed    $values          Can be a scalar or an array of values 
      *                                      to be validated
      * @param     mixed    $options         Options used by the rule
      * @param     mixed    $multiple        Whether to validate an array of values altogether
@@ -161,10 +152,9 @@ class HTML_QuickForm_RuleRegistry
     /**
      * Returns the validation test in javascript code
      *
-     * @param     array|HTML_QuickForm_element  Element(s) the rule applies to
-     * @param     string                        Element name, in case $element is
-     *                                          not an array
-     * @param     array                         Rule data
+     * @param     mixed     Element(s) the rule applies to
+     * @param     string    Element name, in case $element is not array
+     * @param     array     Rule data
      * @access    public
      * @return    string    JavaScript for the rule
      */
@@ -186,21 +176,21 @@ class HTML_QuickForm_RuleRegistry
         $jsField = isset($ruleData['group'])? $ruleData['group']: $elementName;
         list ($jsPrefix, $jsCheck) = $rule->getValidationScript($ruleData['format']);
         if (!isset($ruleData['howmany'])) {
-            $js = $jsValue . "\n" . $jsPrefix .
+            $js = $jsValue . "\n" . $jsPrefix . 
                   "  if (" . str_replace('{jsVar}', 'value', $jsCheck) . " && !errFlag['{$jsField}']) {\n" .
                   "    errFlag['{$jsField}'] = true;\n" .
                   "    _qfMsg = _qfMsg + '\\n - {$ruleData['message']}';\n" .
                   $jsReset .
                   "  }\n";
         } else {
-            $js = $jsValue . "\n" . $jsPrefix .
+            $js = $jsValue . "\n" . $jsPrefix . 
                   "  var res = 0;\n" .
                   "  for (var i = 0; i < value.length; i++) {\n" .
                   "    if (!(" . str_replace('{jsVar}', 'value[i]', $jsCheck) . ")) {\n" .
                   "      res++;\n" .
                   "    }\n" .
-                  "  }\n" .
-                  "  if (res < {$ruleData['howmany']} && !errFlag['{$jsField}']) {\n" .
+                  "  }\n" . 
+                  "  if (res < {$ruleData['howmany']} && !errFlag['{$jsField}']) {\n" . 
                   "    errFlag['{$jsField}'] = true;\n" .
                   "    _qfMsg = _qfMsg + '\\n - {$ruleData['message']}';\n" .
                   $jsReset .
@@ -211,15 +201,13 @@ class HTML_QuickForm_RuleRegistry
 
 
    /**
-    * Returns JavaScript to get and to reset the element's value
-    *
+    * Returns JavaScript to get and to reset the element's value 
+    * 
     * @access private
-    * @param  HTML_QuickForm_element    element being processed
-    * @param  string                    element's name
-    * @param  bool                      whether to generate JavaScript to reset
-    *                                   the value
-    * @param  integer                   value's index in the array (only used for
-    *                                   multielement rules)
+    * @param  object HTML_QuickForm_element     element being processed
+    * @param  string    element's name
+    * @param  bool      whether to generate JavaScript to reset the value
+    * @param  integer   value's index in the array (only used for multielement rules)
     * @return array     first item is value javascript, second is reset
     */
     function _getJsValue(&$element, $elementName, $reset = false, $index = null)
@@ -240,7 +228,7 @@ class HTML_QuickForm_RuleRegistry
                 "  var valueIdx = 0;\n" .
                 "  for (var i = 0; i < frm.elements.length; i++) {\n" .
                 "    var _element = frm.elements[i];\n" .
-                "    if (_element.name in _qfGroups['{$elementName}']) {\n" .
+                "    if (_element.name in _qfGroups['{$elementName}']) {\n" . 
                 "      switch (_element.type) {\n" .
                 "        case 'checkbox':\n" .
                 "        case 'radio':\n" .
@@ -274,14 +262,14 @@ class HTML_QuickForm_RuleRegistry
                 $tmp_reset =
                     "    for (var i = 0; i < frm.elements.length; i++) {\n" .
                     "      var _element = frm.elements[i];\n" .
-                    "      if (_element.name in _qfGroups['{$elementName}']) {\n" .
+                    "      if (_element.name in _qfGroups['{$elementName}']) {\n" . 
                     "        switch (_element.type) {\n" .
                     "          case 'checkbox':\n" .
                     "          case 'radio':\n" .
                     "            _element.checked = _element.defaultChecked;\n" .
                     "            break;\n" .
                     "          case 'select-one':\n" .
-                    "          case 'select-multiple':\n" .
+                    "          case 'select-multiple:\n" .
                     "            for (var j = 0; j < _element.options.length; j++) {\n" .
                     "              _element.options[j].selected = _element.options[j].defaultSelected;\n" .
                     "            }\n" .
@@ -299,7 +287,7 @@ class HTML_QuickForm_RuleRegistry
                 $value =
                     "  value{$jsIndex} = new Array();\n" .
                     "  var valueIdx = 0;\n" .
-                    "  for (var i = 0; i < frm.elements['{$elementName}'].options.length; i++) {\n" .
+                    "  for (var i = 0; i < frm.elements['{$elementName}'].options.length; i++) {\n" . 
                     "    if (frm.elements['{$elementName}'].options[i].selected) {\n" .
                     "      value{$jsIndex}[valueIdx++] = frm.elements['{$elementName}'].options[i].value;\n" .
                     "    }\n" .
@@ -308,28 +296,25 @@ class HTML_QuickForm_RuleRegistry
                 $value = "  value{$jsIndex} = frm.elements['{$elementName}'].selectedIndex == -1? '': frm.elements['{$elementName}'].options[frm.elements['{$elementName}'].selectedIndex].value;\n";
             }
             if ($reset) {
-                $tmp_reset .=
+                $tmp_reset .= 
                     "    for (var i = 0; i < field.options.length; i++) {\n" .
                     "      field.options[i].selected = field.options[i].defaultSelected;\n" .
                     "    }\n";
             }
 
-        } elseif ($element->getType() == 'checkbox') {
-            if (is_a($element, 'html_quickform_advcheckbox')) {
-                $value = "  value{$jsIndex} = frm.elements['$elementName'][1].checked? frm.elements['$elementName'][1].value: frm.elements['$elementName'][0].value;\n";
-                $tmp_reset .= $reset ? "    field[1].checked = field[1].defaultChecked;\n" : '';
-            } else {
-                $value = "  value{$jsIndex} = frm.elements['$elementName'].checked? '1': '';\n";
-                $tmp_reset .= $reset ? "    field.checked = field.defaultChecked;\n" : '';
-            }
+        } elseif ($element->getType() == 'checkbox' && !is_a($element, 'html_quickform_advcheckbox')) {
+            $value = "  if (frm.elements['$elementName'].checked) {\n" .
+                     "    value{$jsIndex} = '1';\n" .
+                     "  } else {\n" .
+                     "    value{$jsIndex} = '';\n" .
+                     "  }";
+            $tmp_reset .= ($reset) ? "    field.checked = field.defaultChecked;\n" : '';
 
         } elseif ($element->getType() == 'radio') {
             $value = "  value{$jsIndex} = '';\n" .
-                     // Fix for bug #5644
-                     "  var els = 'length' in frm.elements['$elementName']? frm.elements['$elementName']: [ frm.elements['$elementName'] ];\n" .
-                     "  for (var i = 0; i < els.length; i++) {\n" .
-                     "    if (els[i].checked) {\n" .
-                     "      value{$jsIndex} = els[i].value;\n" .
+                     "  for (var i = 0; i < frm.elements['$elementName'].length; i++) {\n" .
+                     "    if (frm.elements['$elementName'][i].checked) {\n" .
+                     "      value{$jsIndex} = frm.elements['$elementName'][i].value;\n" .
                      "    }\n" .
                      "  }";
             if ($reset) {

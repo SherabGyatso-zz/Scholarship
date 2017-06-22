@@ -7,7 +7,7 @@ if(isset($_POST['submitted']) && $_POST['submitted']==1) {
 	$lqry="";
 	if(isset($_GET['a']) && $_GET['a']=="a") {
 		$qry = "
-		INSERT INTO `School` ( `SchoolId` , `Name` , `Address` , `SchoolCategoryId` )
+		INSERT INTO `School` ( `SchoolId` , `Name` , `Address` , `SchoolCategoryId` ) 
 		VALUES (
 		'', '".$_POST['sname']."', '".$_POST['saddress']."', '".$_POST['ssc']."'
 		)";
@@ -18,10 +18,10 @@ if(isset($_POST['submitted']) && $_POST['submitted']==1) {
 		add_log($db,$_SESSION['userid'],$_SESSION['utype'],7,$lqry);
 	} else if(isset($_GET['a']) && $_GET['a']=="e") {
 		$qry = "
-		UPDATE `School`
-		SET `Name` = '".$_POST['sname']."', `Address` = '".$_POST['saddress']."', `SchoolCategoryId` = '".$_POST['ssc']."'
+		UPDATE `School` 
+		SET `Name` = '".$_POST['sname']."', `Address` = '".$_POST['saddress']."', `SchoolCategoryId` = '".$_POST['ssc']."' 
 		WHERE `SchoolId`='".$_POST['id']."'";
-		$ewnid=209;
+		$ewnid=209;	
 		$lqry.=$qry;
 		add_log($db,$_SESSION['userid'],$_SESSION['utype'],8,$lqry);
 	}
@@ -33,7 +33,7 @@ if(isset($_POST['submitted']) && $_POST['submitted']==1) {
 
 $title="Add new school";
 if(isset($_GET['a']) && $_GET['a']=="e") $title="Edit school";
-$c.="<h4 class=\"title\">$title</h4>";
+$c.="<font class=\"title\">$title</font><br><Br>";
 
 if(isset($_GET['a'])) {
 	if($_GET['a']=="a") {
@@ -42,7 +42,7 @@ if(isset($_GET['a'])) {
 	} else if($_GET['a']=="e") {
 		$scf="?pid=103&a=e&id=".$_GET['id']."";
 		$qry = "SELECT * FROM School WHERE SchoolId='".$_GET['id']."'";
-		$rs = mysqli_query($db,$qry) or die ("DB Error!!!");
+		$rs = mysqli_query ($db,$qry) or die ("DB Error!!!");
 		$line = mysqli_fetch_array($rs);
 		$name_value=$line['Name'];
 		$scid_value=$line['SchoolCategoryId'];
@@ -84,7 +84,7 @@ if(isset($_GET['a']) && $_GET['a']=="a") {
 $c.="
 <input type=\"radio\" name=\"next_opt\" value=\"0\" checked />&nbsp;Save and go back to list<br />
 <input type=\"radio\" name=\"next_opt\" value=\"1\" />&nbsp;Save and add new school<br />
-<br />";
+<br />"; 
 }
 
 $c.="<input type=\"submit\" value=\"Submit\" class=\"button\" />&nbsp;&nbsp;&nbsp;

@@ -6,13 +6,13 @@ if(isset($_GET['a']) && $_GET['a']==1) {
 	$rs = mysqli_query ($db,$qry) or die ("DB Error!!!");
 	add_log($db,$_SESSION['userid'],$_SESSION['utype'],15,$qry);
 	header("Location: index.php?pid=1&ewn=218");
-	exit();
+	exit();		
 }
 
 $lqry="";
 if(isset($_GET['a']) && $_GET['a']==2) {
 	$fcheck=$_POST['fcheck'];
-	for($i=0;$i<count($fcheck);$i++) {
+	for($i=0;$i<count($fcheck);$i++) {		
 		$qry="DELETE FROM `DoeOfficer` WHERE DoeOfficerId='".$fcheck[$i]."'";
 		$rs = mysqli_query ($db,$qry) or die ("DB Error!!!");
 		$lqry.=$qry."\n\r";
@@ -20,15 +20,15 @@ if(isset($_GET['a']) && $_GET['a']==2) {
 	add_log($db,$_SESSION['userid'],$_SESSION['utype'],15,$lqry);
 	header("Location: index.php?pid=1&ewn=219");
 	exit();
-}
+} 
 
-$c.="<h4 class=\"title\">Doe Officers</h4>
+$c.="<font class=\"title\">Doe Officers</font><br><Br>
 <a href=\"?pid=2&a=a\"><img src=\"images/add.gif\" width=\"16\" height=\"16\" border=\"0\" alt=\"Add new doe officer\" align=\"left\" />&nbsp;&nbsp;Add new DOE Officer</a><br><Br>
 ";
 //show existing addresses
 
 $qry = "
-SELECT * FROM `DoeOfficer` WHERE 1
+SELECT * FROM `DoeOfficer` WHERE 1 
 ";
 
 $rs = mysqli_query ($db, $qry) or die ("DB Error!!!");
@@ -58,7 +58,7 @@ $c.="
 ";
 
 while ($line = mysqli_fetch_array($rs)) {
-
+	
 	$c.="
 	<tr>
 	<td bgcolor=\"#FAFAFA\" align=\"center\">

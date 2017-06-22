@@ -7,7 +7,7 @@ if(isset($_POST['submitted']) && $_POST['submitted']==1) {
 	$lqry="";
 	if(isset($_GET['a']) && $_GET['a']=="a") {
 		$qry = "
-		INSERT INTO `course` ( `courseType` , `course` , `fullform` )
+		INSERT INTO `course` ( `courseType` , `course` , `fullform` ) 
 		VALUES (
 		 '".$_POST['sname']."', '".$_POST['saddress']."', '".$_POST['ssc']."'
 		)";
@@ -18,11 +18,11 @@ if(isset($_POST['submitted']) && $_POST['submitted']==1) {
 		add_log($db,$_SESSION['userid'],$_SESSION['utype'],7,$lqry);
 	} else if(isset($_GET['a']) && $_GET['a']=="e") {
 		$qry = "
-		UPDATE `course`
-		SET `courseType` = '".$_POST['sname']."', `course` = '".$_POST['saddress']."', `fullform` = '".$_POST['ssc']."'
+		UPDATE `course` 
+		SET `courseType` = '".$_POST['sname']."', `course` = '".$_POST['saddress']."', `fullform` = '".$_POST['ssc']."' 
 		WHERE `courseid`='".$_POST['id']."'";
-
-		$ewnid=209;
+		
+		$ewnid=209;	
 		$lqry.=$qry;
 		add_log($db,$_SESSION['userid'],$_SESSION['utype'],8,$lqry);
 	}
@@ -34,7 +34,7 @@ if(isset($_POST['submitted']) && $_POST['submitted']==1) {
 
 $title="Add new course";
 if(isset($_GET['a']) && $_GET['a']=="e") $title="Edit Course";
-$c.="<h4 class=\"title\">$title</h4>"; 
+$c.="<font class=\"title\">$title</font><br><Br>";
 
 if(isset($_GET['a'])) {
 	if($_GET['a']=="a") {
@@ -73,7 +73,7 @@ if(isset($_GET['a']) && $_GET['a']=="a") {
 $c.="
 <input type=\"radio\" name=\"next_opt\" value=\"0\" checked />&nbsp;Save and go back to list<br />
 <input type=\"radio\" name=\"next_opt\" value=\"1\" />&nbsp;Save and add new course<br />
-<br />";
+<br />"; 
 }
 
 $c.="<input type=\"submit\" value=\"Submit\" class=\"button\" />&nbsp;&nbsp;&nbsp;

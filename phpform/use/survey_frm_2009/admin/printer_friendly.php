@@ -50,7 +50,7 @@
 
 				$results = array();
 
-				while($row = mysql_fetch_array($resultset)) {
+				while($row = mysqli_fetch_array($resultset)) {
 					$results[] = $row;
 				}
 

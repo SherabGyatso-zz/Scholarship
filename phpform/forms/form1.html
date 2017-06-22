@@ -1,36 +1,66 @@
-<HTML><HEAD><TITLE>My Form - created with phpFormGenerator</TITLE></HEAD>
-<BODY>
-<font face='arial' size=2><b>All fields marked with a * are required:<br>
 <form enctype='multipart/form-data' action='process.php' method='post'>
-<table width='50%' border=0>
-<tr><td> Name</td>
-<td>
-<input type=text name='Name'></td></tr>
-<tr><td> DOB</td>
-<td>
-<input type=text name='DOB'></td></tr>
-<tr><td> Course</td>
-<td>
-<select name='Course'><option value='safdg'>safdg<option value='sfdg'>sfdg<option value='sfdg'>sfdg<option value='sfdg'>sfdg<option value='sdfg'>sdfg<option value='sfdg'>sfdg<option value='fsdg'>fsdg<option value='sfdg'>sfdg<option value='sgf'>sgf<option value='gsdf'>gsdf</select></td></tr>
-<tr><td> College</td>
-<td>
-<select name='College'><option value='sdfg'>sdfg<option value='sfg'>sfg<option value='sfdg'>sfdg<option value='sfdg'>sfdg<option value='fdsg'>fdsg<option value='sfdg'>sfdg<option value='sfdg'>sfdg<option value='sfdg'>sfdg<option value='fdsg'>fdsg<option value='sfgfg'>sfgfg</select></td></tr>
-<tr><td> Class XII id</td>
-<td>
-<input type=text name='ClassXIIid'></td></tr>
-<tr><td> RC no</td>
-<td>
-<input type=text name='RCno'></td></tr>
-<tr><td> Greenbook no</td>
-<td>
-<input type=text name='Greenbookno'></td></tr>
-<tr><td> Duration</td>
-<td>
-<select name='Duration'><option value='fdsg'>fdsg<option value='fsdg'>fsdg<option value='fdg'>fdg<option value='fdg'>fdg<option value='dfg'>dfg<option value='sfdg'>sfdg<option value='sfdg'>sfdg<option value='sfg'>sfg<option value='fdg'>fdg<option value='sfg'>sfg</select></td></tr>
-<tr><td> Degree</td>
-<td>
-<select name='Degree'><option value='fdgfd'>fdgfd<option value='sfdg'>sfdg<option value='fdg'>fdg<option value='dsfg'>dsfg<option value='fdsg'>fdsg<option value='dfsg'>dfsg<option value='sdfg'>sdfg<option value='sdfg'>sdfg<option value='fdsg'>fdsg<option value='dsfg'>dsfg</select></td></tr>
-</table>
-<input type='submit' value='Submit Form'> <input type=reset value='Clear Form'></form>
-<br><br><br><a href='http://phpformgen.sourceforge.net'><img src='button.jpg' border=0></a>
-</BODY></HTML>
+<table border="1" cellspacing="1" style="border-collapse: collapse" bordercolor="#000066" width="95%" cellpadding="5">
+<tr>
+<td colspan="3" bgcolor="#B5CBEF" height="17" width="100%" bordercolor="#FFFFFF" background="tile_back.gif">
+<p align="left\><b><font face="Verdana" size="2" color="#FFFFFF"><img border="0" src="nav_m.gif" width="8" height="8">
+<font face='Verdana' size=2 color='#FFFFFF'><b>
+<!- You can add a form title here -->
+&nbsp;
+</font><font face="Verdana" size="2" color="#000066"> </font></b></td>
+</tr><tr><td colspan="3" bgcolor="#B5CBEF" height="16" width="100%" bordercolor="#FFFFFF" background="tile_sub.gif"><font size="2" face="Verdana"><b><font face="Verdana" size="2" color="#000066">
+<!- You can add a brief form description here-->
+&nbsp;
+</font></b></font></td></tr><tr><td colspan="3" bgcolor="#D6DFEF" height="16" width="100%" bordercolor="#FFFFFF"><font size="1" face="Verdana">Please fill in all fields marked with a *</font></td></tr><tr><td height="30" width="55" bgcolor="#EFF3F7" bordercolor="#FFFFFF">
+<img border="0" src="bc_new.gif" width="28" height="28"></td><td height="30" width="189" bgcolor="#EFF3F7" bordercolor="#FFFFFF">
+<font face="Verdana" size="2">name</td>
+<td height="30" width="469" bgcolor="#EFF3F7" bordercolor="#FFFFFF">
+<font face="Verdana"><input type=text name='name'>*</td></tr><tr><td height="30" width="55" bgcolor="#EFF3F7" bordercolor="#FFFFFF">
+<img border="0" src="bc_new.gif" width="28" height="28"></td><td height="30" width="189" bgcolor="#EFF3F7" bordercolor="#FFFFFF">
+<font face="Verdana" size="2">Place of Birth</td>
+<td height="30" width="469" bgcolor="#EFF3F7" bordercolor="#FFFFFF">
+<font face="Verdana"><input type=text name='PlaceofBirth'>*</td></tr><tr><td height="30" width="55" bgcolor="#EFF3F7" bordercolor="#FFFFFF">
+<img border="0" src="bc_new.gif" width="28" height="28"></td><td height="30" width="189" bgcolor="#EFF3F7" bordercolor="#FFFFFF">
+<font face="Verdana" size="2">Date of birth</td>
+<td height="30" width="469" bgcolor="#EFF3F7" bordercolor="#FFFFFF">
+<font face="Verdana"><input type=text name='Dateofbirth'>*</td></tr><tr><td height="30" width="55" bgcolor="#EFF3F7" bordercolor="#FFFFFF">
+<img border="0" src="bc_new.gif" width="28" height="28"></td><td height="30" width="189" bgcolor="#EFF3F7" bordercolor="#FFFFFF">
+<font face="Verdana" size="2">Gender</td>
+<td height="30" width="469" bgcolor="#EFF3F7" bordercolor="#FFFFFF">
+<font face="Verdana"><select name='Gender'><option value='Male'>Male<option value='Female'>Female</select>*</td></tr><tr><td height="30" width="55" bgcolor="#EFF3F7" bordercolor="#FFFFFF">
+<img border="0" src="bc_new.gif" width="28" height="28"></td><td height="30" width="189" bgcolor="#EFF3F7" bordercolor="#FFFFFF">
+<font face="Verdana" size="2">Education and Profession of Parents</td>
+<td height="30" width="469" bgcolor="#EFF3F7" bordercolor="#FFFFFF">
+<font face="Verdana"><input type=text name='EducationandProfessionofParents'>*</td></tr><tr><td height="30" width="55" bgcolor="#EFF3F7" bordercolor="#FFFFFF">
+<img border="0" src="bc_new.gif" width="28" height="28"></td><td height="30" width="189" bgcolor="#EFF3F7" bordercolor="#FFFFFF">
+<font face="Verdana" size="2">complete graduation or post graduation</td>
+<td height="30" width="469" bgcolor="#EFF3F7" bordercolor="#FFFFFF">
+<font face="Verdana"><input type=text name='completegraduationorpostgraduation'>*</td></tr><tr><td height="30" width="55" bgcolor="#EFF3F7" bordercolor="#FFFFFF">
+<img border="0" src="bc_new.gif" width="28" height="28"></td><td height="30" width="189" bgcolor="#EFF3F7" bordercolor="#FFFFFF">
+<font face="Verdana" size="2">Education</td>
+<td height="30" width="469" bgcolor="#EFF3F7" bordercolor="#FFFFFF">
+<font face="Verdana"><textarea name='Education' rows=10 cols=10></textarea>*</td></tr><tr><td height="30" width="55" bgcolor="#EFF3F7" bordercolor="#FFFFFF">
+<img border="0" src="bc_new.gif" width="28" height="28"></td><td height="30" width="189" bgcolor="#EFF3F7" bordercolor="#FFFFFF">
+<font face="Verdana" size="2">Work Experience</td>
+<td height="30" width="469" bgcolor="#EFF3F7" bordercolor="#FFFFFF">
+<font face="Verdana"><input type=text name='WorkExperience'>*</td></tr><tr><td height="30" width="55" bgcolor="#EFF3F7" bordercolor="#FFFFFF">
+<img border="0" src="bc_new.gif" width="28" height="28"></td><td height="30" width="189" bgcolor="#EFF3F7" bordercolor="#FFFFFF">
+<font face="Verdana" size="2">Funding sources </td>
+<td height="30" width="469" bgcolor="#EFF3F7" bordercolor="#FFFFFF">
+<font face="Verdana"><input type=text name='Fundingsources'></td></tr><tr><td height="30" width="55" bgcolor="#EFF3F7" bordercolor="#FFFFFF">
+<img border="0" src="bc_new.gif" width="28" height="28"></td><td height="30" width="189" bgcolor="#EFF3F7" bordercolor="#FFFFFF">
+<font face="Verdana" size="2">In waht area of expertise do you feel you can best contribute to the tibetan community</td>
+<td height="30" width="469" bgcolor="#EFF3F7" bordercolor="#FFFFFF">
+<font face="Verdana"><input type=text name='Inwahtareaofexpertisedoyoufeelyoucanbestcontributetothetibetancommunity'>*</td></tr><tr><td height="30" width="55" bgcolor="#EFF3F7" bordercolor="#FFFFFF">
+<img border="0" src="bc_new.gif" width="28" height="28"></td><td height="30" width="189" bgcolor="#EFF3F7" bordercolor="#FFFFFF">
+<font face="Verdana" size="2">Present Address</td>
+<td height="30" width="469" bgcolor="#EFF3F7" bordercolor="#FFFFFF">
+<font face="Verdana"><textarea name='PresentAddress' rows=10 cols=10></textarea>*</td></tr><tr><td height="30" width="55" bgcolor="#EFF3F7" bordercolor="#FFFFFF">
+<img border="0" src="bc_new.gif" width="28" height="28"></td><td height="30" width="189" bgcolor="#EFF3F7" bordercolor="#FFFFFF">
+<font face="Verdana" size="2">Phone</td>
+<td height="30" width="469" bgcolor="#EFF3F7" bordercolor="#FFFFFF">
+<font face="Verdana"><input type=text name='Phone'>*</td></tr><tr><td height="30" width="55" bgcolor="#EFF3F7" bordercolor="#FFFFFF">
+<img border="0" src="bc_new.gif" width="28" height="28"></td><td height="30" width="189" bgcolor="#EFF3F7" bordercolor="#FFFFFF">
+<font face="Verdana" size="2">email</td>
+<td height="30" width="469" bgcolor="#EFF3F7" bordercolor="#FFFFFF">
+<font face="Verdana"><input type=text name='email'>*</td></tr><tr><td colspan="3" bgcolor="#B5CBEF" height="25" width="737" background="tile_sub.gif"><p align="center"><font face="Verdana" size="2"><input type=submit value='Submit Form'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type=reset value='Reset Form'></font></td></tr>
+</table></form> <br><br><a href='http://phpformgen.sourceforge.net'><img src='button.jpg' border=0></a>

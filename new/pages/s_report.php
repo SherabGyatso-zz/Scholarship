@@ -1,7 +1,8 @@
 <?php
 $c="";
 
-$c.="<h4 class=\"title\">Report</h4>";
+$c.="<font class=\"title\">Report</font><br><Br>
+";
 
 if(!isset($_GET['id'])) exit(0); else $gssid=$_GET['id'];
 
@@ -10,7 +11,7 @@ $rs = mysqli_query ($db,$qry) or die ("DB Error!!!");
 $line=mysqli_fetch_array($rs);
 $status=$line['Status'];
 $qry="select * from student where studentid=".$line['StudentId'];
-$rs = mysqli_query($db,$qry) or die("DB ERROR!!!");
+$rs = mysql_query($qry,$db) or die("DB ERROR!!!");
 $line1=mysqli_fetch_array($rs);
 $c.=show_scholarship_type($db,$line['ScholarshipId']);
 
@@ -30,28 +31,26 @@ $form_action="index.php?pid=110&id=$gssid";
 $form = new HTML_QuickForm('status','post',$form_action);
 $form->addElement('hidden','ssid',$gssid);
 
-$elt =$form->addElement('text','name_of_edu_inst','Name of Educational Institution:');
-//$name_of_edu = mysqli_real_escape_string($r,$_POST['name_of_edu_inst']);
-//$elt->setValue($name_of_edu);
-$elt->setValue($r['name_of_edu_inst']);
-$elt =$form->addElement('text','place','Place of Institution:');
+$elt =& $form->addElement('text','name_of_edu_inst','Name of Educational Institution:');
+$name_of_edu = mysql_real_escape_string($r['name_of_edu_inst']);
+$elt->setValue($name_of_edu);
+$elt =& $form->addElement('text','place','Place of Institution:');
 $elt->setValue($r['place']);
 $elt =& $form->addElement('text','mailing_address','Mailing address:');
-//$mailing_address = mysqli_real_escape_string($r,$_POST['mailing_address']);
-//$elt->setValue($mailing_address);
-$elt->setValue($r['mailing_address']);
+$mailing_address = mysql_real_escape_string($r['mailing_address']);
+$elt->setValue($mailing_address);
 $elt =& $form->addElement('text','contact_number','Contact number:');
 $elt->setValue($r['contact_number']);
 
 if($line['ScholarshipId']=="2" || $line['ScholarshipId']=="4") {
 //sponsor list dropdown
-
+	
 	$elt =& $form->addElement('text','sponsor_name','Sponsor Name:');
 	$elt->setValue($r['sponsor_name']);
 	$elt =& $form->addElement('text','amount_received','Amount received from the Sponsor for the current year:');
 	$elt->setValue($r['amount_received']);
 	$elt =& $form->addElement('text','medical_leave','Medical Leave sanctioned on:');
-	$elt->setValue($r['medical_leave']);
+	$elt->setValue($r['medical_leave']);	
 	$elt =& $form->addElement('text','remarks','Remarks:');
 	$elt->setValue($r['remarks']);
 }elseif($line['ScholarshipId']=="1") {
@@ -74,10 +73,10 @@ $form->addElement('submit','save','Submit','class="button"');
 if ($form->validate()) {
 	$form->process('submit_report');
 	header("Location: index.php?pid=110&id=$gssid");
-	exit();
+	exit();		
 } else {
 	$rendered_form=$form->toHtml();
-	$c.=$rendered_form;
+	$c.=$rendered_form; 
 }
 
 ?>

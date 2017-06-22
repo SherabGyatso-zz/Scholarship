@@ -2,9 +2,9 @@
 $c="";
 if(isset($_GET['ty']))
   $prm=$_GET['ty'];
+  
 
-
-$c.="<h4 class=\"title\">Scholarship</h4>
+$c.="<font class=\"title\">Scholarship</font><br><Br>
 ";
 
 if(!isset($_GET['id'])) exit(0); else $gssid=$_GET['id'];
@@ -22,7 +22,7 @@ $c.="<table cellpadding=\"0\" cellspacing=\"0\" width=\"100%\"><tr><td>";
 $form_action="index.php?pid=109&id=$gssid";
 $form = new HTML_QuickForm('status','post',$form_action);
 $form->addElement('hidden','ssid',$gssid);
-$sel_status = array('Selected','Alternate','Rejected','Closed','Discontinued');
+$sel_status = array('Selected','Alternate','Rejected','Closed','Discontinued'); 
 $elt =& $form->addElement('select','status','Status: ',$sel_status);
 $elt->setSelected(getIndex($sel_status,$line['Status']));
 $elt =& $form->addElement('text','study_course','Study Course:');
@@ -39,10 +39,10 @@ $form->addElement('submit','save','Submit','class="button"');
 if ($form->validate()) {
 	$form->process('submit_status');
 	header("Location: index.php?pid=109&id=$gssid");
-	exit();
+	exit();		
 } else {
 	$rendered_form=$form->toHtml();
-	$c.=$rendered_form;
+	$c.=$rendered_form; 
 }
 if($status=="Selected") $c.="</td><td width=\"50%\" align=\"center\"><table cellpadding=\"5\" cellspacing=\"0\" align=\"center\"><tr><td style=\"border: 1px solid #cccccc; background: whitesmoke\"><a href=\"index.php?pid=110&id=$gssid\"><img src=\"images/report.gif\" border=0 align=\"absmiddle\">&nbsp;&nbsp;REPORT</a></td></tr></table>";
 $c.="</td></tr></table>";

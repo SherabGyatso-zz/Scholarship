@@ -1,7 +1,8 @@
 <?php
 $c="";
 
-$c.="<h4 class=\"title\">Report - read only</h4>";
+$c.="<font class=\"title\">Report - read only</font><br><Br>
+";
 
 if(!isset($_GET['id'])) exit(0); else $gssid=$_GET['id'];
 
@@ -50,7 +51,7 @@ if($line['ScholarshipId']=="2" || $line['ScholarshipId']=="4") {
 	$elt =& $form->addElement('text','medical_leave','Medical Leave sanctioned on:',' READONLY');
 	$elt->setValue($r['medical_leave']);
 	$elt =& $form->addElement('text','remarks','Remarks:');
-	$elt->setValue($r['remarks']);
+	$elt->setValue($r['remarks']);	
 }elseif($line['ScholarshipId']=="1") {
 $elt =& $form->addElement('text','category','Category:');
 $elt->setValue($r['category']);
@@ -68,6 +69,6 @@ $form->addElement('html',$htmlin);
 add_report_elements($form,$line['ScholarshipId'],$r,TRUE);
 
 $rendered_form=$form->toHtml();
-$c.=$rendered_form;
+$c.=$rendered_form; 
 
 ?>

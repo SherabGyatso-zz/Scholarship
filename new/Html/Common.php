@@ -1,45 +1,52 @@
 <?php
-/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
+/* vim: set expandtab tabstop=4 shiftwidth=4: */
+// +----------------------------------------------------------------------+
+// | PHP Version 4                                                        |
+// +----------------------------------------------------------------------+
+// | Copyright (c) 1997, 1998, 1999, 2000, 2001 The PHP Group             |
+// +----------------------------------------------------------------------+
+// | This source file is subject to version 2.0 of the PHP license,       |
+// | that is bundled with this package in the file LICENSE, and is        |
+// | available at through the world-wide-web at                           |
+// | http://www.php.net/license/2_02.txt.                                 |
+// | If you did not receive a copy of the PHP license and are unable to   |
+// | obtain it through the world-wide-web, please send a note to          |
+// | license@php.net so we can mail you a copy immediately.               |
+// +----------------------------------------------------------------------+
+// | Author: Adam Daniel <adaniel1@eesus.jnj.com>                         |
+// +----------------------------------------------------------------------+
+//
+// $Id: Common.php,v 1.1 2005/12/06 01:50:39 matthieu_ Exp $
 
 /**
  * Base class for all HTML classes
- *
- * PHP versions 4 and 5
- *
- * LICENSE: This source file is subject to version 3.01 of the PHP license
- * that is available through the world-wide-web at the following URI:
- * http://www.php.net/license/3_01.txt If you did not receive a copy of
- * the PHP License and are unable to obtain it through the web, please
- * send a note to license@php.net so we can mail you a copy immediately.
- *
- * @category    HTML
- * @package     HTML_Common
- * @author      Adam Daniel <adaniel1@eesus.jnj.com>
- * @copyright   2001-2007 The PHP Group
- * @license     http://www.php.net/license/3_01.txt PHP License 3.01
- * @link        http://pear.php.net/package/HTML_Common/
- */
-
-/**
- * Base class for all HTML classes
- *
- * @category    HTML
- * @package     HTML_Common
- * @author      Adam Daniel <adaniel1@eesus.jnj.com>
- * @version     Release: 1.2.4
+ * 
+ * @author    Adam Daniel <adaniel1@eesus.jnj.com>
+ * @category  HTML
+ * @package   HTML_Common
+ * @version   1.2.2
  * @abstract
  */
-class HTML_Common
-{
+
+/**
+ * Base class for all HTML classes
+ *
+ * @author      Adam Daniel <adaniel1@eesus.jnj.com>
+ * @version     1.7
+ * @since       PHP 4.0.3pl1
+ * @abstract
+ */
+class HTML_Common {
+
     /**
-     * Associative array of attributes
+     * Associative array of table attributes
      * @var     array
      * @access  private
      */
     var $_attributes = array();
 
     /**
-     * Tab offset of the tag
+     * Tab offset of the table
      * @var     int
      * @access  private
      */
@@ -71,12 +78,12 @@ class HTML_Common
 
     /**
      * Class constructor
-     * @param    mixed   $attributes     Associative array of table tag attributes
+     * @param    mixed   $attributes     Associative array of table tag attributes 
      *                                   or HTML attributes name="value" pairs
      * @param    int     $tabOffset      Indent offset in tabs
      * @access   public
      */
-    function __construct($attributes = null, $tabOffset = 0)
+    function HTML_Common($attributes = null, $tabOffset = 0)
     {
         $this->setAttributes($attributes);
         $this->setTabOffset($tabOffset);
@@ -94,10 +101,11 @@ class HTML_Common
 
     /**
      * Returns the lineEnd
-     *
+     * 
      * @since     1.7
      * @access    private
      * @return    string
+     * @throws
      */
     function _getLineEnd()
     {
@@ -106,7 +114,7 @@ class HTML_Common
 
     /**
      * Returns a string containing the unit for indenting HTML
-     *
+     * 
      * @since     1.7
      * @access    private
      * @return    string
@@ -118,7 +126,7 @@ class HTML_Common
 
     /**
      * Returns a string containing the offset for the whole HTML code
-     *
+     * 
      * @return    string
      * @access   private
      */
@@ -138,9 +146,8 @@ class HTML_Common
         $strAttr = '';
 
         if (is_array($attributes)) {
-            $charset = HTML_Common::charset();
             foreach ($attributes as $key => $value) {
-                $strAttr .= ' ' . $key . '="' . htmlspecialchars($value, ENT_COMPAT, $charset) . '"';
+                $strAttr .= ' ' . $key . '="' . htmlspecialchars($value) . '"';
             }
         }
         return $strAttr;
@@ -150,7 +157,6 @@ class HTML_Common
      * Returns a valid atrributes array from either a string or array
      * @param    mixed   $attributes     Either a typical HTML attribute string or an associative array
      * @access   private
-     * @return   array
      */
     function _parseAttributes($attributes)
     {
@@ -190,12 +196,13 @@ class HTML_Common
 
     /**
      * Returns the array key for the given non-name-value pair attribute
-     *
+     * 
      * @param     string    $attr         Attribute
      * @param     array     $attributes   Array of attribute
      * @since     1.0
      * @access    private
      * @return    bool
+     * @throws
      */
     function _getAttrKey($attr, $attributes)
     {
@@ -224,12 +231,13 @@ class HTML_Common
 
     /**
      * Removes the given attribute from the given array
-     *
+     * 
      * @param     string    $attr           Attribute name
      * @param     array     $attributes     Attribute array
      * @since     1.4
      * @access    private
      * @return    void
+     * @throws
      */
     function _removeAttr($attr, &$attributes)
     {
@@ -241,11 +249,12 @@ class HTML_Common
 
     /**
      * Returns the value of the given attribute
-     *
+     * 
      * @param     string    $attr   Attribute name
      * @since     1.5
      * @access    public
-     * @return    string|null   returns null if an attribute does not exist
+     * @return    void
+     * @throws
      */
     function getAttribute($attr)
     {
@@ -255,22 +264,6 @@ class HTML_Common
         }
         return null;
     } //end func getAttribute
-
-    /**
-     * Sets the value of the attribute
-     *
-     * @param   string  Attribute name
-     * @param   string  Attribute value (will be set to $name if omitted)
-     * @access  public
-     */
-    function setAttribute($name, $value = null)
-    {
-        $name = strtolower($name);
-        if (is_null($value)) {
-            $value = $name;
-        }
-        $this->_attributes[$name] = $value;
-    } // end func setAttribute
 
     /**
      * Sets the HTML attributes
@@ -285,7 +278,7 @@ class HTML_Common
     /**
      * Returns the assoc array (default) or string of attributes
      *
-     * @param     bool    Whether to return the attributes as string
+     * @param     bool    Whether to return the attributes as string 
      * @since     1.6
      * @access    public
      * @return    mixed   attributes
@@ -311,11 +304,12 @@ class HTML_Common
 
     /**
      * Removes an attribute
-     *
+     * 
      * @param     string    $attr   Attribute name
      * @since     1.4
      * @access    public
      * @return    void
+     * @throws
      */
     function removeAttribute($attr)
     {
@@ -324,7 +318,7 @@ class HTML_Common
 
     /**
      * Sets the line end style to Windows, Mac, Unix or a custom string.
-     *
+     * 
      * @param   string  $style  "win", "mac", "unix" or custom string.
      * @since   1.7
      * @access  public
@@ -360,7 +354,7 @@ class HTML_Common
 
     /**
      * Returns the tabOffset
-     *
+     * 
      * @since     1.5
      * @access    public
      * @return    int
@@ -372,7 +366,7 @@ class HTML_Common
 
     /**
      * Sets the string used to indent HTML
-     *
+     * 
      * @since     1.7
      * @param     string    $string     String used to indent ("\11", "\t", '  ', etc.).
      * @access    public
@@ -398,7 +392,7 @@ class HTML_Common
 
     /**
      * Returns the HTML comment
-     *
+     * 
      * @since     1.5
      * @access    public
      * @return    string
@@ -430,34 +424,5 @@ class HTML_Common
         print $this->toHtml();
     } // end func display
 
-    /**
-     * Sets the charset to use by htmlspecialchars() function
-     *
-     * Since this parameter is expected to be global, the function is designed
-     * to be called statically:
-     * <code>
-     * HTML_Common::charset('utf-8');
-     * </code>
-     * or
-     * <code>
-     * $charset = HTML_Common::charset();
-     * </code>
-     *
-     * @param   string  New charset to use. Omit if just getting the
-     *                  current value. Consult the htmlspecialchars() docs
-     *                  for a list of supported character sets.
-     * @return  string  Current charset
-     * @access  public
-     * @static
-     */
-    function charset($newCharset = null)
-    {
-        static $charset = 'ISO-8859-1';
-
-        if (!is_null($newCharset)) {
-            $charset = $newCharset;
-        }
-        return $charset;
-    } // end func charset
 } // end class HTML_Common
 ?>

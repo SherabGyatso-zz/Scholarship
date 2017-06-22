@@ -1,62 +1,49 @@
 <?php
-/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
+/* vim: set expandtab tabstop=4 shiftwidth=4: */
+// +----------------------------------------------------------------------+
+// | PHP version 4.0                                                      |
+// +----------------------------------------------------------------------+
+// | Copyright (c) 1997-2003 The PHP Group                                |
+// +----------------------------------------------------------------------+
+// | This source file is subject to version 2.0 of the PHP license,       |
+// | that is bundled with this package in the file LICENSE, and is        |
+// | available at through the world-wide-web at                           |
+// | http://www.php.net/license/2_02.txt.                                 |
+// | If you did not receive a copy of the PHP license and are unable to   |
+// | obtain it through the world-wide-web, please send a note to          |
+// | license@php.net so we can mail you a copy immediately.               |
+// +----------------------------------------------------------------------+
+// | Author: Ron McClain <ron@humaniq.com>                                |
+// +----------------------------------------------------------------------+
+//
+// $Id: ObjectFlexy.php,v 1.1 2005/12/06 01:50:39 matthieu_ Exp $
+
+require_once("Html/QuickForm/Renderer/Object.php");
 
 /**
  * QuickForm renderer for Flexy template engine, static version.
- *
- * PHP versions 4 and 5
- *
- * LICENSE: This source file is subject to version 3.01 of the PHP license
- * that is available through the world-wide-web at the following URI:
- * http://www.php.net/license/3_01.txt If you did not receive a copy of
- * the PHP License and are unable to obtain it through the web, please
- * send a note to license@php.net so we can mail you a copy immediately.
- *
- * @category    HTML
- * @package     HTML_QuickForm
- * @author      Ron McClain <ron@humaniq.com>
- * @copyright   2001-2007 The PHP Group
- * @license     http://www.php.net/license/3_01.txt PHP License 3.01
- * @link        http://pear.php.net/package/HTML_QuickForm
- */
-
-/**
- * A concrete renderer for HTML_QuickForm, makes an object from form contents
- */
-require_once 'HTML/QuickForm/Renderer/Object.php';
-
-/**
- * QuickForm renderer for Flexy template engine, static version.
- *
+ * 
  * A static renderer for HTML_Quickform.  Makes a QuickFormFlexyObject
  * from the form content suitable for use with a Flexy template
  *
  * Usage:
- * <code>
- * $form = new HTML_QuickForm('form', 'POST');
- * $template = new HTML_Template_Flexy();
- * $renderer = new HTML_QuickForm_Renderer_ObjectFlexy(&$template);
+ * $form =& new HTML_QuickForm('form', 'POST');
+ * $template =& new HTML_Template_Flexy();
+ * $renderer =& new HTML_QuickForm_Renderer_ObjectFlexy(&$template);
  * $renderer->setHtmlTemplate("html.html");
  * $renderer->setLabelTemplate("label.html");
  * $form->accept($renderer);
  * $view = new StdClass;
  * $view->form = $renderer->toObject();
  * $template->compile("mytemplate.html");
- * </code>
  *
  * Based on the code for HTML_QuickForm_Renderer_ArraySmarty
  *
- * @category    HTML
- * @package     HTML_QuickForm
- * @author      Ron McClain <ron@humaniq.com>
- * @version     Release: 3.2.10
- * @since       3.1.1
+ * @see QuickFormFlexyObject
+ * @access public
  */
 class HTML_QuickForm_Renderer_ObjectFlexy extends HTML_QuickForm_Renderer_Object
 {
-   /**#@+
-    * @access private
-    */
     /**
      * HTML_Template_Flexy instance
      * @var object $_flexy
@@ -95,17 +82,16 @@ class HTML_QuickForm_Renderer_ObjectFlexy extends HTML_QuickForm_Renderer_Object
      * @var string $_elementType
      */
     var $_elementType = 'QuickformFlexyElement';
-   /**#@-*/
 
     /**
      * Constructor
      *
-     * @param HTML_Template_Flexy   template object to use
+     * @param $flexy object   HTML_Template_Flexy instance
      * @public
      */
-    function __construct(&$flexy)
+    function HTML_QuickForm_Renderer_ObjectFlexy(&$flexy)
     {
-        parent::__construct(true);
+        $this->HTML_QuickForm_Renderer_Object(true);
         $this->_obj = new QuickformFlexyForm();
         $this->_flexy =& $flexy;
     } // end constructor
@@ -131,9 +117,9 @@ class HTML_QuickForm_Renderer_ObjectFlexy extends HTML_QuickForm_Renderer_Object
      * the key for storing this
      *
      * @access private
-     * @param HTML_QuickForm_element    form element being rendered
-     * @param bool        Whether an element is required
-     * @param string    Error associated with the element
+     * @param element object     An HTML_QuickForm_element object
+     * @param required bool        Whether an element is required
+     * @param error string    Error associated with the element
      * @return object
      */
     function _elementToObject(&$element, $required, $error)
@@ -155,12 +141,9 @@ class HTML_QuickForm_Renderer_ObjectFlexy extends HTML_QuickForm_Renderer_Object
         // Create an element key from the name
         if (false !== ($pos = strpos($ret->name, '[')) || is_object($this->_currentGroup)) {
             if (!$pos) {
-                $keys = '->{\'' . str_replace(array('\\', '\''), array('\\\\', '\\\''), $ret->name) . '\'}';
+                $keys = '->{\'' . $ret->name . '\'}';
             } else {
-                $keys = '->{\'' . str_replace(
-                            array('\\', '\'', '[', ']'), array('\\\\', '\\\'', '\'}->{\'', ''),
-                            $ret->name
-                        ) . '\'}';
+                $keys = '->{\'' . str_replace(array('[', ']'), array('\'}->{\'', ''), $ret->name) . '\'}';
             }
             // special handling for elements in native groups
             if (is_object($this->_currentGroup)) {
@@ -177,11 +160,11 @@ class HTML_QuickForm_Renderer_ObjectFlexy extends HTML_QuickForm_Renderer_Object
         } elseif (0 == strlen($ret->name)) {
             $keys = '->{\'element_' . $this->_elementIdx . '\'}';
         } else {
-            $keys = '->{\'' . str_replace(array('\\', '\''), array('\\\\', '\\\''), $ret->name) . '\'}';
+            $keys = '->{\'' . $ret->name . '\'}';
         }
         // for radios: add extra key from value
         if ('radio' == $ret->type && '[]' != substr($keys, -2)) {
-            $keys .= '->{\'' . str_replace(array('\\', '\''), array('\\\\', '\\\''), $ret->value) . '\'}';
+            $keys .= '->{\'' . $ret->value . '\'}';
         }
         $ret->keys = $keys;
         $this->_elementIdx++;
@@ -189,14 +172,14 @@ class HTML_QuickForm_Renderer_ObjectFlexy extends HTML_QuickForm_Renderer_Object
     }
 
     /**
-     * Stores an object representation of an element in the
+     * Stores an object representation of an element in the 
      * QuickformFormObject instance
      *
      * @access private
-     * @param QuickformElement  Object representation of an element
+     * @param elObj object  Object representation of an element
      * @return void
      */
-    function _storeObject($elObj)
+    function _storeObject($elObj) 
     {
         if ($elObj) {
             $keys = $elObj->keys;
@@ -215,21 +198,19 @@ class HTML_QuickForm_Renderer_ObjectFlexy extends HTML_QuickForm_Renderer_Object
      * In your template, {html} is replaced by the unmodified html.
      * If the element is required, {required} will be true.
      * Eg.
-     * <pre>
      * {if:error}
      *   <font color="red" size="1">{error:h}</font><br />
      * {end:}
      * {html:h}
-     * </pre>
      *
      * @access public
-     * @param string   Filename of template
+     * @param template string   Filename of template
      * @return void
      */
     function setHtmlTemplate($template)
     {
         $this->_html = $template;
-    }
+    } 
 
     /**
      * Set the filename of the template to render form labels
@@ -237,18 +218,16 @@ class HTML_QuickForm_Renderer_ObjectFlexy extends HTML_QuickForm_Renderer_Object
      * {error} will be set to the error, if any.  {required} will
      * be true if this is a required field
      * Eg.
-     * <pre>
      * {if:required}
      * <font color="orange" size="1">*</font>
      * {end:}
      * {label:h}
-     * </pre>
      *
      * @access public
-     * @param string   Filename of template
+     * @param template string   Filename of template
      * @return void
      */
-    function setLabelTemplate($template)
+    function setLabelTemplate($template) 
     {
         $this->_label = $template;
     }
@@ -268,10 +247,6 @@ class HTML_QuickForm_Renderer_ObjectFlexy extends HTML_QuickForm_Renderer_Object
 
 /**
  * Adds nothing to QuickformForm, left for backwards compatibility
- *
- * @category    HTML
- * @package     HTML_QuickForm
- * @ignore
  */
 class QuickformFlexyForm extends QuickformForm
 {
@@ -279,10 +254,6 @@ class QuickformFlexyForm extends QuickformForm
 
 /**
  * Adds nothing to QuickformElement, left for backwards compatibility
- *
- * @category    HTML
- * @package     HTML_QuickForm
- * @ignore
  */
 class QuickformFlexyElement extends QuickformElement
 {

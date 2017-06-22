@@ -8,12 +8,12 @@ if(isset($_GET['a']) && $_GET['a']==1) {
 	$lqry.=$qry;
 	if($_SESSION['utype']==1) add_log($db,$_SESSION['userid'],9,$lqry);
 	header("Location: index.php?pid=102&ewn=210");
-	exit();
+	exit();		
 }
 
 if(isset($_GET['a']) && $_GET['a']==2) {
 	$fcheck=$_POST['fcheck'];
-	for($i=0;$i<count($fcheck);$i++) {
+	for($i=0;$i<count($fcheck);$i++) {		
 		$qry="DELETE FROM `School` WHERE SchoolId='".$fcheck[$i]."'";
 		$lqry.=$qry."\n\r";
 		$rs = mysqli_query ($db,$qry) or die ("DB Error!!!");
@@ -21,14 +21,14 @@ if(isset($_GET['a']) && $_GET['a']==2) {
 	if($_SESSION['utype']==1) add_log($db,$_SESSION['userid'],9,$lqry);
 	header("Location: index.php?pid=102&ewn=211");
 	exit();
-}
+} 
 
-$c.="<h4 class=\"title\">Logs</h4>
+$c.="<font class=\"title\">Logs</font><br><Br>
 ";
 //show existing addresses
 
 $qry = "
-SELECT *
+SELECT * 
 FROM logs LEFT JOIN logs_types USING(TypeId) WHERE 1
 ";
 
@@ -41,7 +41,7 @@ switch($order) {
 	case 3 : $qry.="ORDER BY Type ";break;
 }
 
-$rs = mysqli_query($db,$qry) or die ("DB Error!!!");
+$rs = mysqli_query ($db,$qry) or die ("DB Error!!!");
 
 $selord[0]="";
 $selord[1]="";
@@ -94,24 +94,24 @@ $i=0;
 while ($line = mysqli_fetch_array($rs)) {
 	$datetime=date("Y-m-d", $line['Time']) . "&nbsp;&nbsp;" . date("g:i a", $line['Time']);
 	$i++;
-
+	
 	$uname = $line['UserName'];
 	if($line['UserType']==0) $uname="<b>$uname</b>";
-
+	
 	if($utype==0) {
 		$utable = 'Admins';
 		$idfield= 'AdminId';
 	} else if($utype==1) {
 		$utable = 'DoeOfficer';
-		$idfield= 'DoeOfficerId';
+		$idfield= 'DoeOfficerId';		
 	}
-
+	
 	$qry="SELECT Name FROM $utable WHERE $idfield=".$line['UserId']."";
-	$rs2 = mysqli_query($db,$qry);
+	$rs2 = mysql_query($qry,$db);
 	$cnt = mysqli_num_rows($rs2);
-
-	if($cnt==0) $uname="<font style=\"color: red\">$uname</font>";
-
+	
+	if($cnt==0) $uname="<font style=\"color: red\">$uname</font>";	
+		
 	$c.="
 	<tr>
 	<td bgcolor=\"#FAFAFA\" align=\"center\">
@@ -129,16 +129,16 @@ while ($line = mysqli_fetch_array($rs)) {
 	<td bgcolor=\"#FAFAFA\">
 	".$line['Type']."
 	</td>
-
+	
 	<td bgcolor=\"#FAFAFA\">
 	<a href=\"javascript:void(0)\" onclick=\"showQuery('$i')\">SQL query</a>
 	</td>
 	<td bgcolor=\"#FAFAFA\" align=\"center\">
-	<a href=\"?pid=102&a=1&id=".isset($line['SchoolId'])."\"><img src=\"images/delete.gif\" width=\"16\" height=\"16\" border=\"0\" alt=\"Delete school\" /></a>
+	<a href=\"?pid=102&a=1&id=".$line['SchoolId']."\"><img src=\"images/delete.gif\" width=\"16\" height=\"16\" border=\"0\" alt=\"Delete school\" /></a>
 	</td>
 	</tr>
-
-
+	
+	
 	<tr><td></td><td colspan=\"6\">
 	<div name=\"sqlquery$i\" style=\"DISPLAY: none\" id=\"sqlquery$i\">
 	<div align=\"right\">
@@ -147,7 +147,7 @@ while ($line = mysqli_fetch_array($rs)) {
 	".$line['Query']."
 	</div>
 	</td></tr>
-
+		
 	";
 }
 

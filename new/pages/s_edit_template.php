@@ -14,25 +14,25 @@ if(isset($_GET['a']) && $_GET['a']==1) {
 	$lqry.=$qry;
 	add_log($db,$_SESSION['userid'],$_SESSION['utype'],20,$lqry);
 	header("Location: index.php?pid=111&id=$templateid&ewn=221");
-	exit();
+	exit();		
 }
 
 if(isset($_GET['a']) && $_GET['a']==2) {
 	$eltId=$_GET['eltId'];
 	$newOrd=$_GET['newOrd'];
 	$mode=$_GET['mode'];
-
+	
 	if($mode=="up") $pOrd=1; else if($mode=="down") $pOrd=-1;
-
+	
 	$qry="UPDATE TemplateElements SET Ord=Ord+($pOrd) WHERE TemplateId=$templateid AND Ord=$newOrd";
 	$rs = mysqli_query ($db,$qry) or die ("DB Error!!!");
-
+	
 	$qry="UPDATE TemplateElements SET Ord=$newOrd WHERE ElementId=$eltId";
 	$rs = mysqli_query ($db,$qry) or die ("DB Error!!!");
-
+	
 	header("Location: index.php?pid=111&id=$templateid&ewn=223");
-	exit();
-
+	exit();	
+	
 }
 
 $c="";
@@ -41,7 +41,7 @@ $qry="SELECT * FROM Template WHERE TemplateId='$templateid'";
 $rs = mysqli_query ($db,$qry) or die ("DB Error!!!");
 $line = mysqli_fetch_array($rs);
 
-$c.="<h4 class=\"title\">Edit template</h4>
+$c.="<font class=\"title\">Edit template</font><br><Br>
 <b>Template name:</b> ".$line['Name']."<br />
 <br />
 <a href=\"?pid=112&toTemplateId=$templateid\" title=\"Add new element to form\"><img src=\"images/add.gif\" width=\"16\" height=\"16\" border=\"0\" alt=\"Add element\" align=\"left\" />&nbsp;&nbsp;Add new element to form</a><br><Br>";
@@ -70,7 +70,7 @@ $cnt=mysqli_num_rows($rs);
 while ($line = mysqli_fetch_array($rs)) {
 
 	$i++;
-
+	
 	$up="images/up.gif";
 	$down="images/down.gif";
 	$upurl="?pid=111&id=$templateid&eltId=".$line['ElementId']."&newOrd=".($line['Ord']-1)."&a=2&mode=up";
@@ -99,14 +99,14 @@ while ($line = mysqli_fetch_array($rs)) {
 	$c .= "
 	<tr>
 	<td bgcolor=\"#FAFAFA\" align=\"center\">
-
+	
 	<a href=\"$downurl\">
 	<img src=\"$down\" width=\"16\" height=\"16\" align=\"middle\" border=\"0\" />
 	</a>
 	<a href=\"$upurl\">
 	<img src=\"$up\" width=\"16\" height=\"16\" border=\"0\" />
 	</a>
-
+	
 	</td>
 	<td bgcolor=\"#FAFAFA\" align=\"left\">
 	$elt

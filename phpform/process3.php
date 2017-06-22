@@ -285,8 +285,9 @@ if($db=="yes")
 if($new_table=="yes")
 {
 echo "Now creating table '".$table_name."' ...<br><br>";
-$link = mysqli_connect($hostname,$dbuser,$dbpass,$db) or die("<br><br>Could not establish connection to MySQL database with the information provided.");
-mysqli_select_db($link,$dbname) or die ("<br><br>Could not access MySQL database with information provided.");
+$link = mysql_connect($hostname,$dbuser,$dbpass) or die("<br><br>Could not establish connection to MySQL database with the information provided.");
+mysql_select_db($dbname,$link) or die ("<br><br>Could not access MySQL database with information provided.");
+
 $query="CREATE TABLE ".$table_name." (id INT (10) UNSIGNED not null AUTO_INCREMENT,";
 for($i=0;$i<sizeof($name);$i++)
 {
@@ -294,10 +295,10 @@ $query.=" ".$column[$i]." TEXT not null ,";
 }
 $query.=" PRIMARY KEY (id), INDEX (id), UNIQUE (id)) comment = 'Created by phpFormGenerator'";
 
-mysqli_query($query) or die ("<br><br>Could not create MySQL database table. Maybe a table of the same name already exists?");
+mysql_query($query) or die ("<br><br>Could not create MySQL database table. Maybe a table of the same name already exists?");
 echo "<br>";
 echo "Done!";
-mysqli_close($link);
+mysql_close($link);
 $conf_file = fopen("forms/admin/config.inc.php","w") or die("<br><br>Could not open file to write. Please make sure your entire forms directory has read+write access.");
 $conf_write = "<?php\n\$db=1;\n \$hostname=\"".$hostname."\";\n";
 $conf_write .= "\$username = \"".$dbuser."\";\n";
@@ -312,8 +313,8 @@ fclose($conf_file);
 else
 {
 echo "Now verifying MySQL database access information (some test data will be entered into the database table)...<br>";
-$link = mysqli_connect($hostname,$dbuser,$dbpass,$db) or die("<br><br>Could not establish connection to MySQL database with the information provided.");
-mysqli_select_db($link,$dbname) or die ("<br><br>Could not access MySQL database with information provided.");
+$link = mysql_connect($hostname,$dbuser,$dbpass) or die("<br><br>Could not establish connection to MySQL database with the information provided.");
+mysql_select_db($dbname,$link) or die ("<br><br>Could not access MySQL database with information provided.");
 $query="insert into ".$tab_name." (";
 for($i=0;$i<sizeof($name);$i++)
 {
@@ -333,11 +334,11 @@ $query.="'test',";
 }
 $query.=")";
 
-mysqli_query($query) or die ("<br><br>Database table does not exist, or columns entered are invalid.");
+mysql_query($query) or die ("<br><br>Database table does not exist, or columns entered are invalid.");
 
 echo "<br>";
 echo "Done!";
-mysqli_close($link);
+mysql_close($link);
 $conf_file = fopen("forms/admin/config.inc.php","w") or die("<br><br>Could not open file to write. Please make sure your entire forms directory has read+write access.");
 $conf_write = "<?php\n\$db=1;\n \$hostname=\"".$hostname."\";\n";
 $conf_write .= "\$username = \"".$dbuser."\";\n";

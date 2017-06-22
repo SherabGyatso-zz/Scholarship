@@ -8,7 +8,7 @@ $qry="SELECT * FROM Template WHERE TemplateId='$templateid'";
 $rs = mysqli_query ($db,$qry) or die ("DB Error!!!");
 $line = mysqli_fetch_array($rs);
 
-$c.="<h4 class=\"title\">Add new element to form</h4>
+$c.="<font class=\"title\">Add new element to form</font><br><Br>
 <b>Template name:</b> ".$line['Name']."<br />
 <br />
 ";
@@ -18,7 +18,7 @@ if(!isset($_POST['step'])) $step=1; else $step=$_POST['step'];
 if($step==1) {
 	$qry="SELECT * FROM TemplateElements WHERE TemplateId='$templateid' ORDER BY Ord";
 	$rs = mysqli_query ($db,$qry) or die ("DB Error!!!");
-
+	
 	$eltcount=mysqli_num_rows($rs)+1;
 	$eltName = $templateid."_".$eltcount;
 
@@ -33,7 +33,7 @@ if($step==1) {
 		<td bgcolor=\"whitesmoke\" align=\"center\">
 		<b>Element example</b>
 		</td>
-
+		
 		</tr>
 		<tr>
 		<td bgcolor=\"#FAFAFA\" align=\"left\">
@@ -43,7 +43,7 @@ if($step==1) {
 		<input type=\"text\" READONLY>
 		</td>
 		</tr>
-
+		
 		</tr>
 		<tr>
 		<td bgcolor=\"#FAFAFA\" align=\"left\">
@@ -53,7 +53,7 @@ if($step==1) {
 		<textarea READONLY></textarea>
 		</td>
 		</tr>
-
+		
 		</tr>
 		<tr>
 		<td bgcolor=\"#FAFAFA\" align=\"left\">
@@ -63,7 +63,7 @@ if($step==1) {
 		<select READONLY style=\"width: 100px\"></select>
 		</td>
 		</tr>
-
+		
 		</tr>
 		<tr>
 		<td bgcolor=\"#FAFAFA\" align=\"left\">
@@ -73,13 +73,13 @@ if($step==1) {
 		<input type=\"checkbox\" READONLY>
 		</td>
 		</tr>
-
+		
 		</table>
-
+		
 		<input type=\"hidden\" name=\"step\" value=\"2\">
 		<input type=\"hidden\" name=\"elementName\" value=\"$eltName\">
 		<br>
-
+		
 		<b>Element order - add after field:</b>&nbsp;&nbsp;
 		<select name=\"afterOrder\">
 		<option value=\"-1\">(First - at the beginning)</option>
@@ -128,10 +128,10 @@ if($step==1) {
 	}
 	$c.="<br><input type=\"submit\" value=\"Add element\" class=\"button\">";
 } else if($step==3) {
-
+	
 	$qry="UPDATE TemplateElements SET Ord=Ord+1 WHERE TemplateId=$templateid AND Ord>".$_POST['afterOrder'];
 	$rs = mysqli_query ($db,$qry) or die ("DB Error!!!");
-
+	
 	$elementType=$_POST['elementType'];
 	$order=$_POST['afterOrder']+1;
 	$elementName=$_POST['elementName'];
@@ -140,15 +140,15 @@ if($step==1) {
 		if($_POST['required']==1) $required=1;
 	} else $required=0;
 	if(isset($_POST['checkboxtext'])) $text=$_POST['checkboxtext']; else $text="";
-
+	
 	if($elementType=="select") {
 		$trans = array("\n" => "||", "\r" => "");
 		$options = strtr($_POST['options'], $trans);
 	} else $options="";
-
+	
 	$qry="INSERT INTO `TemplateElements` (`ElementId`, `TemplateId`, `Type`, `Name`, `Label`, `Text`, `Value`, `Options`, `Attributes`, `Ord`, `required`) VALUES (NULL, '$templateid', '$elementType', '$elementName', '$elementLabel', '$text', '', '$options', '', '$order', '$required')";
 	$rs = mysqli_query ($db,$qry) or die ("DB Error!!!");
-
+	
 	add_log($db,$_SESSION['userid'],$_SESSION['utype'],18,$qry);
 	header("Location: index.php?pid=111&id=$templateid&ewn=220");
 	exit();

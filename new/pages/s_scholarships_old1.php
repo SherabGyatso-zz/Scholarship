@@ -14,12 +14,12 @@ if(isset($_GET['a']) && $_GET['a']==1) {
 	$lqry.=$qry;
 	add_log($db,$_SESSION['userid'],$_SESSION['utype'],21,$lqry);
 	header("Location: index.php?pid=108&ewn=225");
-	exit();
+	exit();		
 }
 
 if(isset($_GET['a']) && $_GET['a']==2) {
 	$fcheck=$_POST['fcheck'];
-	for($i=0;$i<count($fcheck);$i++) {
+	for($i=0;$i<count($fcheck);$i++) {		
 		$qry="DELETE FROM `StudentScholarship` WHERE StudentScholarshipId='".$fcheck[$i]."'";
 		$lqry.=$qry."\n\r";
 		$rs = mysqli_query ($db,$qry) or die ("DB Error!!!");
@@ -35,17 +35,18 @@ if(isset($_GET['a']) && $_GET['a']==2) {
 	exit();
 }
 
-$c.="<h4 class=\"title\">Scholarships</h4>";
+$c.="<font class=\"title\">Scholarships</font><br><Br>
+";
 //show existing addresses
 
 $qry = "
-SELECT StudentScholarship.StudentScholarshipId, StudentScholarship.ScholarshipId, ScholarshipTypes.Name, StudentScholarship.Status, StudentScholarship.SponsorName, StudentScholarship.AppTime, Student.StudentId, Student.Name as SName, Student.Surname
+SELECT StudentScholarship.StudentScholarshipId, StudentScholarship.ScholarshipId, ScholarshipTypes.Name, StudentScholarship.Status, StudentScholarship.SponsorName, StudentScholarship.AppTime, Student.StudentId, Student.Name as SName, Student.Surname 
 FROM (`StudentScholarship` LEFT JOIN `Student` USING(StudentId)) LEFT JOIN `ScholarshipTypes` ON(ScholarshipTypes.ScholarshipId=StudentScholarship.ScholarshipId) ";
 
 $add2qry="WHERE 1 ";
 
 if(isset($_GET['clk']) && $_GET['clk']==0) {
-		$_SESSION['stype']=0;
+		$_SESSION['stype']=0;	
 		$_SESSION['statustype']=0;
 		$_SESSION['s_name'] =0;
 }
@@ -57,7 +58,7 @@ if(isset($_POST['stype']) && isset($_POST['statustype']) && isset($_POST['sp_typ
 	if($_POST['stype']==2)
 	  $style="style=\"visibility:visible\"";
    	else
-	  $style="style=\"visibility:hidden\"";
+	  $style="style=\"visibility:hidden\""; 
   }else
       $style="style=\"visibility:hidden\"";
 
@@ -65,22 +66,22 @@ if(isset($_SESSION['stype']) && isset($_SESSION['statustype'])) {
 	$add2qry="WHERE ";
 	if($_SESSION['stype']!=0) $add2qry.="StudentScholarship.ScholarshipId=".$_SESSION['stype']." ";
 	if($_SESSION['s_name']!='all' and $_SESSION['stype']==2) $add2qry.=" AND StudentScholarship.SponsorName='".$_SESSION['s_name']."'";
-
+	
 	$status_tbl[1]="Selected";
 	$status_tbl[2]="Alternate";
 	$status_tbl[3]="Rejected";
 	$status_tbl[4]="Closed";
-
+	
 	if($_SESSION['stype']!=0 && $_SESSION['statustype']!=0) $add2qry.=" AND ";
-
+	
 	if($_SESSION['statustype']!=0)  {
 		$status_opt=$status_tbl[$_SESSION['statustype']];
 		$add2qry.="StudentScholarship.Status='$status_opt' ";
 	}
-	if($_SESSION['stype']==0 && $_SESSION['statustype']==0) $add2qry.="1 ";
+	if($_SESSION['stype']==0 && $_SESSION['statustype']==0) $add2qry.="1 "; 
 }
 
-$qry.=$add2qry;
+$qry.=$add2qry;	
 
 $order=-1;
 if(!isset($_GET['order'])) $order=0; else $order=$_GET['order'];
@@ -245,7 +246,7 @@ $i=0;
 while ($line = mysqli_fetch_array($rs)) {
 	++$i;
 	$when=date("m.d.y",$line['AppTime'])."&nbsp;&nbsp;".date("H:i",$line['AppTime']);
-
+	
 	$c.="
 	<tr>
 	<td bgcolor=\"#FAFAFA\" align=\"center\">
@@ -263,11 +264,11 @@ while ($line = mysqli_fetch_array($rs)) {
 	<a href=\"?pid=200&id=".$line['StudentId']."\">".$line['SName']."</a>
 	</td>
 	<td bgcolor=\"#FAFAFA\">
-
+	
 	".$line['Name']."
 	</td>
 	<td bgcolor=\"#FAFAFA\">
-
+	
 	".$line['SponsorName']."
 	</td>
 	<td bgcolor=\"#FAFAFA\">

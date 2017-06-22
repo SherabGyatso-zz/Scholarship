@@ -1,7 +1,7 @@
 <?php
 $c="";
 
-$c.="<h4 class=\"title\">Your scholarships</h4>
+$c.="<font class=\"title\">Your scholarships</font><br><Br>
 ";
 //show existing addresses
 if(isset($_GET['id']))
@@ -10,7 +10,7 @@ else
 	$studentID=$_SESSION['userid'];
 
 $qry = "
-SELECT StudentScholarship.StudentScholarshipId, StudentScholarship.ScholarshipId, ScholarshipTypes.Name, StudentScholarship.Status, StudentScholarship.AppTime, Student.StudentId, Student.Name as SName, Student.Surname
+SELECT StudentScholarship.StudentScholarshipId, StudentScholarship.ScholarshipId, ScholarshipTypes.Name, StudentScholarship.Status, StudentScholarship.AppTime, Student.StudentId, Student.Name as SName, Student.Surname 
 FROM (`StudentScholarship` LEFT JOIN `Student` USING(StudentId)) LEFT JOIN `ScholarshipTypes` ON(ScholarshipTypes.ScholarshipId=StudentScholarship.ScholarshipId) WHERE StudentScholarship.StudentId = $studentID";
 
 
@@ -46,9 +46,9 @@ $c.="
 ";
 
 while ($line = mysqli_fetch_array($rs)) {
-
+	
 	$when=date("m.d.y",$line['AppTime'])."&nbsp;&nbsp;".date("H:i",$line['AppTime']);
-
+	
 	$c.="
 	<tr>
 	<td bgcolor=\"#FAFAFA\" align=\"center\">

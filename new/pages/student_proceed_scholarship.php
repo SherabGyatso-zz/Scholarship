@@ -5,7 +5,8 @@ if(isset($_GET['ty']))
 $c="";
 
 
-$c.="<h4 class=\"title\">Your Scholarship</h4>";
+$c.="<font class=\"title\">Your Scholarship</font><br><Br>
+";
 
 if(!isset($_GET['id'])) exit(0); else $gssid=$_GET['id'];
 
@@ -28,7 +29,7 @@ $c.="<table cellpadding=\"0\" cellspacing=\"0\" width=\"100%\"><tr><td>";
 $form_action="index.php?pid=203&id=$gssid";
 $form = new HTML_QuickForm('status','get',$form_action);
 $form->addElement('hidden','ssid',$gssid);
-$sel_status = array('','Selected','Alternate','Rejected','Closed','Discontinued');
+$sel_status = array('','Selected','Alternate','Rejected','Closed','Discontinued'); 
 $elt =& $form->addElement('select','status','Status: ',$sel_status,' READONLY DISABLED');
 $elt->setSelected(getIndex($sel_status,$line['Status']));
 $elt =& $form->addElement('text','study_course','Study Course:',' READONLY');
@@ -43,7 +44,7 @@ $elt->setValue($line['YearReturned']);
 
 $rendered_form=$form->toHtml();
 $c.=$rendered_form;
-
+ 
 if($status=="Selected") $c.="</td><td width=\"50%\" align=\"center\"><table cellpadding=\"5\" cellspacing=\"0\" align=\"center\"><tr><td style=\"border: 1px solid #cccccc; background: whitesmoke\"><a href=\"index.php?pid=204&id=$gssid\"><img src=\"images/report.gif\" border=0 align=\"absmiddle\">&nbsp;&nbsp;REPORT (read only)</a></td></tr></table>";
 $c.="</td></tr></table>";
 

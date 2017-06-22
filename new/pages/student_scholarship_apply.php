@@ -6,7 +6,7 @@ if(isset($_GET['step'])) $step=$_GET['step']; else $step=1;
 
 if($step==1) {
    $studentid=$_GET['id'];
-	$c.="<h4 class=\"title\">Available scholarships</h4>
+	$c.="<font class=\"title\">Available scholarships</font><br><Br>
 	<b>Choose scholarship</b><br>
 	<form action=\"?pid=201&step=2&id=$studentid\" method=\"post\">";
 	$qry="SELECT * FROM ScholarshipTypes WHERE 1";
@@ -24,7 +24,7 @@ if($step==2) {
 		$studentid=$_GET['id'];
 	else
 		$studentid=$_SESSION['userid'];
-
+	
 	if(!isset($_POST['stype'])) {
 		header("Location: index.php?pid=201&ewn=100");
 		exit();
@@ -39,7 +39,7 @@ if($step==2) {
 	   } else {
 		header("Location: index.php?pid=201&step=3&id=$studentid&stype=".$_POST['stype']."");
 		exit();
-		}
+			}
 	}
 }
 
@@ -54,35 +54,37 @@ if($step==3) {
 		case 6 : $add_fields=3; $t="Tibet Funds Professional Scholarship Application Form"; break;
 		case 7 : $add_fields=3; $t="Professional Scholarship Under POHDD Application Form"; break;
 		case 8 : $add_fields=3; $t="The Dalai Lama Trust Scholarship Application Form"; break;
-	}
-	$c.="<h4 class=\"title\">$t</h4>";
+	}	
+	$c.="<font class=\"title\">$t</font><br><Br>";
 	$edit_type = 'a';
 	$template_name="template$add_fields";
 	$form = new HTML_QuickForm($template_name,'post',"?pid=201&step=3&stype=".$_GET['stype']."");
-
+	
 	$form->addElement('file','photo','Your Photo (max. 1MB):');
-
+	
 	get_form($db,1,$form);
 	get_form($db,$add_fields,$form);
-
+	
 	if(isset($_GET['id']))
 		$studentid=$_GET['id'];
 	else
 		$studentid=$_SESSION['userid'];
-
-	$form->addElement('hidden', 'edit_type', $edit_type);
-	$form->addElement('hidden', 'stype', $stype);
-	$form->addElement('hidden', 'studentid', $studentid);
-	$form->addElement('submit', 'save', 'Submit', 'class="button"');
-	$form->addElement('reset', 'reset', 'Reset', 'class="button"');
+		
+	$form->addElement('hidden','edit_type',$edit_type);
+	$form->addElement('hidden','stype',$stype);
+	$form->addElement('hidden','studentid',$studentid); 
+	$form->addElement('submit','save','Submit','class="button"');
+	$form->addElement('reset','reset','Reset','class="button"');  
 	if ($form->validate()) {
 		$form->process('submit_application_form');
 		header("Location: index.php?ewn=231");
 		exit();
 	} else {
 		$rendered_form=$form->toHtml();
-		$c.=$rendered_form;
-	}
+		$c.=$rendered_form; 
+	}		
+  
+	
 }
 
 ?>

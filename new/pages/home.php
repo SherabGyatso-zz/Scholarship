@@ -1,6 +1,6 @@
 <?php
 
-$c="<h4 class=\"title\">News</h4>
+$c="<font class=\"title\">News</font><br />
 <br />";
 
 $c .= get_news_list($db,'ALL');

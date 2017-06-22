@@ -4,11 +4,11 @@ $c="";
 $lqry="";
 if(isset($_GET['a']) && $_GET['a']==1) {
 
-	$qry="SELECT * FROM `School` WHERE SchoolCategoryId=".$_GET['id']."";
+	$qry="SELECT * FROM `School` WHERE SchoolCategoryId=".$_GET['id'].""; 
 	$rs = mysqli_query ($db,$qry) or die ("DB Error!!!");
 	if(mysqli_num_rows($rs)>0) {
 		header("Location: index.php?pid=100&ewn=104");
-		exit();
+		exit();		
 	}
 
 	$qry="DELETE FROM `SchoolCategory` WHERE SchoolCategoryId='".$_GET['id']."'";
@@ -16,20 +16,20 @@ if(isset($_GET['a']) && $_GET['a']==1) {
 	$lqry.=$qry;
 	add_log($db,$_SESSION['userid'],$_SESSION['utype'],6,$lqry);
 	header("Location: index.php?pid=100&ewn=200");
-	exit();
+	exit();		
 }
 
 if(isset($_GET['a']) && $_GET['a']==2) {
 	$fcheck=$_POST['fcheck'];
 	for($i=0;$i<count($fcheck);$i++) {
-
-		$qry="SELECT * FROM `School` WHERE SchoolCategoryId=".$fcheck[$i]."";
+	
+		$qry="SELECT * FROM `School` WHERE SchoolCategoryId=".$fcheck[$i].""; 
 		$rs = mysqli_query ($db,$qry) or die ("DB Error!!!");
 		if(mysqli_num_rows($rs)>0) {
 			header("Location: index.php?pid=100&ewn=104");
-			exit();
+			exit();		
 		}
-
+			
 		$qry="DELETE FROM `SchoolCategory` WHERE SchoolCategoryId='".$fcheck[$i]."'";
 		$rs = mysqli_query ($db,$qry) or die ("DB Error!!!");
 		$lqry.=$qry."\n\r";
@@ -37,9 +37,9 @@ if(isset($_GET['a']) && $_GET['a']==2) {
 	add_log($db,$_SESSION['userid'],$_SESSION['utype'],6,$lqry);
 	header("Location: index.php?pid=100&ewn=203");
 	exit();
-}
+} 
 
-$c.="<h4 class=\"title\">School categories</h4>
+$c.="<font class=\"title\">School categories</font><br><Br>
 <a href=\"javascript:void(0)\" onclick=\"popup('schoolcategories_add_edit.php?a=a',500,200)\"><img src=\"images/add.gif\" width=\"16\" height=\"16\" border=\"0\" alt=\"Edit category\" align=\"left\" />&nbsp;&nbsp;Add new category</a><br><Br>
 ";
 //show existing categories

@@ -7,7 +7,7 @@ if(isset($_POST['submitted']) && $_POST['submitted']==1) {
 	$lqry="";
 	if(isset($_GET['a']) && $_GET['a']=="a") {
 		$qry = "
-		INSERT INTO `scholarshiptypes` ( `Name` )
+		INSERT INTO `scholarshiptypes` ( `Name` ) 
 		VALUES (
 		 '".trim($_POST['sname'])."'
 		)";
@@ -18,11 +18,11 @@ if(isset($_POST['submitted']) && $_POST['submitted']==1) {
 		add_log($db,$_SESSION['userid'],$_SESSION['utype'],7,$lqry);
 	} else if(isset($_GET['a']) && $_GET['a']=="e") {
 		$qry = "
-		UPDATE `scholarshiptypes`
-		SET `Name` = '".trim($_POST['sname'])."'
+		UPDATE `scholarshiptypes` 
+		SET `Name` = '".trim($_POST['sname'])."' 
 		WHERE `ScholarshipId`='".$_POST['id']."'";
-
-		$ewnid=209;
+		
+		$ewnid=209;	
 		$lqry.=$qry;
 		add_log($db,$_SESSION['userid'],$_SESSION['utype'],8,$lqry);
 	}
@@ -34,7 +34,7 @@ if(isset($_POST['submitted']) && $_POST['submitted']==1) {
 
 $title="<br />Add New Scholarship Type: ";
 if(isset($_GET['a']) && $_GET['a']=="e") $title="Edit Scholarship Type";
-$c.="<h4 class=\"title\">$title</h4>";
+$c.="<font class=\"title\">$title</font><br><Br>";
 
 if(isset($_GET['a'])) {
 	if($_GET['a']=="a") {
@@ -67,7 +67,7 @@ if(isset($_GET['a']) && $_GET['a']=="a") {
 $c.="
 <input type=\"radio\" name=\"next_opt\" value=\"0\" checked />&nbsp;Save and go back to list<br />
 <input type=\"radio\" name=\"next_opt\" value=\"1\" />&nbsp;Save and add new scholarship type<br />
-<br />";
+<br />"; 
 }
 
 $c.="<input type=\"submit\" value=\"Submit\" class=\"button\" />&nbsp;&nbsp;&nbsp;

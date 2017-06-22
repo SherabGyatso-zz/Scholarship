@@ -16,7 +16,7 @@ $ssfy_value=$line['SecondarySchoolFinishYear'];
 $pass_value=$line['Password'];
 
 $email_value=$line['email'];
-$remarks_value=isset($line['remarks']);
+$remarks_value=$line['remarks'];
 
 $address_value=$line['Address'];
 $qry = "SELECT * FROM StudentSchool WHERE StudentId='$studentID'";
@@ -28,7 +28,7 @@ $gos_value=$line['GradeOfStart'];
 $qry = "
 SELECT School.SchoolId, School.Name, School.Address, School.SchoolCategoryId, SchoolCategory.SchoolCategoryName
 FROM School
-LEFT JOIN SchoolCategory ON ( SchoolCategory.SchoolCategoryId = School.SchoolCategoryId )
+LEFT JOIN SchoolCategory ON ( SchoolCategory.SchoolCategoryId = School.SchoolCategoryId ) 
 WHERE School.SchoolId='$sid_value'
 ";
 $rs = mysqli_query ($db,$qry) or die ("DB Error!!!");
@@ -37,11 +37,9 @@ $schoolname_value=$line['Name'];
 $schoolcat_value=$line['SchoolCategoryName'];
 $schooladdress_value=$line['Address'];
 
-$c="";
-
 $title="Student details";
 if(isset($_SESSION['utype']) && $_SESSION['utype']==2) $title="Your profile";
-$c.="<h4 class=\"title\">$title</h4>";
+$c.="<font class=\"title\">$title</font><br><Br>";
 
 $add_info="";
 if($a=="reg") {
@@ -61,7 +59,7 @@ if($a=="reg") {
 	</tr>
 	<tr><td colspan=\"2\" bgcolor=\"whitesmoke\" style=\"font-size: 2px\">&nbsp;</td></tr>
 	";
-
+	
 	$add_info2="
 		<tr><td colspan=\"2\" bgcolor=\"whitesmoke\"><b>Profile has not been approved yet</b><br>
 		<a href=\"?pid=114&a=3&id=$studentID\"><img src=\"images/accept.gif\" width=\"16\" height=\"16\" border=\"0\" alt=\"Approve student\" align=\"absmiddle\" />&nbsp;&nbsp;Clik here to approve the student</a></td></tr>
@@ -83,7 +81,7 @@ Gender<br />
 E-mail</b>
 </td>
 <td bgcolor=\"#FAFAFA\">
-$studentID<br />
+$studentID<br>
 $name_value<br />
 $surname_value<br />
 $pass_value<br /><br />

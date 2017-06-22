@@ -9,13 +9,13 @@ if(isset($_GET['a']) && $_GET['a']==1) {
 	$lqry.=$qry;
 	add_log($db,$_SESSION['userid'],$_SESSION['utype'],24,$lqry);
 	header("Location: index.php?pid=115&ewn=234");
-	exit();
+	exit();		
 }
 
 if(isset($_GET['a']) && $_GET['a']==2) {
 	$fcheck=$_POST['fcheck'];
-	for($i=0;$i<count($fcheck);$i++) {
-
+	for($i=0;$i<count($fcheck);$i++) {	
+			
 		$qry="DELETE FROM `news` WHERE id='".$fcheck[$i]."'";
 		$lqry.=$qry."\n\r";
 		$rs = mysqli_query ($db,$qry) or die ("DB Error!!!");
@@ -23,15 +23,15 @@ if(isset($_GET['a']) && $_GET['a']==2) {
 	add_log($db,$_SESSION['userid'],$_SESSION['utype'],24,$lqry);
 	header("Location: index.php?pid=115&ewn=235");
 	exit();
-}
+} 
 
-$c.="<h4 class=\"title\">News</h4>
+$c.="<font class=\"title\">News</font><br><Br>
 <a href=\"?pid=116&a=a\"><img src=\"images/add.gif\" width=\"16\" height=\"16\" border=\"0\" alt=\"Edit category\" align=\"left\" />&nbsp;&nbsp;Add news</a><br><Br>
 ";
 //show existing addresses
 
 $qry = "
-SELECT * FROM news WHERE 1
+SELECT * FROM news WHERE 1 
 ";
 
 $order=-1;
@@ -106,7 +106,7 @@ $paginator_pages
 ";
 
 while ($line = mysqli_fetch_array($rs)) {
-
+	
 	$c.="
 	<tr>
 	<td bgcolor=\"#FAFAFA\" align=\"center\">

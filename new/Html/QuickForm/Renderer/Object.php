@@ -1,49 +1,37 @@
 <?php
-/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
+/* vim: set expandtab tabstop=4 shiftwidth=4: */
+// +----------------------------------------------------------------------+
+// | PHP version 4.0                                                      |
+// +----------------------------------------------------------------------+
+// | Copyright (c) 1997-2003 The PHP Group                                |
+// +----------------------------------------------------------------------+
+// | This source file is subject to version 2.0 of the PHP license,       |
+// | that is bundled with this package in the file LICENSE, and is        |
+// | available at through the world-wide-web at                           |
+// | http://www.php.net/license/2_02.txt.                                 |
+// | If you did not receive a copy of the PHP license and are unable to   |
+// | obtain it through the world-wide-web, please send a note to          |
+// | license@php.net so we can mail you a copy immediately.               |
+// +----------------------------------------------------------------------+
+// | Author: Ron McClain <ron@humaniq.com>                                |
+// +----------------------------------------------------------------------+
+//
+// $Id: Object.php,v 1.1 2005/12/06 01:50:39 matthieu_ Exp $
 
-/**
- * A concrete renderer for HTML_QuickForm, makes an object from form contents
- *
- * PHP versions 4 and 5
- *
- * LICENSE: This source file is subject to version 3.01 of the PHP license
- * that is available through the world-wide-web at the following URI:
- * http://www.php.net/license/3_01.txt If you did not receive a copy of
- * the PHP License and are unable to obtain it through the web, please
- * send a note to license@php.net so we can mail you a copy immediately.
- *
- * @category    HTML
- * @package     HTML_QuickForm
- * @author      Ron McClain <ron@humaniq.com>
- * @copyright   2001-2007 The PHP Group
- * @license     http://www.php.net/license/3_01.txt PHP License 3.01
- * @link        http://pear.php.net/package/HTML_QuickForm
- */
-
-/**
- * An abstract base class for QuickForm renderers
- */
-require_once 'HTML/QuickForm/Renderer.php';
+require_once('Html/QuickForm/Renderer.php');
 
 /**
  * A concrete renderer for HTML_QuickForm, makes an object from form contents
  *
  * Based on HTML_Quickform_Renderer_Array code
  *
- * @category    HTML
- * @package     HTML_QuickForm
- * @author      Ron McClain <ron@humaniq.com>
- * @version     Release: 3.2.10
- * @since       3.1.1
+ * @access public
  */
 class HTML_QuickForm_Renderer_Object extends HTML_QuickForm_Renderer
 {
-   /**#@+
-    * @access private
-    */
     /**
      * The object being generated
-     * @var QuickformForm
+     * @var object $_obj
      */
     var $_obj= null;
 
@@ -72,7 +60,7 @@ class HTML_QuickForm_Renderer_Object extends HTML_QuickForm_Renderer
     var $_elementType = 'QuickFormElement';
 
     /**
-    * Additional style information for different elements
+    * Additional style information for different elements  
     * @var array $_elementStyles
     */
     var $_elementStyles = array();
@@ -82,18 +70,17 @@ class HTML_QuickForm_Renderer_Object extends HTML_QuickForm_Renderer
     * @var bool $_collectHidden
     */
     var $_collectHidden = false;
-   /**#@-*/
 
 
     /**
      * Constructor
      *
-     * @param bool    true: collect all hidden elements
+     * @param collecthidden bool    true: collect all hidden elements
      * @access public
      */
-    function __construct($collecthidden = false)
+    function HTML_QuickForm_Renderer_Object($collecthidden = false) 
     {
-        parent::__construct();
+        $this->HTML_QuickForm_Renderer();
         $this->_collectHidden = $collecthidden;
         $this->_obj = new QuickformForm;
     }
@@ -102,14 +89,14 @@ class HTML_QuickForm_Renderer_Object extends HTML_QuickForm_Renderer
      * Return the rendered Object
      * @access public
      */
-    function toObject()
+    function toObject() 
     {
         return $this->_obj;
     }
 
     /**
      * Set the class of the form elements.  Defaults to QuickformElement.
-     * @param string   Name of element class
+     * @param type string   Name of element class
      * @access public
      */
     function setElementType($type)
@@ -117,7 +104,7 @@ class HTML_QuickForm_Renderer_Object extends HTML_QuickForm_Renderer
         $this->_elementType = $type;
     }
 
-    function startForm(&$form)
+    function startForm(&$form) 
     {
         $this->_obj->frozen = $form->isFrozen();
         $this->_obj->javascript = $form->getValidationScript();
@@ -133,7 +120,7 @@ class HTML_QuickForm_Renderer_Object extends HTML_QuickForm_Renderer
         $this->_sectionCount = 0;
     } // end func startForm
 
-    function renderHeader(&$header)
+    function renderHeader(&$header) 
     {
         $hobj = new StdClass;
         $hobj->header = $header->toHtml();
@@ -141,7 +128,7 @@ class HTML_QuickForm_Renderer_Object extends HTML_QuickForm_Renderer
         $this->_currentSection = $this->_sectionCount++;
     }
 
-    function renderElement(&$element, $required, $error)
+    function renderElement(&$element, $required, $error) 
     {
         $elObj = $this->_elementToObject($element, $required, $error);
         if(!empty($error)) {
@@ -160,7 +147,7 @@ class HTML_QuickForm_Renderer_Object extends HTML_QuickForm_Renderer
         }
     } //end func renderHidden
 
-    function startGroup(&$group, $required, $error)
+    function startGroup(&$group, $required, $error) 
     {
         $this->_currentGroup = $this->_elementToObject($group, $required, $error);
         if(!empty($error)) {
@@ -169,7 +156,7 @@ class HTML_QuickForm_Renderer_Object extends HTML_QuickForm_Renderer
         }
     } // end func startGroup
 
-    function finishGroup(&$group)
+    function finishGroup(&$group) 
     {
         $this->_storeObject($this->_currentGroup);
         $this->_currentGroup = null;
@@ -179,12 +166,12 @@ class HTML_QuickForm_Renderer_Object extends HTML_QuickForm_Renderer
      * Creates an object representing an element
      *
      * @access private
-     * @param HTML_QuickForm_element    form element being rendered
+     * @param element object    An HTML_QuickForm_element object
      * @param required bool         Whether an element is required
      * @param error string    Error associated with the element
      * @return object
      */
-    function _elementToObject(&$element, $required, $error)
+    function _elementToObject(&$element, $required, $error) 
     {
         if($this->_elementType) {
             $ret = new $this->_elementType;
@@ -219,14 +206,14 @@ class HTML_QuickForm_Renderer_Object extends HTML_QuickForm_Renderer
         return $ret;
     }
 
-    /**
+    /** 
      * Stores an object representation of an element in the form array
      *
      * @access private
-     * @param QuickformElement     Object representation of an element
+     * @param elObj object     Object representation of an element
      * @return void
      */
-    function _storeObject($elObj)
+    function _storeObject($elObj) 
     {
         $name = $elObj->name;
         if(is_object($this->_currentGroup) && $elObj->type != 'group') {
@@ -253,9 +240,8 @@ class HTML_QuickForm_Renderer_Object extends HTML_QuickForm_Renderer
 
 /**
  * Convenience class for the form object passed to outputObject()
- *
- * Eg.
- * <pre>
+ * 
+ * Eg.  
  * {form.outputJavaScript():h}
  * {form.outputHeader():h}
  *   <table>
@@ -264,13 +250,6 @@ class HTML_QuickForm_Renderer_Object extends HTML_QuickForm_Renderer
  *     </tr>
  *   </table>
  * </form>
- * </pre>
- *
- * @category    HTML
- * @package     HTML_QuickForm
- * @author      Ron McClain <ron@humaniq.com>
- * @version     Release: 3.2.10
- * @since       3.1.1
  */
 class QuickformForm
 {
@@ -305,7 +284,7 @@ class QuickformForm
     var $hidden;
 
    /**
-    * Set if there were validation errors.
+    * Set if there were validation errors.  
     * StdClass object with element names for keys and their
     * error messages as values
     * @var object $errors
@@ -314,7 +293,7 @@ class QuickformForm
 
    /**
     * Array of QuickformElementObject elements.  If there are headers in the form
-    * this will be empty and the elements will be in the
+    * this will be empty and the elements will be in the 
     * separate sections
     * @var array $elements
     */
@@ -328,7 +307,7 @@ class QuickformForm
 
    /**
     * Output &lt;form&gt; header
-    * {form.outputHeader():h}
+    * {form.outputHeader():h} 
     * @return string    &lt;form attributes&gt;
     */
     function outputHeader()
@@ -350,16 +329,9 @@ class QuickformForm
 
 /**
  * Convenience class describing a form element.
- *
- * The properties defined here will be available from
+ * The properties defined here will be available from 
  * your flexy templates by referencing
  * {form.zip.label:h}, {form.zip.html:h}, etc.
- *
- * @category    HTML
- * @package     HTML_QuickForm
- * @author      Ron McClain <ron@humaniq.com>
- * @version     Release: 3.2.10
- * @since       3.1.1
  */
 class QuickformElement
 {

@@ -16,12 +16,12 @@ if(isset($_GET['a']) && $_GET['a']==1) {
 	$lqry.=$qry;
 	add_log($db,$_SESSION['userid'],$_SESSION['utype'],21,$lqry);
 	header("Location: index.php?pid=108&ewn=225");
-	exit();
+	exit();		
 }
 
 if(isset($_GET['a']) && $_GET['a']==2) {
 	$fcheck=$_POST['fcheck'];
-	for($i=0;$i<count($fcheck);$i++) {
+	for($i=0;$i<count($fcheck);$i++) {		
 		$qry="DELETE FROM `StudentScholarship` WHERE StudentScholarshipId='".$fcheck[$i]."'";
 		$lqry.=$qry."\n\r";
 		$rs = mysqli_query ($db,$qry) or die ("DB Error!!!");
@@ -37,7 +37,8 @@ if(isset($_GET['a']) && $_GET['a']==2) {
 	exit();
 }
 
-$c.="<h4 class=\"title\">Scholarships</h4>";
+$c.="<font class=\"title\">Scholarships</font><br><Br>
+";
 //show existing addresses
 
 $qry = "
@@ -46,7 +47,7 @@ FROM (scholarshiptypes INNER JOIN (student INNER JOIN studentscholarship ON stud
 //$add2qry="WHERE 1 ";
 
 if(isset($_GET['clk']) && $_GET['clk']==0) {
-		$_SESSION['stype']=0;
+		$_SESSION['stype']=0;	
 		$_SESSION['statustype']=0;
 		$_SESSION['s_name'] =0;
 		$_SESSION['stu_name']="";
@@ -73,7 +74,7 @@ if(isset($_POST['stype']) && isset($_POST['statustype'])){
 	if($_POST['stype']==2 or $_POST['stype']==1)
 	  $style="style=\"visibility:visible\"";
    	else
-	  $style="style=\"visibility:hidden\"";
+	  $style="style=\"visibility:hidden\"";  
   }
  elseif($_SESSION['stype']==2  or $_SESSION['stype']==1)  //this apply when we click on >>back to scholarship on other page
 	  $style="style=\"visibility:visible\"";
@@ -82,28 +83,28 @@ if(isset($_POST['stype']) && isset($_POST['statustype'])){
  $year="";
 if(isset($_SESSION['stype']) && isset($_SESSION['statustype'])) {
 	//$add2qry="WHERE ";
-
+	
 	if($_SESSION['stype']!=0) $add2qry.=" AND StudentScholarship.ScholarshipId=".$_SESSION['stype']." ";
 	//for sponsor name
-	if($_SESSION['s_name']!='all' and $_SESSION['stype']==2)
+	if($_SESSION['s_name']!='all' and $_SESSION['stype']==2) 
 	$add2qry.=" AND StudentScholarship.SponsorName='".$_SESSION['s_name']."'";
 	elseif($_SESSION['s_name']!='all' and $_SESSION['stype']==1)  	//for category
 	$add2qry.=" AND StudentScholarship.category='".$_SESSION['s_name']."'";
 	elseif($_SESSION['s_name']=='all')  $add2qry.="";
 	else
 	unset($_SESSION['s_name']);
-	if (isset($_SESSION['year'])!='all')
+	if($_SESSION['year']!='all')
 	 {
 	  if($_SESSION['statustype']==1)
 	   	$add2qry.=" AND year(studentscholarship.From) = '".$_SESSION['year']."' ";
 	  else
-	  	$add2qry.=" AND year(studentscholarship.To) = '".isset($_SESSION['year'])."' ";
+	  	$add2qry.=" AND year(studentscholarship.To) = '".$_SESSION['year']."' ";
 	  }
-	if($_SESSION['stu_name']!="")
+	if($_SESSION['stu_name']!="") 
 	 {
 	   $add2qry.=" AND student.name like '%".$_SESSION['stu_name']."%' ";
 	   }
-
+   
 	if($_SESSION['course']!="")
 	   {
 		$add2qry.=" AND course.Course like '".$_SESSION['course']."%'";
@@ -117,25 +118,25 @@ if(isset($_SESSION['stype']) && isset($_SESSION['statustype'])) {
 	$status_tbl[3]="Rejected";
 	$status_tbl[4]="Closed";
 	$status_tbl[5]="Discontinued";
-
+	
 	//if($_SESSION['stype']!=0 && $_SESSION['statustype']!=0)  $add2qry.=" AND ";
-
-
+   
+		
 	if($_SESSION['statustype']!=0)  {
 		$status_opt=$status_tbl[$_SESSION['statustype']];
 		$add2qry.=" AND StudentScholarship.Status='$status_opt' ";
 	}
-
-	//if($_SESSION['stype']==0 && $_SESSION['statustype']==0) $add2qry.="1 ";
+	
+	//if($_SESSION['stype']==0 && $_SESSION['statustype']==0) $add2qry.="1 "; 
 	// echo substr($add2qry,4);
-
+  
 }
 if(substr($add2qry,0,4) == " AND")
 	  $add2qry=substr($add2qry,5);
 	else
 	   $add2qry.=" 1 ";
-
-$qry.=" where ".$add2qry;
+	   
+$qry.=" where ".$add2qry;	
 //echo $qry;
 $order=-1;
 if(!isset($_GET['order'])) $order=0; else $order=$_GET['order'];
@@ -151,7 +152,7 @@ switch($order) {
 if(isset($_POST['new_limit'])) $_SESSION['p_scholarships']=$_POST['new_limit'];
 if(!isset($_GET['page'])) $page=1; else $page=$_GET['page'];
 if(!isset($_GET['sno'])) $i=0; else $i=$_GET['sno'];
-
+  
 if(!isset($_SESSION['p_scholarships'])) $_SESSION['p_scholarships']=10;
 
 $paginator_select=get_paginator_select("scholarships",$pid,$order);
@@ -211,7 +212,7 @@ while ($line4 = mysqli_fetch_array($rs4)) {
 
 //for year combo box
 $year_combo="<option value=\"all\" SELECTED><--Select Year--></option>";
-if(isset($status_opt)=='Selected')
+if($status_opt=='Selected')
 $qry5 = "SELECT distinct year(studentscholarship.From) as year FROM studentscholarship WHERE 1 order by studentscholarship.From desc";
 else
 $qry5="SELECT distinct year(studentscholarship.To) as year FROM studentscholarship WHERE 1 order by studentscholarship.To desc";
@@ -230,9 +231,6 @@ $sel2[1]="";
 $sel2[2]="";
 $sel2[3]="";
 $sel2[4]="";
-$sel2[5]="";
-$sel2[6]="";
-$sel2[7]="";
 if(isset($_SESSION['statustype'])) {
 	$sel2[$_SESSION['statustype']]=" SELECTED";
 }
@@ -240,19 +238,19 @@ if(isset($_SESSION['statustype'])) {
 $addact="";
 if($order!=-1) $addact="&order=$order";
 
-if(isset($_POST['stype'])==2 or $_SESSION['stype']==2)
+if($_POST['stype']==2 or $_SESSION['stype']==2)
 {
  $id_txt='2';
  $label = 'lbl';
  $combo = $sp_name;
  }
-
- if(isset($_POST['stype'])==1 or $_SESSION['stype']==1){
+ 
+ if($_POST['stype']==1 or $_SESSION['stype']==1){
  $id_txt='1';
  $label = 'lbl';
  $combo = $cat;
  }
-
+ 
 $c.="
 <table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" >
 <tr>
@@ -304,13 +302,13 @@ $stradios
 </select>
 </td>";
 
-$c.="<td><label ".$style." id=\"".isset($label)."\">Sponsor/Category:</label></td><td><select name=\"sp_type\"  ".$style." id=\"".isset($id_txt)."\">".isset($combo)."</select></td>
+$c.="<td><label ".$style." id=\"".$label."\">Sponsor/Category:</label></td><td><select name=\"sp_type\"  ".$style." id=\"".$id_txt."\">".$combo."</select></td>
 </tr>
 <tr><td>Student Name:</td><td><input type=text name=stu_name value=".$_SESSION['stu_name']."></td>
 <td>Course:</td><td><input type=text name=course size=\"5\" value=".$_SESSION['course']."></td>
 <td>Institute/Place:</td><td><input type=text name=institute value=".$_SESSION['institute']."></td>
 </tr>
-<tr><td>Year:</td><td><select name=\"year\"  ".isset($style1)." id=\"".isset($id_txt1)."\">".$year_combo."</select></td>
+<tr><td>Year:</td><td><select name=\"year\"  ".$style1." id=\"".$id_txt1."\">".$year_combo."</select></td>
 <td align=\"center\" valign=\"bottom\"><input type=\"submit\" value=\"Filter\" class=\"button\"></td>
 </tr>
 
@@ -334,19 +332,19 @@ $paginator_pages
 <td bgcolor=\"whitesmoke\">
 <b>Scholarship</b>
 </td>";
-if(isset($_POST['stype'])==2 or $_SESSION['stype']==0)
+if($_POST['stype']==2 or $_SESSION['stype']==0)
  {
  $c.="<td bgcolor=\"whitesmoke\">
 <b>Sponsor</b>
 </td>";
-}elseif($_SESSION['stype']==2){
+}elseif($_SESSION['stype']==2){ 
 $c.="<td bgcolor=\"whitesmoke\">
 <b>Sponsor</b>
 </td>";
 }else
 $c.="<td bgcolor=\"whitesmoke\">
 <b>Category</b>
-</td>";
+</td>";	
 
 
 $c.="<td bgcolor=\"whitesmoke\">
@@ -367,7 +365,7 @@ $c.="<td bgcolor=\"whitesmoke\">
 while ($line = mysqli_fetch_array($rs)) {
 	++$i;
 	$when=date("m.d.y",$line['AppTime'])."&nbsp;&nbsp;".date("H:i",$line['AppTime']);
-
+	
 	$c.="
 	<tr>
 	<td bgcolor=\"#FAFAFA\" align=\"center\">
@@ -380,7 +378,7 @@ while ($line = mysqli_fetch_array($rs)) {
 	</td>
 	<td bgcolor=\"#FAFAFA\">
 	".$line['Name'];
-	if($line['Remarks']!="")
+	if($line['Remarks']!="") 
 	$c.=" (".$line['Remarks'].") ";
 	$c.="</td>";
 	if($line['ScholarshipId']==2)
@@ -396,7 +394,7 @@ while ($line = mysqli_fetch_array($rs)) {
 	$c.="<td bgcolor=\"#FAFAFA\">
 	".$line['Status']."
 	</td>";
-
+	
 	if(empty($line['Course']))
 	 {
 		 $c.="<td bgcolor=\"#FAFAFA\">".$line['StudyCourse']."</td>";
