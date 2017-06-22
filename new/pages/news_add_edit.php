@@ -40,7 +40,9 @@ if(isset($_POST['submitted']) && $_POST['submitted']==1) {
 
 $title="Add news";
 if(isset($_GET['a']) && $_GET['a']=="e") $title="Edit news";
+
 $c.="<h4 class=\"title\">$title</h4>";
+
 
 if(isset($_GET['a'])) {
 	if($_GET['a']=="a") {

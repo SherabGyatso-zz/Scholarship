@@ -119,15 +119,15 @@ function get_left_content($user,$utype) {
 	<a href=\"?pid=300\">Registrations</a><br><br />
 
 	<a href=\"?pid=114\">Accept Registrations</a><br><br />
-
 	<!--<a href=\"?pid=100\">Manage school categories</a><Br>
+
 	<a href=\"?pid=102\">Manage schools</a><br><br />
-     <a href=\"?pid=118\">Manage Course</a><Br>-->
+     <a href=\"?pid=118\">Manage Course</a><Br>
 	<a href=\"?pid=104\">Manage students</a><br><br />
 
 	<a href=\"?pid=108&clk=0\"><b>SCHOLARSHIPS</b></a><br><br />
 
-	 <!--<a href=\"?pid=120\">Manage Scholarship Types</a><Br><br />-->
+	 <!--<a href=\"?pid=120\">Manage Scholarship Types</a><Br><br />
 
 	<a href=\"?pid=117\"><b>Export</b></a><br><br /><br />
 	<!--<a href=\"?pid=106\">Edit templates</a><br>-->

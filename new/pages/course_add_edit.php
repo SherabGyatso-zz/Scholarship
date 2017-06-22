@@ -34,8 +34,8 @@ if(isset($_POST['submitted']) && $_POST['submitted']==1) {
 
 $title="Add new course";
 if(isset($_GET['a']) && $_GET['a']=="e") $title="Edit Course";
-$c.="<h4 class=\"title\">$title</h4>"; 
 
+$c.="<h4 class=\"title\">$title</h4>"; 
 if(isset($_GET['a'])) {
 	if($_GET['a']=="a") {
 		$sc_value="";

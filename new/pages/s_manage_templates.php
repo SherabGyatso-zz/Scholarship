@@ -2,6 +2,7 @@
 
 $c="";
 
+
 $c.="<h4 class=\"title\">Manage templates</h4>";
 
 $qry="SELECT * FROM Template WHERE 1";

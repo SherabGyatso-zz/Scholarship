@@ -36,6 +36,7 @@ $title="<br />Add New Scholarship Type: ";
 if(isset($_GET['a']) && $_GET['a']=="e") $title="Edit Scholarship Type";
 $c.="<h4 class=\"title\">$title</h4>";
 
+
 if(isset($_GET['a'])) {
 	if($_GET['a']=="a") {
 		$sc_value="";

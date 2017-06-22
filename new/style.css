@@ -1,6 +1,7 @@
 
 html {
 	width: 100%;
+
 	position: relative;
 	min-height: 100%;
 	padding-bottom: 100px
@@ -25,6 +26,7 @@ td {
 .header {
  	width:100%;
 	text-align:center;
+
 	height: 131px;
 	background: #004D40;
 }
@@ -101,6 +103,7 @@ td {
 	padding: 15px;
 	float: left;
 	width: 600px;
+
 	text-align: left;
 }
 
